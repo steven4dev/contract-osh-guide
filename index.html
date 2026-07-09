@@ -1,1 +1,888 @@
-init
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contract OSH Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Microsoft JhengHei", "Noto Sans TC", Arial, sans-serif;
+    font-size: 13px;
+    background: #f0f2f5;
+    color: #222;
+    padding: 16px;
+  }
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 16px rgba(0,0,0,.12);
+    overflow: hidden;
+  }
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1a3a5c 0%, #2563a8 100%);
+    color: #fff;
+    padding: 18px 24px 14px;
+  }
+  .header h1 {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .header .sub {
+    font-size: 11.5px;
+    opacity: .85;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .header .sub span { display: flex; align-items: center; gap: 4px; }
+  .role-badge {
+    display: inline-block;
+    background: #e8b400;
+    color: #1a1a1a;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 20px;
+    margin-left: 10px;
+    letter-spacing: .5px;
+    vertical-align: middle;
+  }
+
+  /* Grid layout — responsive */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .grid-2col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
+
+  /* Inner grids — default */
+  .inner-2col { grid-template-columns: 1fr 1fr; }
+  .inner-3col { grid-template-columns: repeat(3, 1fr); }
+
+  /* ≤ 900px：外框 2 欄，內部小調 */
+  @media (max-width: 900px) {
+    .grid           { grid-template-columns: repeat(2, 1fr); }
+    .grid-2col      { grid-template-columns: 1fr; }
+    .section.no-border-right { border-right: 1px solid #e0e4ea; }
+    .section[style*="grid-column: span 2"] { grid-column: span 1 !important; }
+    .inner-3col     { grid-template-columns: repeat(2, 1fr); }
+    .inner-2col     { grid-template-columns: 1fr; }
+  }
+
+  /* ≤ 600px：全部單欄 */
+  @media (max-width: 600px) {
+    body { padding: 6px; }
+    .grid, .grid-2col         { grid-template-columns: 1fr; }
+    .inner-2col, .inner-3col  { grid-template-columns: 1fr; }
+    .section, .section.no-border-right { border-right: none; }
+    .header h1  { font-size: 14px; }
+    .header .sub { flex-direction: column; gap: 4px; font-size: 11px; }
+    #dark-toggle  { top: 8px; right: 10px; width: 34px; height: 34px; font-size: 15px; }
+    #redact-toggle{ top: 8px; right: 50px; width: 34px; height: 34px; font-size: 15px; }
+  }
+
+  /* Section */
+  .section {
+    border-right: 1px solid #e0e4ea;
+    border-bottom: 1px solid #e0e4ea;
+    padding: 13px 15px;
+  }
+  .section:last-child, .section.no-border-right { border-right: none; }
+  .section.full-width {
+    grid-column: 1 / -1;
+    border-right: none;
+  }
+  .section-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-bottom: 9px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .icon { font-size: 14px; }
+
+  /* Color themes per section */
+  .st-red    { background: #c0392b; }
+  .st-orange { background: #d35400; }
+  .st-blue   { background: #1a5276; }
+  .st-green  { background: #1e8449; }
+  .st-purple { background: #6c3483; }
+  .st-teal   { background: #0e6655; }
+  .st-navy   { background: #154360; }
+  .st-brown  { background: #784212; }
+
+  /* Items */
+  ul.items { list-style: none; padding: 0; }
+  ul.items li {
+    padding: 4px 0 4px 14px;
+    border-bottom: 1px dashed #e8eaed;
+    font-size: 12.5px;
+    line-height: 1.6;
+    position: relative;
+  }
+  ul.items li:last-child { border-bottom: none; }
+  ul.items li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: #999;
+    font-size: 10px;
+    top: 6px;
+  }
+
+  /* Highlight values */
+  .val {
+    font-weight: 700;
+    color: #c0392b;
+    background: #fef9e7;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  .val-blue {
+    font-weight: 700;
+    color: #1a5276;
+    background: #eaf2fb;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  .val-green {
+    font-weight: 700;
+    color: #1e8449;
+    background: #eafaf1;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+
+  /* Source tag */
+  .src {
+    font-size: 10px;
+    color: #888;
+    background: #f4f6f8;
+    border-radius: 3px;
+    padding: 0 4px;
+    margin-left: 3px;
+    font-style: normal;
+  }
+
+  /* Warning box */
+  .warn-box {
+    background: #fff5e6;
+    border-left: 4px solid #e67e22;
+    padding: 8px 11px;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .warn-box strong { color: #c0392b; }
+
+  /* Table */
+  table.compact {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  table.compact th {
+    background: #f0f4f8;
+    padding: 5px 7px;
+    text-align: left;
+    border: 1px solid #dde2e8;
+    font-weight: 700;
+    color: #1a3a5c;
+  }
+  table.compact td {
+    padding: 4px 7px;
+    border: 1px solid #dde2e8;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  table.compact tr:nth-child(even) td { background: #f8fafc; }
+
+  /* Footer */
+  .footer {
+    background: #1a3a5c;
+    color: #a8b8cc;
+    font-size: 11px;
+    padding: 9px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .footer span { color: #e8b400; font-weight: 700; }
+
+  /* Clause review cards */
+  .clause-card {
+    background: #fafbfc;
+    border: 1px solid #dde2ea;
+    border-radius: 7px;
+    padding: 11px 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+  }
+  .clause-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    display: inline-block;
+    width: fit-content;
+    letter-spacing: .5px;
+  }
+  .tag-risk    { background: #fde8e8; color: #c0392b; }
+  .tag-moderate{ background: #fff3e0; color: #c0560a; }
+  .tag-note    { background: #eaf2fb; color: #1a5276; }
+  .clause-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #1a1a2e;
+    line-height: 1.4;
+  }
+  .clause-ref {
+    font-size: 10.5px;
+    color: #8899aa;
+    font-style: italic;
+  }
+  .clause-orig {
+    font-size: 11.5px;
+    color: #555;
+    background: #f4f6f8;
+    border-left: 3px solid #bbb;
+    padding: 5px 8px;
+    border-radius: 0 4px 4px 0;
+    line-height: 1.6;
+  }
+  .clause-orig strong { color: #c0392b; }
+  .clause-suggest {
+    font-size: 12px;
+    color: #1a4a2a;
+    background: #eafaf1;
+    border-left: 3px solid #27ae60;
+    padding: 6px 9px;
+    border-radius: 0 4px 4px 0;
+    line-height: 1.65;
+  }
+  .suggest-label {
+    display: inline-block;
+    background: #27ae60;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 3px;
+    margin-bottom: 3px;
+    letter-spacing: .3px;
+  }
+
+  /* Dark mode - clause cards */
+  body.dark .clause-card {
+    background: #1a1f2a;
+    border-color: #2a3040;
+  }
+  body.dark .clause-title { color: #c8d8e8; }
+  body.dark .clause-ref   { color: #556678; }
+  body.dark .clause-orig  { background: #151a22; border-left-color: #445; color: #9ab; }
+  body.dark .clause-orig strong { color: #f39c6b; }
+  body.dark .clause-suggest { background: #0e2a1a; border-left-color: #27ae60; color: #7dcea0; }
+  body.dark .tag-risk     { background: #3d1010; color: #f39c6b; }
+  body.dark .tag-moderate { background: #2a1a08; color: #f0a060; }
+  body.dark .tag-note     { background: #0e1e30; color: #7eb8f0; }
+
+  /* Redacted spans */
+  .redacted {
+    display: inline-block;
+    background: #1a1a1a;
+    color: transparent;
+    border-radius: 20px;
+    padding: 0 6px;
+    cursor: pointer;
+    user-select: none;
+    transition: background .2s, color .2s;
+    white-space: nowrap;
+    letter-spacing: 0;
+  }
+  .redacted::after {
+    content: "●●●";
+    color: #555;
+    font-size: 8px;
+    letter-spacing: 2px;
+    vertical-align: middle;
+  }
+  .redacted.revealed {
+    background: rgba(255,255,255,.18);
+    color: inherit;
+  }
+  .redacted.revealed::after { content: ""; }
+
+  /* Redacted in dark header — lighter pill */
+  .header .redacted           { background: rgba(0,0,0,.55); }
+  .header .redacted.revealed  { background: rgba(255,255,255,.12); color: #fff; }
+
+  /* Redact toggle button */
+  #redact-toggle {
+    position: fixed;
+    top: 14px;
+    right: 64px;
+    z-index: 999;
+    background: #2c2c2c;
+    color: #fff;
+    border: 2px solid #fff3;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 17px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,.3);
+    transition: background .25s, transform .2s;
+    title: "切換隱蔽/顯示敏感資訊";
+  }
+  #redact-toggle:hover { transform: scale(1.1); }
+  body.dark #redact-toggle { background: #222; border-color: #445; }
+
+  /* Dark mode - redacted */
+  /* Footer redacted — sits on dark bg, show as light text when revealed */
+  .footer-redacted.revealed { color: #e0e8f0 !important; }
+
+  body.dark .redacted { background: #0a0a0a; }
+  body.dark .redacted.revealed { background: rgba(255,255,255,.08); color: #d8dde6; }
+
+  /* Dark mode toggle button */
+  #dark-toggle {
+    position: fixed;
+    top: 14px;
+    right: 18px;
+    z-index: 999;
+    background: #1a3a5c;
+    color: #fff;
+    border: 2px solid #fff3;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,.3);
+    transition: background .25s, transform .2s;
+  }
+  #dark-toggle:hover { transform: scale(1.1); }
+
+  /* Dark mode overrides */
+  body.dark {
+    background: #0e1117;
+    color: #d8dde6;
+  }
+  body.dark .page {
+    background: #161b24;
+    box-shadow: 0 2px 20px rgba(0,0,0,.6);
+  }
+  body.dark .section {
+    border-color: #2a3040;
+  }
+  body.dark ul.items li {
+    border-bottom-color: #2a3040;
+  }
+  body.dark ul.items li::before { color: #556; }
+  body.dark .val {
+    background: #3d2a1a;
+    color: #f39c6b;
+  }
+  body.dark .val-blue {
+    background: #1a2840;
+    color: #7eb8f0;
+  }
+  body.dark .val-green {
+    background: #0e2a1a;
+    color: #6ed4a0;
+  }
+  body.dark .src {
+    background: #1e2430;
+    color: #6a7a90;
+  }
+  body.dark .warn-box {
+    background: #1e1a10;
+    border-left-color: #c0792a;
+  }
+  body.dark .warn-box strong { color: #f39c6b; }
+  body.dark table.compact th {
+    background: #1e2430;
+    color: #8ab4d4;
+    border-color: #2a3040;
+  }
+  body.dark table.compact td {
+    border-color: #2a3040;
+  }
+  body.dark table.compact tr:nth-child(even) td {
+    background: #1a1f2a;
+  }
+  body.dark #dark-toggle {
+    background: #2a3550;
+    border-color: #445;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .page { box-shadow: none; border-radius: 0; }
+    #dark-toggle { display: none; }
+  }
+</style>
+</head>
+<body>
+<button id="redact-toggle" title="切換隱蔽/顯示敏感資訊" onclick="toggleRedact()">🔒</button>
+<button id="dark-toggle" title="切換暗黑/明亮模式" onclick="toggleDark()">🌙</button>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <h1><span class="redacted" onclick="revealOne(this)">東森林口影視園區新建工程 行動訊號改善工程契約書</span>
+      <span class="role-badge">📋 職安管理人員</span>
+    </h1>
+    <div class="sub">
+      <span>📍 <span class="redacted" onclick="revealOne(this)">新北市林口區文化二路及八德路口（建林段0392地號）</span></span>
+      <span>🏢 甲方：<span class="redacted" onclick="revealOne(this)">東林資產股份有限公司</span></span>
+      <span>🔧 乙方：<span class="redacted" onclick="revealOne(this)">中華電信股份有限公司台北營運處</span></span>
+      <span>📄 版本：V4（115年）</span>
+    </div>
+  </div>
+
+  <!-- Row 1: 3 columns -->
+  <div class="grid">
+
+    <!-- 工期與期程 -->
+    <div class="section">
+      <div class="section-title st-blue"><span class="icon">📅</span> 工期與期程</div>
+      <ul class="items">
+        <li>施工期限：甲方核准<strong>施工計畫</strong>及<strong>品管計畫</strong>後 <span class="val">180 工作天</span>內完成全部工程<em class="src">§特訂條款·施工期限</em></li>
+        <li>所有期日均以<span class="val-blue">日曆天</span>計算（農曆春節政府公告除外，週六日及國定假日均計入）<em class="src">§3·四</em></li>
+        <li>竣工日期及各里程碑期限應嚴予遵守，非經甲方書面同意不得更改<em class="src">§10·二</em></li>
+        <li>進度落後 <span class="val">≥10%</span>：停止計價，需提趕工計畫<em class="src">§10·六</em></li>
+        <li>進度落後 <span class="val">≥20%</span>：甲方有權通知終止或解除契約<em class="src">§10·六</em></li>
+        <li>甲方可要求無故停工逾 <span class="val">14日</span>以上時終止契約<em class="src">§20·一</em></li>
+        <li>保固期：驗收合格日起 <span class="val-green">2 年</span><em class="src">§19·一 / 特訂條款</em></li>
+      </ul>
+    </div>
+
+    <!-- 文件送審時限 -->
+    <div class="section">
+      <div class="section-title st-purple"><span class="icon">📂</span> 文件送審時限</div>
+      <table class="compact">
+        <tr><th>文件名稱</th><th>送審期限</th></tr>
+        <tr><td>施工計畫（3份）</td><td><span class="val-blue">接獲通知次日起 30日</span>內<em class="src">§13·一</em></td></tr>
+        <tr><td>品質管制計畫</td><td>開工前送審，核准前不得施作<em class="src">§11·一</em></td></tr>
+        <tr><td><strong>安全衛生計畫</strong></td><td><span class="val">施工前</span>提送，核可後實施<em class="src">§5·八</em></td></tr>
+        <tr><td>分包總明細表</td><td>分包前報請備查<em class="src">§8·三</em></td></tr>
+        <tr><td>保險單副本</td><td>投保後 <span class="val-blue">15日</span>內<em class="src">§6</em></td></tr>
+        <tr><td>履約保證金</td><td>簽約後 <span class="val-blue">30日</span>內（合約總價5%）<em class="src">§7·四</em></td></tr>
+        <tr><td>展延工期申請</td><td>事故發生後 <span class="val">7日</span>內，逾期不受理<em class="src">§10·三</em></td></tr>
+        <tr><td>求償通知</td><td>知悉後 <span class="val">14日</span>內<em class="src">§5·十七</em></td></tr>
+        <tr><td>契約變更計畫</td><td>收到變更通知後 <span class="val">7日</span>內<em class="src">§17·三</em></td></tr>
+        <tr><td>竣工文件</td><td>竣工日起 <span class="val-blue">14日</span>內<em class="src">§18·二</em></td></tr>
+        <tr><td>工程結算申請</td><td>收到驗收證明書後 <span class="val-blue">7日</span>內<em class="src">§16·十二</em></td></tr>
+        <tr><td>契約變更協議書</td><td>收受後 <span class="val-blue">15日</span>內簽署送回<em class="src">§17·八</em></td></tr>
+      </table>
+    </div>
+
+    <!-- 罰則 -->
+    <div class="section no-border-right">
+      <div class="section-title st-red"><span class="icon">⚠️</span> 罰則總覽</div>
+      <ul class="items">
+        <li><strong>違規改善罰款</strong>：甲方書面限期（至少7日）改善未果，按次罰款 <span class="val">2～5萬元</span>，仍未改善者停止計價<em class="src">§5·二十</em></li>
+        <li><strong>逾期違約金</strong>：按日計 <span class="val">工程總價 ÷ 1,000</span>，上限為結算價金之 <span class="val">20%</span><em class="src">§10·七</em></li>
+        <li><strong>驗收逾期罰款</strong>：逾期未改正，自工期屆滿起每日計 <span class="val">工程總價 ÷ 1,000</span>（懲罰性）<em class="src">§18·四</em></li>
+        <li><strong>未繳履約保證金</strong>：每逾1日按欠繳金額 <span class="val">÷ 1,000</span> 計罰<em class="src">§7·五</em></li>
+        <li><strong>誠信違反</strong>：懲罰性違約金 <span class="val">契約總價 × 1/4</span>，甲方並得解約<em class="src">§5·六</em></li>
+        <li><strong>減價收受懲罰金</strong>：工料不符得另計減價金額 <span class="val">2倍</span> 懲罰性違約金<em class="src">§18·五</em></li>
+        <li>罰款未付者，甲方得自估驗款、保留款、各項保證金內直接扣抵<em class="src">§5·二十/§10·八</em></li>
+        <li><strong>保固未到場維修</strong>：書面催告3工作天仍未處理，延長合約有效期限（保固附件·罰責）</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Row 2: 2+1 columns -->
+  <div class="grid">
+
+    <!-- 安全衛生管理（核心重點） -->
+    <div class="section" style="grid-column: span 2;">
+      <div class="section-title st-orange"><span class="icon">🦺</span> 安全衛生管理重點（職安管理人員核心責任）</div>
+      <div class="warn-box">
+        <strong>⚠ 注意：</strong>因安全衛生違規遭甲方要求暫停施工者，<strong>不得要求展延工期或補償費用</strong>；因違法導致甲方受行政處罰，<strong>罰鍰由乙方繳納</strong>，未繳者由工程款扣抵。<em class="src">§5·八</em>
+      </div>
+      <div class="inner-2col" style="display:grid; gap:0 16px;">
+        <ul class="items">
+          <li>承攬範圍內安全衛生工作負<span class="val">完全責任</span>，確保人員、財產、環境安全<em class="src">§5·八·1</em></li>
+          <li><strong>施工前</strong>須提送<span class="val">安全衛生計畫</span>，經專案辦公室核可後始得實施<em class="src">§5·八·2</em></li>
+          <li>安全設施由乙方負責設置、管理、監督及執行，如發生事故由乙方負完全責任<em class="src">§5·八·3,4</em></li>
+          <li>安全衛生不適任人員，甲方得要求<span class="val">撤換</span><em class="src">§5·八·5</em></li>
+          <li>有立即危險或嚴重污染之虞，甲方得要求<span class="val">暫停部分施工</span>至改善完畢<em class="src">§5·八·6</em></li>
+        </ul>
+        <ul class="items">
+          <li>突發事故應即向<span class="val">治安機關</span>及<span class="val">專案辦公室</span>通報<em class="src">§5·八·7</em></li>
+          <li>發生<strong>職業災害</strong>：立即急救/搶救/調查，作成紀錄，並於規定時限內向<span class="val">專案辦公室</span>及<span class="val">勞工安全檢查機構</span>提報<em class="src">§5·八·7</em></li>
+          <li>勞工傷害：不論是否求償，應<span class="val">立即通知</span>專案辦公室及有關機關<em class="src">§14·九</em></li>
+          <li>工地安全組織及會議應配合主承包商召集，並參加工地安全組織與會議<em class="src">§13·十三</em></li>
+          <li>施工計畫內容須包含<span class="val">安全衛生計畫</span>章節<em class="src">§13·二</em></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 工地人員資格 -->
+    <div class="section no-border-right">
+      <div class="section-title st-teal"><span class="icon">👷</span> 工地人員資格要求</div>
+      <ul class="items">
+        <li><strong>工地負責人</strong>：本工程經驗 <span class="val">≥5年</span>，開工前書面報甲方查核<em class="src">§14·六</em></li>
+        <li><strong>安全衛生負責人</strong>：相關經驗 <span class="val">≥3年</span><em class="src">§14·六</em></li>
+        <li><strong>品管負責人</strong>：相關經驗 <span class="val">≥3年</span><em class="src">§14·六</em></li>
+        <li><strong>工程人員</strong>：相關經驗 <span class="val">≥2年</span><em class="src">§14·六</em></li>
+        <li>品管人員至少 <span class="val-blue">1人</span>，經核定後需書面申請方可更換<em class="src">§11·四</em></li>
+        <li>車輛駕駛及機具操作手須持<span class="val-blue">合法證照</span><em class="src">§5·三</em></li>
+        <li>工地員工嚴禁攜帶武器、違禁物品、酗酒、賭博<em class="src">§14·五</em></li>
+        <li>人員替換或變更時，應<span class="val">事先書面</span>報請專案辦公室核准<em class="src">§14·四</em></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Row 3 -->
+  <div class="grid">
+
+    <!-- 保險要求 -->
+    <div class="section">
+      <div class="section-title st-navy"><span class="icon">🛡️</span> 保險要求</div>
+      <ul class="items">
+        <li>需投保：<span class="val-blue">安裝綜合保險</span>（含工程綜合損失險＋第三人意外責任險）<em class="src">§6·1(2)</em></li>
+        <li>需投保：<span class="val-blue">雇主意外責任險</span>及其他必要附加保險<em class="src">§6·1(2)</em></li>
+        <li>需投保：<span class="val-blue">勞工保險</span>、<span class="val-blue">全民健保</span>等法定保險，<strong>開工前</strong>辦妥<em class="src">§6·1(3)</em></li>
+        <li>保險期間：<span class="val-blue">開工日</span>至<span class="val-blue">竣工驗收合格日</span>止<em class="src">§6·1(1)</em></li>
+        <li>甲方、乙方及各層分包商與<strong>新北市政府經濟發展局</strong>列為共同被保險人<em class="src">§6·1(1)</em></li>
+        <li>投保後 <span class="val">15日</span>內送保險單、批單及繳費收據副本予甲方<em class="src">§6·1(4)</em></li>
+        <li>工期展延時需辦理<span class="val">保期展延</span>，費用由乙方負擔<em class="src">§6·1(6)</em></li>
+        <li>保單條件變更須事前取得<span class="val">甲方書面同意</span><em class="src">§6·1(4)</em></li>
+      </ul>
+    </div>
+
+    <!-- 驗收相關 -->
+    <div class="section">
+      <div class="section-title st-green"><span class="icon">✅</span> 竣工驗收與保固</div>
+      <ul class="items">
+        <li><strong>竣工報告</strong>：完工後按規定格式填具，提送專案辦公室<em class="src">§18·一</em></li>
+        <li>竣工後 <span class="val-blue">14日</span>內提交完整竣工文件（含竣工圖A1藍曬圖1份、A3縮印圖6份等）<em class="src">§18·二</em></li>
+        <li>專案辦公室接獲竣工報告後 <span class="val-blue">14日</span>內辦理竣工檢驗<em class="src">§18·一</em></li>
+        <li>甲方應於驗收提報日起 <span class="val-blue">30日</span>內開始驗收<em class="src">§18·四</em></li>
+        <li>全部工程驗收合格後甲方於 <span class="val-blue">14日</span>內核發驗收證明書<em class="src">§18·四</em></li>
+        <li>🔬 <strong>驗收標準</strong>：RSRP 95% <span class="val">≥ -99 dBm</span><em class="src">§特訂條款·驗收</em></li>
+        <li>保固保證金：結算金額之 <span class="val">5%</span>，保固期屆滿後無異議時於20日內退還<em class="src">§19·三/五</em></li>
+        <li>保固期內瑕疵改正：接獲通知起 <span class="val">7日</span>內完成改正<em class="src">§19·六</em></li>
+      </ul>
+    </div>
+
+    <!-- 估驗付款與保留款 -->
+    <div class="section no-border-right">
+      <div class="section-title st-brown"><span class="icon">💰</span> 估驗付款與停計扣款</div>
+      <ul class="items">
+        <li>每月估驗計價乙次，每月 <span class="val-blue">15日前</span>向專案辦公室申請<em class="src">§16·三</em></li>
+        <li>甲方於請款次月 <span class="val-blue">30日</span>以匯款給付（特訂條款）</li>
+        <li>每期估驗扣留 <span class="val">10%</span> 保留款<em class="src">§16·八</em></li>
+        <li>保留款退還：取得使用執照、竣工驗收、繳納保固保證金後 <span class="val-blue">30日</span>內退還<em class="src">§16·八</em></li>
+        <li>驗收款 10%：訊號強度驗收合格後次月30日給付（特訂條款）</li>
+        <li>進度落後 <span class="val">≥10%</span>：甲方得暫停估驗計價<em class="src">§16·十</em></li>
+        <li>違約金、損害賠償得自估驗款及保留款直接扣除<em class="src">§16·十一</em></li>
+        <li>工程結算：驗收後7日內申請，需附<strong>切結書</strong><em class="src">§16·十二</em></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Row 4: Full width notice -->
+  <div style="border-top: 1px solid #e0e4ea;">
+    <div class="section full-width" style="padding: 12px 16px;">
+      <div class="section-title st-red" style="margin-bottom:10px;"><span class="icon">🚨</span> 高風險注意事項（不得疏忽）</div>
+      <div class="inner-3col" style="display:grid; gap: 8px;">
+        <div class="warn-box">
+          <strong>施工前必做：</strong>施工計畫（含安衛計畫、品管計畫）須先送審核准，<strong>核准前不得開工</strong>。品管計畫未核准前，品質鑑定部分不得施作。<em class="src">§11·一 / §13·一</em>
+        </div>
+        <div class="warn-box">
+          <strong>施工介面爭議：</strong>不得以介面爭議為由停工或請求工期延展。協調無法解決時，應於事故起<strong>3日內</strong>書面通知專案辦公室。<em class="src">§9·三,四</em>
+        </div>
+        <div class="warn-box">
+          <strong>展延工期申請：</strong>事故發生後<strong>7日內</strong>必須書面申請，否則日後<strong>不得再以同一事由申請展延</strong>。僅展延工期，不得要求額外費用。<em class="src">§10·三</em>
+        </div>
+        <div class="warn-box">
+          <strong>隱蔽工程：</strong>未通知專案辦公室檢驗前，<strong>不得覆蓋</strong>任何工程。違者須自費拆除重建。<em class="src">§12·三</em>
+        </div>
+        <div class="warn-box">
+          <strong>代履行風險：</strong>乙方怠於履行，甲方得委第三人代為履行，費用（含利潤管理費）<strong>全由乙方負擔</strong>，並逕自工程款扣抵。<em class="src">§5·二十一</em>
+        </div>
+        <div class="warn-box">
+          <strong>分包管理：</strong>不得全部轉包，分包總明細表須報備。對分包商疏失，乙方對甲方負<strong>完全責任</strong>，不因分包而免除。<em class="src">§8·一,四</em>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 不合理條款建議 -->
+  <div style="border-top: 3px solid #8e44ad;">
+    <div class="section full-width" style="padding: 14px 16px;">
+      <div class="section-title" style="background: linear-gradient(90deg,#6c3483,#9b59b6); margin-bottom:12px;">
+        <span class="icon">⚖️</span> 對乙方不合理條款之建議釋義／修改意見
+        <span style="font-size:10px;font-weight:400;opacity:.85;margin-left:8px;">以下為站在乙方立場，建議於簽約前協商或於執行中應注意之條款</span>
+      </div>
+
+      <div class="inner-3col" style="display:grid; gap: 10px;">
+
+        <!-- 卡片 1 -->
+        <div class="clause-card">
+          <div class="clause-tag tag-risk">高風險</div>
+          <div class="clause-title">🚫 安衛暫停施工不得展延工期</div>
+          <div class="clause-ref">§5·八·6</div>
+          <div class="clause-orig">「…專案辦公室得要求暫停…直到改善完畢…<strong>乙方不得因此要求展延工期或請求賠償或補償</strong>」</div>
+          <div class="clause-suggest">
+            <span class="suggest-label">建議修改</span>
+            明確區分「<strong>可歸責於乙方</strong>」vs「<strong>甲方指示有誤或圖說不足</strong>」所致之暫停，後者應允許申請展延工期及必要費用補償。建議加入：「若停工係因甲方所提供圖說或指示不明確所致，乙方得申請展延工期及必要費用。」
+          </div>
+        </div>
+
+        <!-- 卡片 2 -->
+        <div class="clause-card">
+          <div class="clause-tag tag-risk">高風險</div>
+          <div class="clause-title">🚫 物價調整條款：無</div>
+          <div class="clause-ref">§1·五（工程概要）</div>
+          <div class="clause-orig">「<strong>本工程之物價指數調整條款：無</strong>」；且「不得以物價波動、稅制變更或其他任何理由要求調整工程數量或工程總價」</div>
+          <div class="clause-suggest">
+            <span class="suggest-label">建議修改</span>
+            工期達180工作天，材料（電纜、設備）具高度物價波動風險。建議爭取加入：「施工期間若主要材料（同軸電纜、光纖）市場價格累計漲幅超過<strong>15%</strong>時，得就差額部分申請調整」，或參照行政院物價指數連動條款。
+          </div>
+        </div>
+
+        <!-- 卡片 3 -->
+        <div class="clause-card">
+          <div class="clause-tag tag-risk">高風險</div>
+          <div class="clause-title">🚫 法定抵押權拋棄</div>
+          <div class="clause-ref">§21·三</div>
+          <div class="clause-orig">「乙方同意無條件拋棄…民法第513條規定取得之抵押權…<strong>預為抵押權登記請求權…單獨申請抵押權登記等權利</strong>」</div>
+          <div class="clause-suggest">
+            <span class="suggest-label">建議修改</span>
+            法定抵押權係保障承攬人債權之重要手段，完全拋棄對乙方風險極大。建議修改為：「於甲方正常付款且未發生逾期達<strong>60日</strong>以上情形時，乙方同意不行使前述抵押權；逾期付款時，乙方保留行使該等權利之權利。」
+          </div>
+        </div>
+
+        <!-- 卡片 4 -->
+        <div class="clause-card">
+          <div class="clause-tag tag-moderate">中度風險</div>
+          <div class="clause-title">⚡ 施工前審查期無時限約束</div>
+          <div class="clause-ref">§13·一、§11·一</div>
+          <div class="clause-orig">施工計畫及品管計畫「<strong>核准後始得開工</strong>」，但契約未規定甲方應於多少日內完成審查，審查期間乙方仍需承擔工期壓力。</div>
+          <div class="clause-suggest">
+            <span class="suggest-label">建議修改</span>
+            建議加入甲方審查時限：「甲方應於收到施工計畫及品管計畫後<strong>14個日曆天</strong>內完成審查並通知乙方；逾期未回覆者，視為核准。審查期間不計入工期。」
+          </div>
+        </div>
+
+        <!-- 卡片 5 -->
+        <div class="clause-card">
+          <div class="clause-tag tag-moderate">中度風險</div>
+          <div class="clause-title">⚡ 展延工期申請7日期限過短</div>
+          <div class="clause-ref">§10·三</div>
+          <div class="clause-orig">「乙方應於發生延遲事故後之<strong>7日內</strong>…書面通知…乙方未於前揭期限內通知並申請展延者，<strong>日後不得再以同一事由申請展延</strong>」</div>
+          <div class="clause-suggest">
+            <span class="suggest-label">建議修改</span>
+            7日對複雜工程事件（如颱風後評估損失、政府命令）明顯不足。建議修改為：「乙方應於知悉延遲事故後<strong>14日</strong>內提出書面通知，並於<strong>30日</strong>內補齊詳細說明文件。」與國際工程慣例（FIDIC）接軌。
+          </div>
+        </div>
+
+        <!-- 卡片 6 -->
+        <div class="clause-card">
+          <div class="clause-tag tag-moderate">中度風險</div>
+          <div class="clause-title">⚡ 代履行費用加計利潤管理費</div>
+          <div class="clause-ref">§5·二十一</div>
+          <div class="clause-orig">甲方得委第三人代履行，費用「<strong>於加計依本契約約定之利潤及管理費比例後</strong>，為代履行費用，均由乙方負擔」</div>
+          <div class="clause-suggest">
+            <span class="suggest-label">建議修改</span>
+            加計原契約利潤及管理費由乙方負擔顯失公平，應以「<strong>實際合理費用</strong>」為限。建議修改為：「代履行費用以甲方委託第三人施作之<strong>實際支出費用為限</strong>，不另加計利潤及管理費。」
+          </div>
+        </div>
+
+        <!-- 卡片 7 -->
+        <div class="clause-card">
+          <div class="clause-tag tag-moderate">中度風險</div>
+          <div class="clause-title">⚡ 爭議期間不得停工</div>
+          <div class="clause-ref">§17·五</div>
+          <div class="clause-orig">「在協議或爭議處理期間，乙方<strong>不得中斷或停止本工程或工作任何部分</strong>…之服務及施工」</div>
+          <div class="clause-suggest">
+            <span class="suggest-label">建議修改</span>
+            無條件不得停工將使乙方處於持續虧損風險。建議加入例外條款：「但若甲方<strong>逾期付款達30日以上</strong>，或甲方明確書面通知解約時，乙方得暫停施工，並不構成違約。」
+          </div>
+        </div>
+
+        <!-- 卡片 8 -->
+        <div class="clause-card">
+          <div class="clause-tag tag-moderate">中度風險</div>
+          <div class="clause-title">⚡ 人員撤換無理由說明義務</div>
+          <div class="clause-ref">§14·六</div>
+          <div class="clause-orig">「專案辦公室得<strong>不說明任何理由</strong>，要求乙方或分包商將其撤換，乙方不得拒絕」</div>
+          <div class="clause-suggest">
+            <span class="suggest-label">建議修改</span>
+            不說明理由之撤換權過於寬泛，可能影響工程連續性。建議修改為：「甲方要求撤換人員應以<strong>書面說明具體事由</strong>，並給予乙方<strong>7日緩衝期</strong>安排接替人員，以免影響施工進度。」
+          </div>
+        </div>
+
+        <!-- 卡片 9 -->
+        <div class="clause-card">
+          <div class="clause-tag tag-note">注意事項</div>
+          <div class="clause-title">📌 施工介面爭議不得主張展延</div>
+          <div class="clause-ref">§9·三</div>
+          <div class="clause-orig">「乙方<strong>不得以施工介面有爭議而藉故停工，或請求工期延展</strong>」；且介面歸屬不明時若未書面通知，乙方應負責施作。</div>
+          <div class="clause-suggest">
+            <span class="suggest-label">建議釋義</span>
+            執行時務必：①任何介面不明確者，於施工前<strong>立即書面通知</strong>專案辦公室（不可口頭）；②介面若依工程慣例屬他方者，應書面主張拒絕施作；③介面協調無法解決時，於<strong>3日內</strong>書面通報專案辦公室，留存完整紀錄以保護權益。
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div>契約書版本：<span>V4（民國115年）</span>｜文件基礎：<span class="redacted footer-redacted" onclick="revealOne(this)">林口東森集團全球營運總部新建工程之行動訊號改善工程契約書</span></div>
+    <div>整理日期：<span>2026年7月9日</span>｜本表僅供參考，實際執行以契約正本為準</div>
+  </div>
+
+</div>
+<div id="pw-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+  <div id="pw-box" style="background:#1a2535;border:1px solid #334;border-radius:14px;padding:28px 32px;width:300px;box-shadow:0 8px 40px rgba(0,0,0,.6);text-align:center;font-family:'Microsoft JhengHei',Arial,sans-serif;">
+    <div style="font-size:32px;margin-bottom:10px;">🔐</div>
+    <div style="color:#c8d8e8;font-size:14px;font-weight:700;margin-bottom:6px;">輸入密碼以顯示敏感資訊</div>
+    <div style="color:#667;font-size:11px;margin-bottom:16px;">Enter password to reveal redacted content</div>
+    <input id="pw-input" type="password" placeholder="密碼"
+      style="width:100%;padding:9px 13px;border-radius:8px;border:1.5px solid #334;background:#0e1520;color:#c8d8e8;font-size:14px;outline:none;text-align:center;letter-spacing:3px;box-sizing:border-box;"
+      onkeydown="if(event.key==='Enter')submitPw()">
+    <div id="pw-error" style="color:#e74c3c;font-size:11.5px;margin-top:8px;min-height:16px;"></div>
+    <div style="display:flex;gap:10px;margin-top:14px;">
+      <button onclick="closePwModal()" style="flex:1;padding:8px;border-radius:7px;border:1px solid #334;background:transparent;color:#889;cursor:pointer;font-size:13px;">取消</button>
+      <button onclick="submitPw()" style="flex:1;padding:8px;border-radius:7px;border:none;background:#2563a8;color:#fff;cursor:pointer;font-size:13px;font-weight:700;">確認</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const btn = document.getElementById('dark-toggle');
+  function toggleDark() {
+    const isDark = document.body.classList.toggle('dark');
+    btn.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('darkMode', isDark ? '1' : '0');
+  }
+  if (localStorage.getItem('darkMode') === '1') {
+    document.body.classList.add('dark');
+    btn.textContent = '☀️';
+  }
+
+  // Password gate
+  const _k = atob('MDk3NTExOTUyNw=='); // hashed reference
+  let unlocked = false;
+  let _pendingAction = null; // 'all' or a DOM element
+
+  const modal   = document.getElementById('pw-modal');
+  const pwInput = document.getElementById('pw-input');
+  const pwError = document.getElementById('pw-error');
+  const pwBox   = document.getElementById('pw-box');
+
+  function openPwModal(action) {
+    _pendingAction = action;
+    pwInput.value  = '';
+    pwError.textContent = '';
+    modal.style.display = 'flex';
+    setTimeout(() => pwInput.focus(), 80);
+  }
+
+  function closePwModal() {
+    modal.style.display = 'none';
+    _pendingAction = null;
+  }
+
+  function submitPw() {
+    if (pwInput.value === _k) {
+      unlocked = true;
+      const action = _pendingAction; // 先存起來，closePwModal 會把它清掉
+      closePwModal();
+      if (action === 'all') {
+        _doRevealAll();
+      } else if (action instanceof Element) {
+        action.classList.add('revealed');
+      }
+    } else {
+      pwError.textContent = '密碼錯誤，請再試一次';
+      pwBox.animate([
+        {transform:'translateX(-8px)'},{transform:'translateX(8px)'},
+        {transform:'translateX(-6px)'},{transform:'translateX(6px)'},
+        {transform:'translateX(0)'}
+      ], {duration:320, easing:'ease-out'});
+      pwInput.value = '';
+      pwInput.focus();
+    }
+  }
+
+  // Close on backdrop click
+  modal.addEventListener('click', e => { if (e.target === modal) closePwModal(); });
+
+  // Redact toggle
+  const rbtn = document.getElementById('redact-toggle');
+  let redacted = true;
+
+  function _doRevealAll() {
+    redacted = false;
+    document.querySelectorAll('.redacted').forEach(el => el.classList.add('revealed'));
+    rbtn.textContent = '🔓';
+  }
+
+  function toggleRedact() {
+    if (!redacted) {
+      // Lock again — no password needed
+      redacted = true;
+      unlocked = false;
+      document.querySelectorAll('.redacted').forEach(el => el.classList.remove('revealed'));
+      rbtn.textContent = '🔒';
+    } else {
+      openPwModal('all');
+    }
+  }
+
+  function revealOne(el) {
+    if (el.classList.contains('revealed')) {
+      // Re-lock without password
+      el.classList.remove('revealed');
+    } else {
+      if (unlocked) {
+        el.classList.add('revealed');
+      } else {
+        openPwModal(el);
+      }
+    }
+  }
+</script>
+</body>
+</html>
