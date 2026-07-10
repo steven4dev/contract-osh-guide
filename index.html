@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>●●● 職安管理筆記</title>
+<title>Contract OSH Guide</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -89,7 +89,6 @@
     .header h1  { font-size: 14px; }
     .header .sub { flex-direction: column; gap: 4px; font-size: 11px; }
     #dark-toggle  { top: 8px; right: 10px; width: 34px; height: 34px; font-size: 15px; }
-    #redact-toggle{ top: 8px; right: 50px; width: 34px; height: 34px; font-size: 15px; }
   }
 
   /* Section */
@@ -309,64 +308,6 @@
   body.dark .tag-moderate { background: #2a1a08; color: #f0a060; }
   body.dark .tag-note     { background: #0e1e30; color: #7eb8f0; }
 
-  /* Redacted spans */
-  .redacted {
-    display: inline-block;
-    background: #1a1a1a;
-    color: transparent;
-    border-radius: 20px;
-    padding: 0 6px;
-    cursor: pointer;
-    user-select: none;
-    transition: background .2s, color .2s;
-    white-space: nowrap;
-    letter-spacing: 0;
-  }
-  .redacted::after {
-    content: "●●●";
-    color: #555;
-    font-size: 8px;
-    letter-spacing: 2px;
-    vertical-align: middle;
-  }
-  .redacted.revealed {
-    background: rgba(255,255,255,.18);
-    color: inherit;
-  }
-  .redacted.revealed::after { content: ""; }
-
-  /* Redacted in dark header — lighter pill */
-  .header .redacted           { background: rgba(0,0,0,.55); }
-  .header .redacted.revealed  { background: rgba(255,255,255,.12); color: #fff; }
-
-  /* Redact toggle button */
-  #redact-toggle {
-    position: fixed;
-    top: 14px;
-    right: 64px;
-    z-index: 999;
-    background: #2c2c2c;
-    color: #fff;
-    border: 2px solid #fff3;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 17px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,.3);
-    transition: background .25s, transform .2s;
-    title: "切換隱蔽/顯示敏感資訊";
-  }
-  #redact-toggle:hover { transform: scale(1.1); }
-  body.dark #redact-toggle { background: #222; border-color: #445; }
-
-  /* Dark mode - redacted */
-  /* Footer redacted — sits on dark bg, show as light text when revealed */
-  .footer-redacted.revealed { color: #e0e8f0 !important; }
-
   body.dark .redacted { background: #0a0a0a; }
   body.dark .redacted.revealed { background: rgba(255,255,255,.08); color: #d8dde6; }
 
@@ -453,19 +394,18 @@
 </style>
 </head>
 <body>
-<button id="redact-toggle" title="切換隱蔽/顯示敏感資訊" onclick="toggleRedact()">🔒</button>
 <button id="dark-toggle" title="切換暗黑/明亮模式" onclick="toggleDark()">🌙</button>
 <div class="page">
 
   <!-- Header -->
   <div class="header">
-    <h1><span class="redacted" onclick="revealOne(this)">東森林口影視園區新建工程 行動訊號改善工程契約書</span>
+    <h1>⭕️⭕️⭕️
       <span class="role-badge">📋 職安管理人員</span>
     </h1>
     <div class="sub">
-      <span>📍 <span class="redacted" onclick="revealOne(this)">新北市林口區文化二路及八德路口（建林段0392地號）</span></span>
-      <span>🏢 甲方：<span class="redacted" onclick="revealOne(this)">東林資產股份有限公司</span></span>
-      <span>🔧 乙方：<span class="redacted" onclick="revealOne(this)">中華電信股份有限公司台北營運處</span></span>
+      <span>📍 ⭕️⭕️⭕️</span>
+      <span>🏢 甲方：⭕️⭕️⭕️</span>
+      <span>🔧 乙方：⭕️⭕️⭕️</span>
       <span>📄 版本：V4（115年）</span>
     </div>
   </div>
@@ -768,25 +708,10 @@
 
   <!-- Footer -->
   <div class="footer">
-    <div>契約書版本：<span>V4（民國115年）</span>｜文件基礎：<span class="redacted footer-redacted" onclick="revealOne(this)">林口東森集團全球營運總部新建工程之行動訊號改善工程契約書</span></div>
+    <div>契約書版本：<span>V4（民國115年）</span>｜文件基礎：⭕️⭕️⭕️</div>
     <div>整理日期：<span>2026年7月9日</span>｜本表僅供參考，實際執行以契約正本為準</div>
   </div>
 
-</div>
-<div id="pw-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
-  <div id="pw-box" style="background:#1a2535;border:1px solid #334;border-radius:14px;padding:28px 32px;width:300px;box-shadow:0 8px 40px rgba(0,0,0,.6);text-align:center;font-family:'Microsoft JhengHei',Arial,sans-serif;">
-    <div style="font-size:32px;margin-bottom:10px;">🔐</div>
-    <div style="color:#c8d8e8;font-size:14px;font-weight:700;margin-bottom:6px;">輸入密碼以顯示敏感資訊</div>
-    <div style="color:#667;font-size:11px;margin-bottom:16px;">Enter password to reveal redacted content</div>
-    <input id="pw-input" type="password" placeholder="密碼"
-      style="width:100%;padding:9px 13px;border-radius:8px;border:1.5px solid #334;background:#0e1520;color:#c8d8e8;font-size:14px;outline:none;text-align:center;letter-spacing:3px;box-sizing:border-box;"
-      onkeydown="if(event.key==='Enter')submitPw()">
-    <div id="pw-error" style="color:#e74c3c;font-size:11.5px;margin-top:8px;min-height:16px;"></div>
-    <div style="display:flex;gap:10px;margin-top:14px;">
-      <button onclick="closePwModal()" style="flex:1;padding:8px;border-radius:7px;border:1px solid #334;background:transparent;color:#889;cursor:pointer;font-size:13px;">取消</button>
-      <button onclick="submitPw()" style="flex:1;padding:8px;border-radius:7px;border:none;background:#2563a8;color:#fff;cursor:pointer;font-size:13px;font-weight:700;">確認</button>
-    </div>
-  </div>
 </div>
 
 <script>
@@ -800,89 +725,9 @@
     document.body.classList.add('dark');
     btn.textContent = '☀️';
   }
-
-  // Password gate
-  const _k = atob('MDk3NTExOTUyNw=='); // hashed reference
-  let unlocked = false;
-  let _pendingAction = null; // 'all' or a DOM element
-
-  const modal   = document.getElementById('pw-modal');
-  const pwInput = document.getElementById('pw-input');
-  const pwError = document.getElementById('pw-error');
-  const pwBox   = document.getElementById('pw-box');
-
-  function openPwModal(action) {
-    _pendingAction = action;
-    pwInput.value  = '';
-    pwError.textContent = '';
-    modal.style.display = 'flex';
-    setTimeout(() => pwInput.focus(), 80);
-  }
-
-  function closePwModal() {
-    modal.style.display = 'none';
-    _pendingAction = null;
-  }
-
-  function submitPw() {
-    if (pwInput.value === _k) {
-      unlocked = true;
-      const action = _pendingAction; // 先存起來，closePwModal 會把它清掉
-      closePwModal();
-      if (action === 'all') {
-        _doRevealAll();
-      } else if (action instanceof Element) {
-        action.classList.add('revealed');
-      }
-    } else {
-      pwError.textContent = '密碼錯誤，請再試一次';
-      pwBox.animate([
-        {transform:'translateX(-8px)'},{transform:'translateX(8px)'},
-        {transform:'translateX(-6px)'},{transform:'translateX(6px)'},
-        {transform:'translateX(0)'}
-      ], {duration:320, easing:'ease-out'});
-      pwInput.value = '';
-      pwInput.focus();
-    }
-  }
-
-  // Close on backdrop click
-  modal.addEventListener('click', e => { if (e.target === modal) closePwModal(); });
-
-  // Redact toggle
-  const rbtn = document.getElementById('redact-toggle');
-  let redacted = true;
-
-  function _doRevealAll() {
-    redacted = false;
-    document.querySelectorAll('.redacted').forEach(el => el.classList.add('revealed'));
-    rbtn.textContent = '🔓';
-  }
-
-  function toggleRedact() {
-    if (!redacted) {
-      // Lock again — no password needed
-      redacted = true;
-      unlocked = false;
-      document.querySelectorAll('.redacted').forEach(el => el.classList.remove('revealed'));
-      rbtn.textContent = '🔒';
-    } else {
-      openPwModal('all');
-    }
-  }
-
-  function revealOne(el) {
-    if (el.classList.contains('revealed')) {
-      // Re-lock without password
-      el.classList.remove('revealed');
-    } else {
-      if (unlocked) {
-        el.classList.add('revealed');
-      } else {
-        openPwModal(el);
-      }
-    }
-  }
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>
