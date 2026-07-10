@@ -89,6 +89,7 @@
     .header h1  { font-size: 14px; }
     .header .sub { flex-direction: column; gap: 4px; font-size: 11px; }
     #dark-toggle  { top: 8px; right: 10px; width: 34px; height: 34px; font-size: 15px; }
+    #redact-toggle{ top: 8px; right: 50px; width: 34px; height: 34px; font-size: 15px; }
   }
 
   /* Section */
@@ -451,12 +452,7 @@
     <div class="section no-border-right">
       <div class="section-title st-red"><span class="icon">⚠️</span> 罰則總覽</div>
       <ul class="items">
-        <li><strong>違規改善罰款</strong>：甲方書面限期（至少7日）改善未果，按次罰款 <span class="val">2～5萬元</span>，仍未改善者停止計價<em class="src">§5·二十</em></li>
-        <li><strong>逾期違約金</strong>：按日計 <span class="val">工程總價 ÷ 1,000</span>，上限為結算價金之 <span class="val">20%</span><em class="src">§10·七</em></li>
-        <li><strong>驗收逾期罰款</strong>：逾期未改正，自工期屆滿起每日計 <span class="val">工程總價 ÷ 1,000</span>（懲罰性）<em class="src">§18·四</em></li>
         <li><strong>未繳履約保證金</strong>：每逾1日按欠繳金額 <span class="val">÷ 1,000</span> 計罰<em class="src">§7·五</em></li>
-        <li><strong>誠信違反</strong>：懲罰性違約金 <span class="val">契約總價 × 1/4</span>，甲方並得解約<em class="src">§5·六</em></li>
-        <li><strong>減價收受懲罰金</strong>：工料不符得另計減價金額 <span class="val">2倍</span> 懲罰性違約金<em class="src">§18·五</em></li>
         <li>罰款未付者，甲方得自估驗款、保留款、各項保證金內直接扣抵<em class="src">§5·二十/§10·八</em></li>
         <li><strong>保固未到場維修</strong>：書面催告3工作天仍未處理，延長合約有效期限（保固附件·罰責）</li>
       </ul>
@@ -712,6 +708,18 @@
     <div>整理日期：<span>2026年7月9日</span>｜本表僅供參考，實際執行以契約正本為準</div>
   </div>
 
+</div>
+    <div style="color:#c8d8e8;font-size:14px;font-weight:700;margin-bottom:6px;">輸入密碼以顯示敏感資訊</div>
+    <div style="color:#667;font-size:11px;margin-bottom:16px;">Enter password to reveal redacted content</div>
+    <input id="pw-input" type="password" placeholder="密碼"
+      style="width:100%;padding:9px 13px;border-radius:8px;border:1.5px solid #334;background:#0e1520;color:#c8d8e8;font-size:14px;outline:none;text-align:center;letter-spacing:3px;box-sizing:border-box;"
+      onkeydown="if(event.key==='Enter')submitPw()">
+    <div id="pw-error" style="color:#e74c3c;font-size:11.5px;margin-top:8px;min-height:16px;"></div>
+    <div style="display:flex;gap:10px;margin-top:14px;">
+      <button onclick="closePwModal()" style="flex:1;padding:8px;border-radius:7px;border:1px solid #334;background:transparent;color:#889;cursor:pointer;font-size:13px;">取消</button>
+      <button onclick="submitPw()" style="flex:1;padding:8px;border-radius:7px;border:none;background:#2563a8;color:#fff;cursor:pointer;font-size:13px;font-weight:700;">確認</button>
+    </div>
+  </div>
 </div>
 
 <script>
