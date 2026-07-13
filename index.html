@@ -730,7 +730,7 @@
   /* ── Tab switching ── */
   function switchTab(t) {
     document.getElementById('view-func').style.display     = t==='func'    ? '' : 'none';
-    document.getElementById('view-chapter').style.display  = t==='chapter' ? '' : 'none';
+    document.getElementById('view-chapter').style.display  = t==='chapter' ? 'block' : 'none';
     document.getElementById('tab-func').classList.toggle('active',    t==='func');
     document.getElementById('tab-chapter').classList.toggle('active', t==='chapter');
     if (t === 'chapter' && !document.getElementById('view-chapter').dataset.built) {
