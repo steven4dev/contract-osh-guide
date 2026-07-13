@@ -783,6 +783,36 @@
     return m ? '§' + m[1] : null;
   }
 
+
+  function chineseToNum(s) {
+    if (!s) return 999;
+    s = s.trim();
+    if (/^\d+$/.test(s)) return parseInt(s);
+    var map = {'一':1,'二':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9};
+    if (s === '十') return 10;
+    var t = s.indexOf('十');
+    if (t === -1) return map[s] || 999;
+    var tens = t === 0 ? 1 : (map[s[t-1]] || 1);
+    var ones = s[t+1] ? (map[s[t+1]] || 0) : 0;
+    return tens * 10 + ones;
+  }
+
+  function chapterSortKey(liHtml, chKey) {
+    var m = liHtml.match(/class="src"[^>]*>([^<]+)<\/em>/);
+    if (!m) return 999;
+    var refs = m[1].split('/');
+    for (var i = 0; i < refs.length; i++) {
+      var p = refs[i].trim();
+      if (chKey === '特訂條款') return 0;
+      var prefix = chKey + '\u00b7';
+      if (p.indexOf(prefix) === 0) {
+        var sub = p.substring(prefix.length).split('\u00b7')[0];
+        return chineseToNum(sub);
+      }
+    }
+    return 999;
+  }
+
   function buildChapterView() {
     const groups = {};
 
@@ -809,6 +839,13 @@
     });
 
     console.log('groups keys:', Object.keys(groups));
+
+    // Sort items within each chapter by sub-section number
+    Object.keys(groups).forEach(function(key) {
+      groups[key].sort(function(a, b) {
+        return chapterSortKey(a, key) - chapterSortKey(b, key);
+      });
+    });
 
     // Build HTML
     const container = document.getElementById('view-chapter');
