@@ -821,4 +821,67 @@
            + '<div class="ch-header" onclick="toggleCh(\'' + id + '\')">'
            + '<span class="ch-num">' + key + '</span>'
            + '<span>' + title + '</span>'
-           + '<span class="ch-toggle" id="' + id +
+           + '<span class="ch-toggle" id="' + id +'-icon">▼</span>'
+           + '</div>'
+           + '<div class="ch-body" id="' + id + '">'
+           + '<ul>' + groups[key].join('') + '</ul>'
+           + '</div></div>';
+    });
+    console.log('output length:', out.length);
+    container.innerHTML = out;
+  }
+
+  function toggleCh(id) {
+    const el = document.getElementById(id);
+    const icon = document.getElementById(id + '-icon');
+    const hidden = el.style.display === 'none';
+    el.style.display = hidden ? '' : 'none';
+    icon.textContent = hidden ? '▼' : '▶';
+  }
+
+  /* ── 全部展開／收摺 ── */
+  let _allCollapsed = false;
+
+  function initCollapsibleSections() {
+    document.querySelectorAll('#view-func .section-title').forEach(function(title) {
+      if (title.dataset.collapsible) return;
+      title.dataset.collapsible = '1';
+      const ind = document.createElement('span');
+      ind.className = 'sec-toggle';
+      ind.textContent = '▼';
+      title.appendChild(ind);
+      title.addEventListener('click', function() {
+        const sec = title.parentElement;
+        const kids = Array.from(sec.children).filter(function(c){ return c !== title; });
+        const isHidden = kids.length > 0 && kids[0].style.display === 'none';
+        kids.forEach(function(c){ c.style.display = isHidden ? '' : 'none'; });
+        ind.textContent = isHidden ? '▼' : '▶';
+      });
+    });
+  }
+
+  function toggleAllSections() {
+    _allCollapsed = !_allCollapsed;
+    // 管理重點各區塊
+    document.querySelectorAll('#view-func .section-title').forEach(function(title) {
+      const sec = title.parentElement;
+      const kids = Array.from(sec.children).filter(function(c){ return c !== title; });
+      kids.forEach(function(c){ c.style.display = _allCollapsed ? 'none' : ''; });
+      const icon = title.querySelector('.sec-toggle');
+      if (icon) icon.textContent = _allCollapsed ? '▶' : '▼';
+    });
+    // 章節排序各章
+    document.querySelectorAll('.ch-body').forEach(function(body) {
+      body.style.display = _allCollapsed ? 'none' : '';
+      const icon = document.getElementById(body.id + '-icon');
+      if (icon) icon.textContent = _allCollapsed ? '▶' : '▼';
+    });
+    const toggleBtn = document.getElementById('btn-toggle-all');
+    if (toggleBtn) toggleBtn.textContent = _allCollapsed ? '⊞ 全部展開' : '⊟ 全部收摺';
+  }
+
+  initCollapsibleSections();
+
+</script>
+</body>
+</html>
