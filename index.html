@@ -392,6 +392,46 @@
     .page { box-shadow: none; border-radius: 0; }
     #dark-toggle { display: none; }
   }
+
+  /* ── Tab bar ── */
+  .tab-bar {
+    display: flex; gap: 0; border-bottom: 2px solid #2563a8;
+    background: var(--header-bg, #1a2332); padding: 0 16px;
+  }
+  .tab-btn {
+    padding: 9px 22px; font-size: 13px; font-weight: 700;
+    border: none; border-bottom: 3px solid transparent;
+    background: transparent; color: #889; cursor: pointer;
+    margin-bottom: -2px; transition: color .2s, border-color .2s;
+    letter-spacing: .3px;
+  }
+  .tab-btn.active { color: #4da6ff; border-bottom-color: #4da6ff; }
+  .tab-btn:hover:not(.active) { color: #c8d8e8; }
+
+  /* ── Chapter view ── */
+  #view-chapter { display: none; }
+  .ch-section { margin: 12px 16px; border-radius: 8px; overflow: hidden;
+    border: 1px solid #2a3a4a; }
+  .ch-header {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 8px 14px; font-weight: 700; font-size: 13px;
+    background: #1e2e42; color: #4da6ff; cursor: pointer;
+    user-select: none;
+  }
+  .ch-header .ch-num { font-size: 15px; color: #7ec8ff; min-width: 56px; }
+  .ch-header .ch-toggle { margin-left: auto; font-size: 11px; color: #556; }
+  .ch-body { padding: 8px 14px 10px 14px; }
+  .ch-body ul { margin: 0; padding-left: 18px; }
+  .ch-body li { font-size: 12.5px; line-height: 1.7; color: var(--text, #c8d8e8); }
+  .ch-body li em.src { font-size: 10px; color: #556; margin-left: 4px; font-style: normal; }
+  .ch-body table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .ch-body table td { padding: 4px 8px; border: 1px solid #2a3a4a;
+    color: var(--text, #c8d8e8); vertical-align: top; }
+  .ch-body table tr:first-child td { background: #1e2e42; font-weight: 700; color: #4da6ff; }
+  body.dark .ch-section { border-color: #334; }
+  body.dark .ch-header { background: #141e2a; }
+  body.dark .ch-body li { color: #c8d8e8; }
+
 </style>
 </head>
 <body>
@@ -411,6 +451,15 @@
     </div>
   </div>
 
+
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tab-func" onclick="switchTab('func')">📋 功能分類</button>
+    <button class="tab-btn" id="tab-chapter" onclick="switchTab('chapter')">📖 章節排序</button>
+  </div>
+
+  <!-- Functional view wrapper -->
+  <div id="view-func">
   <!-- Row 1: 3 columns -->
   <div class="grid">
 
@@ -652,6 +701,12 @@
     </div>
   </div>
 
+
+  </div><!-- /#view-func -->
+
+  <!-- Chapter view (built by JS) -->
+  <div id="view-chapter"></div>
+
   <!-- Footer -->
   <div class="footer">
     <div>契約書版本：<span>V4（民國115年）</span>｜文件基礎：⭕️⭕️⭕️</div>
@@ -671,9 +726,120 @@
     document.body.classList.add('dark');
     btn.textContent = '☀️';
   }
-</script>
-</body>
-</html>
+
+  /* ── Tab switching ── */
+  function switchTab(t) {
+    document.getElementById('view-func').style.display     = t==='func'    ? '' : 'none';
+    document.getElementById('view-chapter').style.display  = t==='chapter' ? '' : 'none';
+    document.getElementById('tab-func').classList.toggle('active',    t==='func');
+    document.getElementById('tab-chapter').classList.toggle('active', t==='chapter');
+    if (t === 'chapter' && !document.getElementById('view-chapter').dataset.built) {
+      buildChapterView();
+      document.getElementById('view-chapter').dataset.built = '1';
+    }
+  }
+
+  /* ── Chapter title map ── */
+  const CH_TITLES = {
+    '特訂條款': '特別約定條款',
+    '§1':  '工程概要',
+    '§3':  '期日及期間之計算',
+    '§5':  '施工管理',
+    '§6':  '保險',
+    '§7':  '履約保證金',
+    '§8':  '分包',
+    '§9':  '施工介面',
+    '§10': '工期',
+    '§11': '品質管理',
+    '§12': '工程查驗',
+    '§13': '施工計畫',
+    '§14': '工地人員管理',
+    '§16': '估驗及付款',
+    '§17': '契約變更',
+    '§18': '竣工及驗收',
+    '§19': '保固',
+    '§20': '停工',
+    '§21': '其他約定',
+  };
+  const CH_ORDER = ['特訂條款','§1','§3','§5','§6','§7','§8','§9','§10',
+                    '§11','§12','§13','§14','§16','§17','§18','§19','§20','§21'];
+
+  function chKey(srcText) {
+    if (!srcText) return null;
+    if (srcText.includes('特訂')) return '特訂條款';
+    const m = srcText.match(/§(\d+)/);
+    return m ? '§' + m[1] : null;
+  }
+
+  function buildChapterView() {
+    const groups = {};  // key → [{html, src}]
+
+    // Collect from all <li> in #view-func that have em.src
+    document.querySelectorAll('#view-func li').forEach(li => {
+      const em = li.querySelector('em.src');
+      if (!em) return;
+      // collect ALL §-keys mentioned in this li
+      const srcText = em.textContent;
+      const keys = new Set();
+      if (srcText.includes('特訂')) keys.add('特訂條款');
+      const matches = srcText.matchAll(/§(\d+)/g);
+      for (const m of matches) keys.add('§' + m[1]);
+      keys.forEach(k => {
+        if (!groups[k]) groups[k] = [];
+        groups[k].push(li.outerHTML);
+      });
+    });
+
+    // Collect from the 文件送審時限 table rows (skip header row)
+    const tbl = document.querySelector('#view-func .deadline-table, #view-func table');
+    if (tbl) {
+      tbl.querySelectorAll('tr').forEach((tr, i) => {
+        if (i === 0) return; // skip header
+        const em = tr.querySelector('em.src');
+        if (!em) return;
+        const srcText = em.textContent;
+        const keys = new Set();
+        if (srcText.includes('特訂')) keys.add('特訂條款');
+        const matches = srcText.matchAll(/§(\d+)/g);
+        for (const m of matches) keys.add('§' + m[1]);
+        const tdText = Array.from(tr.querySelectorAll('td')).map(td=>td.innerHTML).join('</td><td>');
+        keys.forEach(k => {
+          if (!groups[k]) groups[k] = [];
+          groups[k].push('<li>' + Array.from(tr.querySelectorAll('td')).map(td=>td.textContent.trim()).join('：') + '</li>');
+        });
+      });
+    }
+
+    // Build HTML
+    const container = document.getElementById('view-chapter');
+    let html = '';
+    CH_ORDER.forEach(key => {
+      if (!groups[key]) return;
+      const title = CH_TITLES[key] || key;
+      const id = 'ch-' + key.replace(/[^a-z0-9]/gi,'_');
+      html += `
+        <div class="ch-section">
+          <div class="ch-header" onclick="toggleCh('${id}')">
+            <span class="ch-num">${key}</span>
+            <span>${title}</span>
+            <span class="ch-toggle" id="${id}-icon">▼</span>
+          </div>
+          <div class="ch-body" id="${id}">
+            <ul>${groups[key].join('')}</ul>
+          </div>
+        </div>`;
+    });
+    container.innerHTML = html;
+  }
+
+  function toggleCh(id) {
+    const el = document.getElementById(id);
+    const icon = document.getElementById(id + '-icon');
+    const hidden = el.style.display === 'none';
+    el.style.display = hidden ? '' : 'none';
+    icon.textContent = hidden ? '▼' : '▶';
+  }
+
 </script>
 </body>
 </html>
