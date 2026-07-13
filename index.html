@@ -772,64 +772,51 @@
   }
 
   function buildChapterView() {
-    const groups = {};  // key → [{html, src}]
+    const groups = {};
 
-    // Collect from all <li> in #view-func that have em.src
-    document.querySelectorAll('#view-func li').forEach(li => {
+    // Debug: count li elements
+    const allLi = document.querySelectorAll('#view-func li');
+    console.log('li count in view-func:', allLi.length);
+
+    allLi.forEach(li => {
       const em = li.querySelector('em.src');
       if (!em) return;
-      // collect ALL §-keys mentioned in this li
       const srcText = em.textContent;
-      const keys = new Set();
-      if (srcText.includes('特訂')) keys.add('特訂條款');
-      const matches = srcText.matchAll(/§(\d+)/g);
-      for (const m of matches) keys.add('§' + m[1]);
-      keys.forEach(k => {
+      const keys = [];
+      if (srcText.indexOf('特訂') !== -1) keys.push('特訂條款');
+      const re = /§(\d+)/g;
+      let m;
+      while ((m = re.exec(srcText)) !== null) {
+        const k = '§' + m[1];
+        if (keys.indexOf(k) === -1) keys.push(k);
+      }
+      keys.forEach(function(k) {
         if (!groups[k]) groups[k] = [];
         groups[k].push(li.outerHTML);
       });
     });
 
-    // Collect from the 文件送審時限 table rows (skip header row)
-    const tbl = document.querySelector('#view-func .deadline-table, #view-func table');
-    if (tbl) {
-      tbl.querySelectorAll('tr').forEach((tr, i) => {
-        if (i === 0) return; // skip header
-        const em = tr.querySelector('em.src');
-        if (!em) return;
-        const srcText = em.textContent;
-        const keys = new Set();
-        if (srcText.includes('特訂')) keys.add('特訂條款');
-        const matches = srcText.matchAll(/§(\d+)/g);
-        for (const m of matches) keys.add('§' + m[1]);
-        const tdText = Array.from(tr.querySelectorAll('td')).map(td=>td.innerHTML).join('</td><td>');
-        keys.forEach(k => {
-          if (!groups[k]) groups[k] = [];
-          groups[k].push('<li>' + Array.from(tr.querySelectorAll('td')).map(td=>td.textContent.trim()).join('：') + '</li>');
-        });
-      });
-    }
+    console.log('groups keys:', Object.keys(groups));
 
     // Build HTML
     const container = document.getElementById('view-chapter');
-    let html = '';
-    CH_ORDER.forEach(key => {
-      if (!groups[key]) return;
+    let out = '';
+    CH_ORDER.forEach(function(key) {
+      if (!groups[key] || groups[key].length === 0) return;
       const title = CH_TITLES[key] || key;
-      const id = 'ch-' + key.replace(/[^a-z0-9]/gi,'_');
-      html += `
-        <div class="ch-section">
-          <div class="ch-header" onclick="toggleCh('${id}')">
-            <span class="ch-num">${key}</span>
-            <span>${title}</span>
-            <span class="ch-toggle" id="${id}-icon">▼</span>
-          </div>
-          <div class="ch-body" id="${id}">
-            <ul>${groups[key].join('')}</ul>
-          </div>
-        </div>`;
+      const id = 'ch' + key.replace(/[^\w]/g, '_');
+      out += '<div class="ch-section">'
+           + '<div class="ch-header" onclick="toggleCh(\'' + id + '\')">'
+           + '<span class="ch-num">' + key + '</span>'
+           + '<span>' + title + '</span>'
+           + '<span class="ch-toggle" id="' + id + '-icon">▼</span>'
+           + '</div>'
+           + '<div class="ch-body" id="' + id + '">'
+           + '<ul>' + groups[key].join('') + '</ul>'
+           + '</div></div>';
     });
-    container.innerHTML = html;
+    console.log('output length:', out.length);
+    container.innerHTML = out;
   }
 
   function toggleCh(id) {
