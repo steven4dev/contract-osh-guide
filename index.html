@@ -797,10 +797,9 @@
     return tens * 10 + ones;
   }
 
-  function chapterSortKey(liHtml, chKey) {
-    var m = liHtml.match(/class="src"[^>]*>([^<]+)<\/em>/);
-    if (!m) return 999;
-    var refs = m[1].split('/');
+  function chapterSortKey(srcText, chKey) {
+    if (!srcText) return 999;
+    var refs = srcText.split('/');
     for (var i = 0; i < refs.length; i++) {
       var p = refs[i].trim();
       if (chKey === '特訂條款') return 0;
@@ -834,7 +833,7 @@
       }
       keys.forEach(function(k) {
         if (!groups[k]) groups[k] = [];
-        groups[k].push(li.outerHTML);
+        groups[k].push({ html: li.outerHTML, src: srcText });
       });
     });
 
@@ -843,7 +842,7 @@
     // Sort items within each chapter by sub-section number
     Object.keys(groups).forEach(function(key) {
       groups[key].sort(function(a, b) {
-        return chapterSortKey(a, key) - chapterSortKey(b, key);
+        return chapterSortKey(a.src, key) - chapterSortKey(b.src, key);
       });
     });
 
@@ -861,7 +860,7 @@
            + '<span class="ch-toggle" id="' + id +'-icon">▼</span>'
            + '</div>'
            + '<div class="ch-body" id="' + id + '">'
-           + '<ul>' + groups[key].join('') + '</ul>'
+           + '<ul>' + groups[key].map(function(item){ return item.html; }).join('') + '</ul>'
            + '</div></div>';
     });
     console.log('output length:', out.length);
