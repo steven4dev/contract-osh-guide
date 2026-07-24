@@ -721,6 +721,81 @@
   body.dark .das-inline-warn { background: #1f1010; color: #f08080; }
   body.dark .das-flow-card p { color: #c8d8e8; }
 
+  /* ── BOM 報價單 view ── */
+  #view-bom { display: none; padding: 14px 16px; }
+
+  .bom-toolbar {
+    display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center;
+  }
+  .bom-filter-btn {
+    padding: 5px 14px; border: 1px solid #3a5070; border-radius: 20px;
+    background: transparent; color: #7ec8ff; font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: all .2s;
+  }
+  .bom-filter-btn.active { background: #2563a8; color: #fff; border-color: #2563a8; }
+  .bom-filter-btn:hover:not(.active) { background: #1e2e42; }
+  .bom-search {
+    margin-left: auto; padding: 5px 10px; border: 1px solid #3a5070;
+    border-radius: 6px; background: #1a2332; color: #c8d8e8;
+    font-size: 12px; min-width: 160px; outline: none;
+  }
+  .bom-search::placeholder { color: #556; }
+
+  .bom-table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid #2a3a4a; }
+  .bom-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .bom-table th {
+    background: #1e2e42; color: #7ec8ff; font-weight: 700;
+    padding: 7px 10px; text-align: left; white-space: nowrap;
+    border-bottom: 2px solid #2563a8;
+  }
+  .bom-table th.num { text-align: right; }
+  .bom-table td { padding: 6px 10px; border-bottom: 1px solid #2a3040; color: #c8d8e8; vertical-align: top; }
+  .bom-table td.num { text-align: right; font-family: monospace; }
+  .bom-table tr:last-child td { border-bottom: none; }
+  .bom-table tr:hover td { background: #1e2e42; }
+
+  /* section header rows */
+  .bom-sec-main td {
+    background: #1a3a5c; color: #7ec8ff; font-weight: 900;
+    font-size: 13px; padding: 8px 10px; border-bottom: 1px solid #2563a8;
+  }
+  .bom-sec-sub td {
+    background: #1a2332; color: #4da6ff; font-weight: 700;
+    padding: 5px 10px; border-bottom: 1px solid #263040;
+  }
+  .bom-sec-subsub td {
+    background: #161e2a; color: #7ec8ff; font-weight: 700; font-style: italic;
+    padding: 4px 10px 4px 20px; font-size: 11.5px; border-bottom: 1px solid #202830;
+  }
+  .bom-zero { color: #556 !important; }
+  .bom-warn { color: #f39c6b !important; font-weight: 700; }
+
+  /* summary row */
+  .bom-summary { margin-top: 12px; text-align: right; }
+  .bom-summary-box {
+    display: inline-block; background: #1a2332; border: 1px solid #2a3a4a;
+    border-radius: 8px; padding: 10px 18px; font-size: 12px; color: #889;
+  }
+  .bom-summary-box strong { color: #f39c6b; }
+
+  /* light mode overrides */
+  body:not(.dark) .bom-filter-btn { border-color: #bdd0ea; color: #2563a8; }
+  body:not(.dark) .bom-filter-btn.active { background: #2563a8; color: #fff; border-color: #2563a8; }
+  body:not(.dark) .bom-filter-btn:hover:not(.active) { background: #e8f0fb; }
+  body:not(.dark) .bom-search { background: #fff; color: #222; border-color: #bdd0ea; }
+  body:not(.dark) .bom-search::placeholder { color: #aaa; }
+  body:not(.dark) .bom-table-wrap { border-color: #d0dcea; }
+  body:not(.dark) .bom-table th { background: #1a3a5c; }
+  body:not(.dark) .bom-table td { color: #222; border-bottom-color: #e8edf2; }
+  body:not(.dark) .bom-table tr:hover td { background: #f0f5fb; }
+  body:not(.dark) .bom-sec-main td { background: #1a3a5c; color: #fff; border-color: #2563a8; }
+  body:not(.dark) .bom-sec-sub td { background: #deeaf8; color: #1a3a5c; border-color: #bdd0ea; }
+  body:not(.dark) .bom-sec-subsub td { background: #eef4fb; color: #2563a8; border-color: #d0dcea; }
+  body:not(.dark) .bom-zero { color: #bbb !important; }
+  body:not(.dark) .bom-warn { color: #c0392b !important; }
+  body:not(.dark) .bom-summary-box { background: #f0f5fb; border-color: #d0dcea; color: #555; }
+  body:not(.dark) .bom-summary-box strong { color: #c0392b; }
+
 </style>
 </head>
 <body>
@@ -747,6 +822,7 @@
     <button class="tab-btn" id="tab-chapter" onclick="switchTab('chapter')">📖 章節排序</button>
     <button class="tab-btn" id="tab-field" onclick="switchTab('field')">👷 現場工務</button>
     <button class="tab-btn" id="tab-das" onclick="switchTab('das')">📡 系統概要</button>
+    <button class="tab-btn" id="tab-bom" onclick="switchTab('bom')">📋 報價單</button>
     <button id="btn-toggle-all" onclick="toggleAllSections()">⊟ 全部收摺</button>
   </div>
 
@@ -1455,6 +1531,144 @@
 
   </div><!-- /#view-das -->
 
+  <!-- BOM 報價單 -->
+  <div id="view-bom">
+    <div class="bom-toolbar">
+      <button class="bom-filter-btn active" onclick="bomFilter('all',this)">全部</button>
+      <button class="bom-filter-btn" onclick="bomFilter('1',this)">一、被動式（4G）</button>
+      <button class="bom-filter-btn" onclick="bomFilter('2',this)">二、主動式（5G）</button>
+      <button class="bom-filter-btn" onclick="bomFilter('3',this)">三、保險管理費</button>
+      <input class="bom-search" type="text" placeholder="🔍 搜尋品項…" oninput="bomSearch(this.value)">
+    </div>
+    <div class="bom-table-wrap">
+      <table class="bom-table" id="bom-table">
+        <thead>
+          <tr>
+            <th style="width:46px;">項次</th>
+            <th>工作項目</th>
+            <th style="width:52px;">單位</th>
+            <th class="num" style="width:64px;">數量</th>
+            <th class="num" style="width:72px;">單價</th>
+            <th class="num" style="width:72px;">複價</th>
+            <th style="width:80px;">備註</th>
+          </tr>
+        </thead>
+        <tbody id="bom-body">
+          <!-- 一、被動式 -->
+          <tr class="bom-sec-main" data-sec="1"><td colspan="7">一、被動式天線系統工程（SISO 4G）</td></tr>
+
+          <tr class="bom-sec-sub" data-sec="1"><td colspan="7">（一）A棟全棟垂直幹纜</td></tr>
+          <tr data-sec="1"><td>1</td><td>1-1/4" 同軸電纜</td><td>米</td><td class="num">3,020</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>2</td><td>1-1/4" 同軸電纜 線纜編號牌</td><td>組</td><td class="num">134</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>3</td><td>1-1/4" 同軸電纜接頭 4.3-10 f</td><td>顆</td><td class="num">80</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>4</td><td>1/2" 同軸電纜跳線 4.3-10M/4.3-10M</td><td>條</td><td class="num">80</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+
+          <tr class="bom-sec-sub" data-sec="1"><td colspan="7">（二）A棟全棟平面幹纜與設備</td></tr>
+          <tr class="bom-sec-subsub" data-sec="1"><td colspan="7">A. 公區（A棟全棟、B/C棟地下室）</td></tr>
+          <tr data-sec="1"><td>5</td><td>SISO Omni 天線</td><td>支</td><td class="num">316</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>6</td><td>SISO Panel 天線</td><td>支</td><td class="num">9</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>7</td><td>2路分配器</td><td>支</td><td class="num">108</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>8</td><td>3路分配器</td><td>支</td><td class="num">52</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>9</td><td>4路分配器</td><td>支</td><td class="num">30</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>10</td><td>不平衡分配器</td><td>支</td><td class="num">22</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>11</td><td>1/2" 同軸電纜</td><td>米</td><td class="num">1,408</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>12</td><td>7/8" 同軸電纜</td><td>米</td><td class="num">4,230</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>13</td><td>1-1/4" 同軸電纜</td><td>米</td><td class="num">3,020</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>14</td><td>1/2"-7/8"-1-1/4" 電纜吊桿</td><td>支</td><td class="num">4,300</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>15</td><td>1/2" 同軸電纜 線纜編號牌</td><td>組</td><td class="num">141</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>16</td><td>7/8" 同軸電纜 線纜編號牌</td><td>組</td><td class="num">422</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>17</td><td>1-1/4" 同軸電纜 線纜編號牌</td><td>組</td><td class="num">469</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>18</td><td>1-1/4" 同軸電纜接頭 4.3-10 f</td><td>顆</td><td class="num">53</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>19</td><td>7/8" 同軸電纜接頭 4.3-10 M</td><td>顆</td><td class="num">310</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>20</td><td>1/2" 同軸電纜接頭 4.3-10 M</td><td>顆</td><td class="num">650</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>21</td><td>1/2" 同軸電纜跳線 4.3-10M/4.3-10M</td><td>條</td><td class="num">53</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+
+          <tr class="bom-sec-subsub" data-sec="1"><td colspan="7">B. 私區（A棟 B2F～2F、10～13F、20～21F，共10樓層）⚠️ 分配器全為0</td></tr>
+          <tr data-sec="1"><td>22</td><td>SISO Omni 天線</td><td>支</td><td class="num">20</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>23</td><td>SISO Panel 天線</td><td>支</td><td class="num bom-zero">0</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>24</td><td>2路分配器</td><td>支</td><td class="num bom-zero">0</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td class="bom-warn">⚠️</td></tr>
+          <tr data-sec="1"><td>25</td><td>3路分配器</td><td>支</td><td class="num bom-zero">0</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td class="bom-warn">⚠️</td></tr>
+          <tr data-sec="1"><td>26</td><td>4路分配器</td><td>支</td><td class="num bom-zero">0</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td class="bom-warn">⚠️</td></tr>
+          <tr data-sec="1"><td>27</td><td>不平衡分配器</td><td>支</td><td class="num bom-zero">0</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td class="bom-warn">⚠️</td></tr>
+          <tr data-sec="1"><td>28</td><td>1/2" 同軸電纜</td><td>米</td><td class="num">407</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>29</td><td>7/8" 同軸電纜</td><td>米</td><td class="num bom-zero">0</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>30</td><td>1-1/4" 同軸電纜</td><td>米</td><td class="num bom-zero">0</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>31</td><td>1/2"-7/8"-1-1/4" 電纜吊桿</td><td>支</td><td class="num">200</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>32</td><td>1/2" 同軸電纜 線纜編號牌</td><td>組</td><td class="num">40</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>33</td><td>7/8" 同軸電纜 線纜編號牌</td><td>組</td><td class="num bom-zero">0</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>34</td><td>1-1/4" 同軸電纜 線纜編號牌</td><td>組</td><td class="num bom-zero">0</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>35</td><td>1-1/4" 同軸電纜接頭 4.3-10 f</td><td>顆</td><td class="num bom-zero">0</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>36</td><td>7/8" 同軸電纜接頭 4.3-10 M</td><td>顆</td><td class="num bom-zero">0</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>37</td><td>1/2" 同軸電纜接頭 4.3-10 M</td><td>顆</td><td class="num">40</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>38</td><td>1/2" 同軸電纜跳線 4.3-10M/4.3-10M</td><td>條</td><td class="num bom-zero">0</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+
+          <tr class="bom-sec-sub" data-sec="1"><td colspan="7">（三）電梯與機房部分</td></tr>
+          <tr data-sec="1"><td>39</td><td>電梯 MU（18/21MU）</td><td>台</td><td class="num">2</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>40</td><td>電梯 RU（18/21RU）</td><td>台</td><td class="num">17</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>41</td><td>電梯光纜</td><td>米</td><td class="num">8,041</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>42</td><td>電梯光纜熔接</td><td>芯</td><td class="num">68</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>43</td><td>16進4出 POI</td><td>組</td><td class="num">10</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>44</td><td>96C 機房連接光纜</td><td>米</td><td class="num">350</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>45</td><td>機房光纜佈放與熔接</td><td>米</td><td class="num">350</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>46</td><td>4C 光收容箱</td><td>組</td><td class="num">17</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>47</td><td>96C 光收容箱</td><td>組</td><td class="num">2</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+
+          <tr class="bom-sec-sub" data-sec="1"><td colspan="7">（四）共同部分</td></tr>
+          <tr data-sec="1"><td>48</td><td>DAS PIM 測試</td><td>組</td><td class="num">10</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>49</td><td>銑洞含防火填塞（3" 含以下）</td><td>個</td><td class="num">100</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>50</td><td>開放式 19" 標準機架（含工料）</td><td>組</td><td class="num">10</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>51</td><td>高空作業車作業</td><td>台,月</td><td class="num">24</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>52</td><td>訊號品質資訊量測（含廠測分析文件）</td><td>cell</td><td class="num">10</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>53</td><td>圖面設計繪製及文書製作費</td><td>式</td><td class="num">1</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>54</td><td>五金另料</td><td>式</td><td class="num">1</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="1"><td>55</td><td>運雜費</td><td>式</td><td class="num">1</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+
+          <!-- 二、主動式 -->
+          <tr class="bom-sec-main" data-sec="2"><td colspan="7">二、主動式天線系統工程（5G 4×4 MIMO）　A棟 3F＋4F</td></tr>
+
+          <tr class="bom-sec-sub" data-sec="2"><td colspan="7">（一）垂直主幹</td></tr>
+          <tr data-sec="2"><td>56</td><td>24C 鎧裝光纜（垂直幹纜）</td><td>米</td><td class="num">100</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>57</td><td>48C 鎧裝光纜（垂直幹纜）</td><td>米</td><td class="num">100</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+
+          <tr class="bom-sec-sub" data-sec="2"><td colspan="7">（二）平面幹纜與設備</td></tr>
+          <tr data-sec="2"><td>58</td><td>業者訊號引進功率調節設備（CU）</td><td>組</td><td class="num">3</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>59</td><td>天線系統主機（MU）</td><td>組</td><td class="num">1</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>60</td><td>天線系統中繼機（EU）</td><td>組</td><td class="num">2</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>61</td><td>主動式天線（RU）</td><td>組</td><td class="num">12</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>62</td><td>設備 Open Rack</td><td>組</td><td class="num">3</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>63</td><td>設備電源管線引接</td><td>組</td><td class="num">3</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>64</td><td>6C 光纖收容箱</td><td>組</td><td class="num">14</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>65</td><td>48C 光纖收容箱</td><td>組</td><td class="num">3</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>66</td><td>設備光纖跳線</td><td>條</td><td class="num">16</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>67</td><td>光纖接續盒至主動式天線之跳接線</td><td>條</td><td class="num">12</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>68</td><td>設備組立與安裝</td><td>組</td><td class="num">18</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>69</td><td>光電混合纜 6C</td><td>米</td><td class="num">720</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>70</td><td>1" EMT 配管（各樓層無 Tray）</td><td>米</td><td class="num">144</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>71</td><td>測試調整</td><td>cell</td><td class="num">1</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>72</td><td>場強測報</td><td>cell</td><td class="num">1</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>73</td><td>系統整合</td><td>cell</td><td class="num">1</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>74</td><td>高空作業車</td><td>台,月</td><td class="num">2</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>75</td><td>運什費</td><td>式</td><td class="num">1</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>76</td><td>環保費</td><td>式</td><td class="num">1</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>77</td><td>圖說繪製費</td><td>式</td><td class="num">1</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="2"><td>78</td><td>品管費</td><td>式</td><td class="num">1</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+
+          <!-- 三、保險管理費 -->
+          <tr class="bom-sec-main" data-sec="3"><td colspan="7">三、保險及管理費用</td></tr>
+          <tr data-sec="3"><td>79</td><td>營造工程綜合險（小計 × 1%）</td><td>式</td><td class="num">1</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="3"><td>80</td><td>勞工安全衛生管理費（小計 × 1%）</td><td>式</td><td class="num">1</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+          <tr data-sec="3"><td>81</td><td>公共意外責任險（小計 × 1%）</td><td>式</td><td class="num">1</td><td class="num bom-warn">—</td><td class="num bom-warn">—</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="bom-summary">
+      <div class="bom-summary-box">
+        共 <strong>81</strong> 項｜未稅小計 <strong>待填</strong>｜稅金 5% <strong>待填</strong>｜含稅總計 <strong>待填</strong>
+        <span style="margin-left:12px;font-size:11px;">⚠️ 單價欄位全部待議</span>
+      </div>
+    </div>
+  </div><!-- /#view-bom -->
+
   <!-- Footer -->
   <div class="footer">
     <div>契約書版本：<span>V4（民國115年7月22日）</span>｜文件基礎：⭕️⭕️⭕️</div>
@@ -1481,14 +1695,38 @@
     document.getElementById('view-chapter').style.display = t==='chapter' ? 'block' : 'none';
     document.getElementById('view-field').style.display   = t==='field'   ? 'block' : 'none';
     document.getElementById('view-das').style.display     = t==='das'     ? 'block' : 'none';
+    document.getElementById('view-bom').style.display     = t==='bom'     ? 'block' : 'none';
     document.getElementById('tab-func').classList.toggle('active',    t==='func');
     document.getElementById('tab-chapter').classList.toggle('active', t==='chapter');
     document.getElementById('tab-field').classList.toggle('active',   t==='field');
     document.getElementById('tab-das').classList.toggle('active',     t==='das');
+    document.getElementById('tab-bom').classList.toggle('active',     t==='bom');
     if (t === 'chapter' && !document.getElementById('view-chapter').dataset.built) {
       buildChapterView();
       document.getElementById('view-chapter').dataset.built = '1';
     }
+  }
+
+  /* ── BOM filter / search ── */
+  let _bomSec = 'all', _bomQ = '';
+  function _bomRender() {
+    document.querySelectorAll('#bom-body tr').forEach(function(tr) {
+      const sec = tr.dataset.sec || '';
+      const txt = tr.textContent.toLowerCase();
+      const secOk = _bomSec === 'all' || sec === _bomSec;
+      const qOk   = _bomQ === '' || txt.includes(_bomQ);
+      tr.style.display = (secOk && qOk) ? '' : 'none';
+    });
+  }
+  function bomFilter(s, btn) {
+    _bomSec = s;
+    document.querySelectorAll('.bom-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    _bomRender();
+  }
+  function bomSearch(q) {
+    _bomQ = q.toLowerCase().trim();
+    _bomRender();
   }
 
   /* ── DAS inner tab switching ── */
