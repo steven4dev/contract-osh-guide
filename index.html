@@ -691,6 +691,36 @@
   body.dark .das-zone.green  .das-zone-title { color: #6ed4a0; }
   body.dark .das-zone-desc { color: #c8d8e8; }
 
+  /* misc inline-style replacements */
+  .das-small { color: #888; font-size: inherit; }
+  .das-body-text { font-size: 12.5px; line-height: 1.8; color: #444; }
+  .das-sys-passive {
+    background: #eaf3fb; border-radius: 8px; padding: 12px;
+    border: 1.5px solid #2563a8;
+  }
+  .das-sys-active {
+    background: #fff3e0; border-radius: 8px; padding: 12px;
+    border: 1.5px solid #e67e22;
+  }
+  .das-sys-ptitle { font-size: 13px; font-weight: 900; color: #1a3a5c; margin-bottom: 6px; }
+  .das-sys-atitle { font-size: 13px; font-weight: 900; color: #c0392b; margin-bottom: 6px; }
+  .das-sys-body   { font-size: 12px; line-height: 1.8; color: #333; }
+  .das-inline-warn {
+    background: #fdecea; padding: 2px 7px; border-radius: 4px;
+    color: #c0392b; font-weight: 700;
+  }
+
+  /* dark overrides for above */
+  body.dark .das-small { color: #556; }
+  body.dark .das-body-text { color: #c8d8e8; }
+  body.dark .das-sys-passive { background: #1e2e42; border-color: #2563a8; }
+  body.dark .das-sys-active  { background: #2a1e08; border-color: #e67e22; }
+  body.dark .das-sys-ptitle  { color: #7ec8ff; }
+  body.dark .das-sys-atitle  { color: #f0a060; }
+  body.dark .das-sys-body    { color: #c8d8e8; }
+  body.dark .das-inline-warn { background: #1f1010; color: #f08080; }
+  body.dark .das-flow-card p { color: #c8d8e8; }
+
 </style>
 </head>
 <body>
@@ -1131,7 +1161,7 @@
       <div class="das-flow-card">
         <h3>🤔 為什麼建築裡收訊不好？</h3>
         <p style="font-size:12.5px;line-height:1.8;color:#444;margin-bottom:10px;">
-          手機訊號靠基地台發射電波，但大樓的混凝土牆、金屬結構、電梯等都會阻擋電波。樓層越多、面積越大，收訊死角就越多。<strong>東森林口影視園區</strong>因此需要在室內自建一套訊號分配系統，把訊號引進來再送到每個角落。
+          手機訊號靠基地台發射電波，但大樓的混凝土牆、金屬結構、電梯等都會阻擋電波。樓層越多、面積越大，收訊死角就越多。因此本案需要在室內自建一套訊號分配系統，把訊號引進來再送到每個角落。
         </p>
         <div class="das-note">📌 這套系統的正式名稱是 <strong>DAS（Distributed Antenna System，室內分散式天線系統）</strong></div>
       </div>
@@ -1139,15 +1169,15 @@
       <div class="das-flow-card">
         <h3>📡 訊號怎麼跑進建築物？</h3>
         <div class="das-flow-row">
-          <div class="das-flow-box"><span class="ico">🗼</span>室外基地台<br><small style="color:#888;">訊號來源</small></div>
+          <div class="das-flow-box"><span class="ico">🗼</span>室外基地台<br><small class="das-small">訊號來源</small></div>
           <span class="das-arrow">→</span>
-          <div class="das-flow-box orange"><span class="ico">📦</span>POI 介接<br><small style="color:#888;">訊號玄關</small></div>
+          <div class="das-flow-box orange"><span class="ico">📦</span>POI 介接<br><small class="das-small">訊號玄關</small></div>
           <span class="das-arrow">→</span>
-          <div class="das-flow-box"><span class="ico">🔌</span>主幹電纜<br><small style="color:#888;">大水管</small></div>
+          <div class="das-flow-box"><span class="ico">🔌</span>主幹電纜<br><small class="das-small">大水管</small></div>
           <span class="das-arrow">→</span>
-          <div class="das-flow-box purple"><span class="ico">🔀</span>分配器<br><small style="color:#888;">訊號分岔</small></div>
+          <div class="das-flow-box purple"><span class="ico">🔀</span>分配器<br><small class="das-small">訊號分岔</small></div>
           <span class="das-arrow">→</span>
-          <div class="das-flow-box green"><span class="ico">📡</span>天線<br><small style="color:#888;">廣播訊號</small></div>
+          <div class="das-flow-box green"><span class="ico">📡</span>天線<br><small class="das-small">廣播訊號</small></div>
           <span class="das-arrow">→</span>
           <div class="das-flow-box red"><span class="ico">📱</span>你的手機</div>
         </div>
@@ -1157,18 +1187,18 @@
       <div class="das-flow-card">
         <h3>🔑 本案兩大系統</h3>
         <div class="das-2col" style="margin-top:8px;">
-          <div style="background:#eaf3fb;border-radius:8px;padding:12px;border:1.5px solid #2563a8;">
-            <div style="font-size:13px;font-weight:900;color:#1a3a5c;margin-bottom:6px;">① 被動式系統（4G）</div>
-            <div style="font-size:12px;line-height:1.8;color:#333;">
+          <div class="das-sys-passive">
+            <div class="das-sys-ptitle">① 被動式系統（4G）</div>
+            <div class="das-sys-body">
               • 全棟公共區域 + 部分私區<br>
               • 只用電纜和天線，<strong>不需要電源</strong><br>
               • 傳統 4G LTE 訊號<br>
               • 共 <strong>345 支</strong>天線
             </div>
           </div>
-          <div style="background:#fff3e0;border-radius:8px;padding:12px;border:1.5px solid #e67e22;">
-            <div style="font-size:13px;font-weight:900;color:#c0392b;margin-bottom:6px;">② 主動式系統（5G）</div>
-            <div style="font-size:12px;line-height:1.8;color:#333;">
+          <div class="das-sys-active">
+            <div class="das-sys-atitle">② 主動式系統（5G）</div>
+            <div class="das-sys-body">
               • 僅 A棟 3–4 樓<br>
               • 設備需要<strong>電源</strong>（像 Wi-Fi 分享器）<br>
               • 5G 訊號，速度更快<br>
@@ -1267,17 +1297,17 @@
     <!-- P3: 本案架構 -->
     <div id="das-p3" class="das-panel">
       <div class="das-flow-card">
-        <h3>🏢 東森林口影視園區　訊號系統示意圖</h3>
+        <h3>🏢 本案訊號系統示意圖</h3>
         <div class="das-sys-row">
           <div class="das-sys-box"><span class="ico">🗼</span>室外基地台</div>
           <span class="das-arrow">→</span>
-          <div class="das-sys-box orange"><span class="ico">📦</span>POI<br><small style="color:#888;">×10 組</small></div>
+          <div class="das-sys-box orange"><span class="ico">📦</span>POI<br><small class="das-small">×10 組</small></div>
           <span class="das-arrow">→</span>
-          <div class="das-sys-box"><span class="ico">🔌</span>主幹電纜<br><small style="color:#888;">1-1/4"</small></div>
+          <div class="das-sys-box"><span class="ico">🔌</span>主幹電纜<br><small class="das-small">1-1/4"</small></div>
           <span class="das-arrow">→</span>
-          <div class="das-sys-box purple"><span class="ico">🔀</span>分配器<br><small style="color:#888;">212 支</small></div>
+          <div class="das-sys-box purple"><span class="ico">🔀</span>分配器<br><small class="das-small">212 支</small></div>
           <span class="das-arrow">→</span>
-          <div class="das-sys-box green"><span class="ico">📡</span>天線<br><small style="color:#888;">336 Omni</small></div>
+          <div class="das-sys-box green"><span class="ico">📡</span>天線<br><small class="das-small">336 Omni</small></div>
           <span class="das-arrow">→</span>
           <div class="das-sys-box red"><span class="ico">📱</span>手機收訊</div>
         </div>
@@ -1360,11 +1390,11 @@
 
       <div class="das-flow-card">
         <h3>📶 為什麼本案大部分用 SISO？</h3>
-        <p style="font-size:12.5px;line-height:1.8;color:#444;">
+        <p class="das-body-text">
           <strong>成本考量：</strong>被動式 SISO 系統造價遠低於主動式 MIMO，只要電纜和天線，不需電源和複雜設備。<br>
           <strong>需求匹配：</strong>對一般公共走道、停車場、電梯大廳而言，4G SISO 足夠保持通話和基本上網。<br>
           <strong>5G 試點：</strong>A棟 3–4 樓可能是展示廳、會議室等高需求場所，因此才配置 5G 主動系統。<br><br>
-          <span style="background:#fdecea;padding:2px 7px;border-radius:4px;color:#c0392b;font-weight:700;">⚠️ 注意：</span> 隨著手機全面 5G 化，未來 SISO 4G 系統可能需要升級，建議佈線時預留 MIMO 升級空間。
+          <span class="das-inline-warn">⚠️ 注意：</span> 隨著手機全面 5G 化，未來 SISO 4G 系統可能需要升級，建議佈線時預留 MIMO 升級空間。
         </p>
       </div>
     </div><!-- /das-p4 -->
