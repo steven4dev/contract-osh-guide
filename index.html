@@ -518,6 +518,179 @@
   body.dark .fv-warn.blue  strong { color: #7eb8f0; }
   body.dark .fv-warn.green strong { color: #6ed4a0; }
 
+  /* ── DAS 懶人包 view ── */
+  #view-das { display: none; padding: 14px 16px; }
+
+  .das-inner-tabs {
+    display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap;
+  }
+  .das-tab-btn {
+    padding: 5px 14px; border: 1px solid #3a5070; border-radius: 20px;
+    background: transparent; color: #7ec8ff; font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: all .2s;
+  }
+  .das-tab-btn.active { background: #2563a8; color: #fff; border-color: #2563a8; }
+  .das-tab-btn:hover:not(.active) { background: #1e2e42; }
+
+  .das-panel { display: none; }
+  .das-panel.active { display: block; }
+
+  /* concept flow */
+  .das-flow-card {
+    background: #f8fafc; border-radius: 10px; padding: 14px 16px;
+    margin-bottom: 12px; border: 1px solid #d0dcea;
+  }
+  .das-flow-card h3 { color: #1a3a5c; margin-bottom: 10px; font-size: 13px; }
+  .das-flow-row {
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  }
+  .das-flow-box {
+    background: #e8f0fb; border: 1.5px solid #2563a8; border-radius: 8px;
+    padding: 7px 10px; text-align: center; font-weight: 700;
+    font-size: 11px; min-width: 76px;
+  }
+  .das-flow-box .ico { font-size: 18px; display: block; margin-bottom: 2px; }
+  .das-flow-box.orange { background: #fff3e0; border-color: #e67e22; }
+  .das-flow-box.green  { background: #e8f8f0; border-color: #27ae60; }
+  .das-flow-box.purple { background: #f3e8fd; border-color: #8e44ad; }
+  .das-flow-box.red    { background: #fdecea; border-color: #e74c3c; }
+  .das-arrow { font-size: 18px; color: #aaa; flex-shrink: 0; }
+  .das-note {
+    background: #fffde7; border-left: 3px solid #f39c12;
+    padding: 8px 12px; border-radius: 0 6px 6px 0;
+    font-size: 12px; line-height: 1.7; color: #444; margin-top: 8px;
+  }
+  .das-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 600px) { .das-2col { grid-template-columns: 1fr; } }
+
+  /* term cards */
+  .das-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap: 10px; }
+  .das-card {
+    background: #f8fafc; border-radius: 10px; padding: 12px 14px;
+    border-top: 3px solid #2563a8; border: 1px solid #d0dcea;
+    border-top: 3px solid #2563a8;
+  }
+  .das-card.orange { border-top-color: #e67e22; }
+  .das-card.green  { border-top-color: #27ae60; }
+  .das-card.red    { border-top-color: #e74c3c; }
+  .das-card.purple { border-top-color: #8e44ad; }
+  .das-card.teal   { border-top-color: #16a085; }
+  .das-card-title { font-size: 13px; font-weight: 700; color: #1a3a5c; margin-bottom: 2px; }
+  .das-card-en { font-size: 10px; color: #888; margin-bottom: 8px; font-family: monospace; }
+  .das-card-desc { font-size: 12px; line-height: 1.7; color: #333; }
+  .das-card-analogy {
+    margin-top: 8px; background: #fffde7; border-radius: 4px;
+    padding: 6px 8px; font-size: 11px; color: #555;
+  }
+  .das-card-analogy::before { content:"💡 比喻："; font-weight: 700; color: #e67e22; }
+
+  /* compare boxes */
+  .das-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  @media (max-width: 560px) { .das-compare { grid-template-columns: 1fr; } }
+  .das-cbox {
+    background: #f8fafc; border-radius: 10px; padding: 14px;
+    border: 1px solid #d0dcea;
+  }
+  .das-cbox h3 { font-size: 13px; margin-bottom: 8px; }
+  .das-cbox.siso h3 { color: #e67e22; }
+  .das-cbox.mimo h3 { color: #2563a8; }
+  .das-sig-vis {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; margin: 10px 0; font-size: 22px;
+  }
+  .das-sig-path { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; font-weight: 700; }
+  .das-badge {
+    display: inline-block; padding: 1px 7px; border-radius: 10px;
+    font-size: 11px; font-weight: 700; margin: 2px 2px 0;
+  }
+  .das-badge.good { background: #e8f8f0; color: #1e8449; }
+  .das-badge.ok   { background: #fff3e0; color: #d35400; }
+  .das-badge.bad  { background: #fdecea; color: #c0392b; }
+
+  /* stat grid */
+  .das-stat-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(130px,1fr)); gap: 8px; margin-bottom: 12px; }
+  .das-stat {
+    background: #f8fafc; border-radius: 8px; padding: 10px;
+    text-align: center; border: 1px solid #d0dcea;
+  }
+  .das-stat-num { font-size: 22px; font-weight: 900; color: #2563a8; }
+  .das-stat-num.orange { color: #e67e22; }
+  .das-stat-num.green  { color: #27ae60; }
+  .das-stat-num.red    { color: #c0392b; }
+  .das-stat-label { font-size: 11px; color: #555; margin-top: 3px; }
+  .das-warn-box {
+    background: #fdecea; border-radius: 8px; padding: 12px 14px;
+    border-left: 4px solid #e74c3c;
+  }
+  .das-warn-box h4 { color: #c0392b; margin-bottom: 8px; font-size: 12px; }
+  .das-warn-box li { margin-left: 14px; font-size: 12px; line-height: 1.8; color: #333; }
+
+  /* system boxes */
+  .das-sys-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+  .das-sys-box {
+    background: #e8f0fb; border: 1.5px solid #2563a8; border-radius: 8px;
+    padding: 8px 10px; text-align: center; font-size: 11px; font-weight: 700;
+    min-width: 80px;
+  }
+  .das-sys-box .ico { font-size: 20px; display: block; margin-bottom: 3px; }
+  .das-sys-box.orange { background: #fff3e0; border-color: #e67e22; }
+  .das-sys-box.green  { background: #e8f8f0; border-color: #27ae60; }
+  .das-sys-box.purple { background: #f3e8fd; border-color: #8e44ad; }
+  .das-zone-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 8px; }
+  .das-zone {
+    background: #f8fafc; border-radius: 8px; padding: 10px 12px;
+    border-left: 4px solid #2563a8; border: 1px solid #d0dcea;
+  }
+  .das-zone.orange { border-left: 4px solid #e67e22; }
+  .das-zone.red    { border-left: 4px solid #e74c3c; }
+  .das-zone.green  { border-left: 4px solid #27ae60; }
+  .das-zone-title { font-size: 11px; font-weight: 700; color: #1a3a5c; margin-bottom: 4px; }
+  .das-zone.orange .das-zone-title { color: #d35400; }
+  .das-zone.red    .das-zone-title { color: #c0392b; }
+  .das-zone.green  .das-zone-title { color: #1e8449; }
+  .das-zone-desc { font-size: 11px; color: #444; line-height: 1.7; }
+
+  /* ── DAS view dark mode ── */
+  body.dark #view-das { background: #161b24; }
+  body.dark .das-tab-btn { border-color: #2a3a4a; color: #7ec8ff; }
+  body.dark .das-tab-btn.active { background: #2563a8; color: #fff; }
+  body.dark .das-tab-btn:hover:not(.active) { background: #1e2e42; }
+  body.dark .das-flow-card { background: #1a2332; border-color: #2a3a4a; }
+  body.dark .das-flow-card h3 { color: #7ec8ff; }
+  body.dark .das-flow-box { background: #1e2e42; border-color: #2563a8; color: #c8d8e8; }
+  body.dark .das-flow-box.orange { background: #2a1e08; border-color: #d35400; color: #f0a060; }
+  body.dark .das-flow-box.green  { background: #0e2a1a; border-color: #27ae60; color: #6ed4a0; }
+  body.dark .das-flow-box.purple { background: #1e1030; border-color: #8e44ad; color: #c8a0f0; }
+  body.dark .das-flow-box.red    { background: #2a1010; border-color: #e74c3c; color: #f08080; }
+  body.dark .das-arrow { color: #556; }
+  body.dark .das-note { background: #1e1a10; border-color: #c0792a; color: #c8d8e8; }
+  body.dark .das-card { background: #1a2332; border-color: #2a3a4a; border-top-color: #2563a8; }
+  body.dark .das-card.orange { border-top-color: #e67e22; }
+  body.dark .das-card.green  { border-top-color: #27ae60; }
+  body.dark .das-card.red    { border-top-color: #e74c3c; }
+  body.dark .das-card.purple { border-top-color: #8e44ad; }
+  body.dark .das-card.teal   { border-top-color: #16a085; }
+  body.dark .das-card-title { color: #7ec8ff; }
+  body.dark .das-card-desc { color: #c8d8e8; }
+  body.dark .das-card-analogy { background: #1e1a10; color: #c8d8e8; }
+  body.dark .das-cbox { background: #1a2332; border-color: #2a3a4a; }
+  body.dark .das-cbox p { color: #c8d8e8; }
+  body.dark .das-stat { background: #1a2332; border-color: #2a3a4a; }
+  body.dark .das-stat-label { color: #889; }
+  body.dark .das-warn-box { background: #1f1010; border-color: #c0392b; }
+  body.dark .das-warn-box h4 { color: #f08080; }
+  body.dark .das-warn-box li { color: #c8d8e8; }
+  body.dark .das-sys-box { background: #1e2e42; border-color: #2563a8; color: #c8d8e8; }
+  body.dark .das-sys-box.orange { background: #2a1e08; border-color: #e67e22; color: #f0a060; }
+  body.dark .das-sys-box.green  { background: #0e2a1a; border-color: #27ae60; color: #6ed4a0; }
+  body.dark .das-sys-box.purple { background: #1e1030; border-color: #8e44ad; color: #c8a0f0; }
+  body.dark .das-zone { background: #1a2332; border-color: #2a3a4a; }
+  body.dark .das-zone-title { color: #7ec8ff; }
+  body.dark .das-zone.orange .das-zone-title { color: #f0a060; }
+  body.dark .das-zone.red    .das-zone-title { color: #f08080; }
+  body.dark .das-zone.green  .das-zone-title { color: #6ed4a0; }
+  body.dark .das-zone-desc { color: #c8d8e8; }
+
 </style>
 </head>
 <body>
@@ -543,6 +716,7 @@
     <button class="tab-btn active" id="tab-func" onclick="switchTab('func')">📋 管理重點</button>
     <button class="tab-btn" id="tab-chapter" onclick="switchTab('chapter')">📖 章節排序</button>
     <button class="tab-btn" id="tab-field" onclick="switchTab('field')">👷 現場工務</button>
+    <button class="tab-btn" id="tab-das" onclick="switchTab('das')">📡 系統懶人包</button>
     <button id="btn-toggle-all" onclick="toggleAllSections()">⊟ 全部收摺</button>
   </div>
 
@@ -939,6 +1113,290 @@
 
   </div><!-- /#view-field -->
 
+  <!-- DAS 懶人包 -->
+  <div id="view-das">
+
+    <!-- inner tab bar -->
+    <div class="das-inner-tabs">
+      <button class="das-tab-btn active" id="das-t1" onclick="dasSwitchTab('das-p1',this)">🏠 什麼是這個系統？</button>
+      <button class="das-tab-btn" id="das-t2" onclick="dasSwitchTab('das-p2',this)">📖 專有名詞</button>
+      <button class="das-tab-btn" id="das-t3" onclick="dasSwitchTab('das-p3',this)">🏢 本案架構</button>
+      <button class="das-tab-btn" id="das-t4" onclick="dasSwitchTab('das-p4',this)">📶 SISO vs MIMO</button>
+      <button class="das-tab-btn" id="das-t5" onclick="dasSwitchTab('das-p5',this)">📊 數量總覽</button>
+    </div>
+
+    <!-- P1: 什麼是 DAS -->
+    <div id="das-p1" class="das-panel active">
+
+      <div class="das-flow-card">
+        <h3>🤔 為什麼建築裡收訊不好？</h3>
+        <p style="font-size:12.5px;line-height:1.8;color:#444;margin-bottom:10px;">
+          手機訊號靠基地台發射電波，但大樓的混凝土牆、金屬結構、電梯等都會阻擋電波。樓層越多、面積越大，收訊死角就越多。<strong>東森林口影視園區</strong>因此需要在室內自建一套訊號分配系統，把訊號引進來再送到每個角落。
+        </p>
+        <div class="das-note">📌 這套系統的正式名稱是 <strong>DAS（Distributed Antenna System，室內分散式天線系統）</strong></div>
+      </div>
+
+      <div class="das-flow-card">
+        <h3>📡 訊號怎麼跑進建築物？</h3>
+        <div class="das-flow-row">
+          <div class="das-flow-box"><span class="ico">🗼</span>室外基地台<br><small style="color:#888;">訊號來源</small></div>
+          <span class="das-arrow">→</span>
+          <div class="das-flow-box orange"><span class="ico">📦</span>POI 介接<br><small style="color:#888;">訊號玄關</small></div>
+          <span class="das-arrow">→</span>
+          <div class="das-flow-box"><span class="ico">🔌</span>主幹電纜<br><small style="color:#888;">大水管</small></div>
+          <span class="das-arrow">→</span>
+          <div class="das-flow-box purple"><span class="ico">🔀</span>分配器<br><small style="color:#888;">訊號分岔</small></div>
+          <span class="das-arrow">→</span>
+          <div class="das-flow-box green"><span class="ico">📡</span>天線<br><small style="color:#888;">廣播訊號</small></div>
+          <span class="das-arrow">→</span>
+          <div class="das-flow-box red"><span class="ico">📱</span>你的手機</div>
+        </div>
+        <div class="das-note">💡 就像自來水系統：水廠（基地台）→ 主幹水管（粗電纜）→ 閥門（分配器）→ 水龍頭（天線）→ 你（手機）</div>
+      </div>
+
+      <div class="das-flow-card">
+        <h3>🔑 本案兩大系統</h3>
+        <div class="das-2col" style="margin-top:8px;">
+          <div style="background:#eaf3fb;border-radius:8px;padding:12px;border:1.5px solid #2563a8;">
+            <div style="font-size:13px;font-weight:900;color:#1a3a5c;margin-bottom:6px;">① 被動式系統（4G）</div>
+            <div style="font-size:12px;line-height:1.8;color:#333;">
+              • 全棟公共區域 + 部分私區<br>
+              • 只用電纜和天線，<strong>不需要電源</strong><br>
+              • 傳統 4G LTE 訊號<br>
+              • 共 <strong>345 支</strong>天線
+            </div>
+          </div>
+          <div style="background:#fff3e0;border-radius:8px;padding:12px;border:1.5px solid #e67e22;">
+            <div style="font-size:13px;font-weight:900;color:#c0392b;margin-bottom:6px;">② 主動式系統（5G）</div>
+            <div style="font-size:12px;line-height:1.8;color:#333;">
+              • 僅 A棟 3–4 樓<br>
+              • 設備需要<strong>電源</strong>（像 Wi-Fi 分享器）<br>
+              • 5G 訊號，速度更快<br>
+              • 共 <strong>12 支</strong>主動天線
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /das-p1 -->
+
+    <!-- P2: 術語 -->
+    <div id="das-p2" class="das-panel">
+      <div class="das-cards">
+
+        <div class="das-card orange">
+          <div class="das-card-title">📍 POI</div>
+          <div class="das-card-en">Point of Interface　16進4出</div>
+          <div class="das-card-desc">把電信業者訊號「接進建築物」的設備，是大樓的「訊號玄關」。16進4出代表可接 16 個訊號源，輸出 4 條線路到大樓各區。本案共 10 組。</div>
+          <div class="das-card-analogy">大樓的「訊號總電錶箱」，電力公司的電接進來再分配給各住戶。</div>
+        </div>
+
+        <div class="das-card">
+          <div class="das-card-title">📡 SISO 天線（Omni / Panel）</div>
+          <div class="das-card-en">Single Input Single Output</div>
+          <div class="das-card-desc">最基本的天線，一次只用一條訊號通道。<strong>Omni（全向天線）</strong>：向四面八方廣播，適合開放空間。<strong>Panel（板狀天線）</strong>：訊號集中朝一個方向，適合長走廊。</div>
+          <div class="das-card-analogy">Omni = 360° 桌燈；Panel = 手電筒（定向照射）。</div>
+        </div>
+
+        <div class="das-card green">
+          <div class="das-card-title">🔀 分配器</div>
+          <div class="das-card-en">Splitter　2路/3路/4路/不平衡</div>
+          <div class="das-card-desc">把一條訊號線「分叉」成多條。2路分配損失約 3dB。<strong>不平衡分配器</strong>：分出的訊號強弱不等，用於距離遠近不同的天線。</div>
+          <div class="das-card-analogy">路口分流，訊號（車輛）被引導往不同方向，但每條路流量減少。</div>
+        </div>
+
+        <div class="das-card purple">
+          <div class="das-card-title">🔌 同軸電纜</div>
+          <div class="das-card-en">Coaxial Cable　1/2" / 7/8" / 1-1/4"</div>
+          <div class="das-card-desc">傳送訊號的管道，數字是電纜直徑（英寸）。<strong>1-1/4"（最粗）</strong>主幹，損耗最低；<strong>7/8"</strong>次幹；<strong>1/2"（最細）</strong>末端到各天線。</div>
+          <div class="das-card-analogy">自來水管：主幹（粗管）→ 各戶支管（中管）→ 水龍頭連接管（細管）。</div>
+        </div>
+
+        <div class="das-card teal">
+          <div class="das-card-title">🧲 DAS</div>
+          <div class="das-card-en">Distributed Antenna System　室內分散式天線系統</div>
+          <div class="das-card-desc">將天線「分散」佈置在建築物各角落，而非靠一支強力天線覆蓋，確保每個死角都能收到訊號。</div>
+          <div class="das-card-analogy">超市燈光：不用一盞超亮大燈，而是多盞燈分散佈置，讓每個角落都亮。</div>
+        </div>
+
+        <div class="das-card orange">
+          <div class="das-card-title">📊 PIM 測試</div>
+          <div class="das-card-en">Passive Intermodulation　被動互調失真</div>
+          <div class="das-card-desc">偵測電纜、接頭、天線因材料不良或接頭鬆動產生的雜訊干擾。本案有 10 組測試點。超標代表通話品質變差。</div>
+          <div class="das-card-analogy">音響系統的「雜音測試」，確保聲音清晰沒有雜音。</div>
+        </div>
+
+        <div class="das-card red">
+          <div class="das-card-title">🔬 RSRP</div>
+          <div class="das-card-en">Reference Signal Received Power　單位：dBm</div>
+          <div class="das-card-desc">量測手機收到訊號強度。≥ −80 dBm 很強（4–5格）；−80 至 −99 dBm 可接受；≤ −100 dBm 訊號弱。<strong>本案驗收門檻：95% 面積 ≥ −99 dBm。</strong></div>
+          <div class="das-card-analogy">溫度計，數字越接近 0 代表訊號越強。</div>
+        </div>
+
+        <div class="das-card green">
+          <div class="das-card-title">🛗 電梯 MU / RU</div>
+          <div class="das-card-en">Master Unit / Remote Unit for Elevator</div>
+          <div class="das-card-desc">電梯是鐵箱，會完全阻斷訊號。需在每座電梯井道佈建光纜和 RU。本案：2 台 MU（主機）帶 17 台 RU（17 座電梯）。</div>
+          <div class="das-card-analogy">電梯是「鐵籠」，RU 就是在籠子裡放的「小基地台」。</div>
+        </div>
+
+        <div class="das-card purple">
+          <div class="das-card-title">⚡ CU / MU / EU / RU</div>
+          <div class="das-card-en">Central / Master / Extension / Remote Unit</div>
+          <div class="das-card-desc">5G 主動式系統的四層架構：<strong>CU</strong> 接業者訊號（3組=3家業者）；<strong>MU</strong> 主機管理設備；<strong>EU</strong> 中繼擴展到更多樓層；<strong>RU</strong> 實際發射的天線單元（本案12支）。</div>
+          <div class="das-card-analogy">網路架構：電信機房（CU）→ 路由器（MU）→ 交換器（EU）→ Wi-Fi 分享器（RU）。</div>
+        </div>
+
+        <div class="das-card orange">
+          <div class="das-card-title">💡 4.3-10 接頭</div>
+          <div class="das-card-en">4.3-10 Connector（取代傳統 N 型接頭）</div>
+          <div class="das-card-desc">電纜和設備之間的「插頭」，新一代標準，體積小、防水性更好、PIM 表現更佳，是現代 DAS 工程主流規格。</div>
+          <div class="das-card-analogy">USB-C 取代舊式 Micro-USB，更小更穩定。</div>
+        </div>
+
+        <div class="das-card teal">
+          <div class="das-card-title">🔒 光電混合纜</div>
+          <div class="das-card-en">Hybrid Fiber-Power Cable</div>
+          <div class="das-card-desc">主動天線（RU）同時需要光纖（傳資料）和電源線（供電），光電混合纜將兩者合一。本案 5G 系統用了 <strong>720 米</strong>。</div>
+          <div class="das-card-analogy">「邊充電邊傳照片」的 MagSafe 線，資料和電力走同一條線。</div>
+        </div>
+
+      </div>
+    </div><!-- /das-p2 -->
+
+    <!-- P3: 本案架構 -->
+    <div id="das-p3" class="das-panel">
+      <div class="das-flow-card">
+        <h3>🏢 東森林口影視園區　訊號系統示意圖</h3>
+        <div class="das-sys-row">
+          <div class="das-sys-box"><span class="ico">🗼</span>室外基地台</div>
+          <span class="das-arrow">→</span>
+          <div class="das-sys-box orange"><span class="ico">📦</span>POI<br><small style="color:#888;">×10 組</small></div>
+          <span class="das-arrow">→</span>
+          <div class="das-sys-box"><span class="ico">🔌</span>主幹電纜<br><small style="color:#888;">1-1/4"</small></div>
+          <span class="das-arrow">→</span>
+          <div class="das-sys-box purple"><span class="ico">🔀</span>分配器<br><small style="color:#888;">212 支</small></div>
+          <span class="das-arrow">→</span>
+          <div class="das-sys-box green"><span class="ico">📡</span>天線<br><small style="color:#888;">336 Omni</small></div>
+          <span class="das-arrow">→</span>
+          <div class="das-sys-box red"><span class="ico">📱</span>手機收訊</div>
+        </div>
+        <div class="das-note">主幹電纜（1-1/4"）從機房出發 → 各樓層改用 7/8" 次幹 → 末端 1/2" 連接天線</div>
+      </div>
+
+      <div class="das-flow-card">
+        <h3>📍 四大覆蓋區域</h3>
+        <div class="das-zone-grid">
+          <div class="das-zone" style="border-left-color:#2563a8;">
+            <div class="das-zone-title">📍 公共區域（被動 4G）</div>
+            <div class="das-zone-desc">A棟全棟 + B/C棟地下室<br>Omni 天線 316 支、分配器 212 支</div>
+          </div>
+          <div class="das-zone red">
+            <div class="das-zone-title">⚠️ 私區（被動 4G，設計稀疏）</div>
+            <div class="das-zone-desc">A棟 B2F–2F、10–13F、20–21F<br>僅 20 支天線，<strong>無分配器</strong>，驗收風險高</div>
+          </div>
+          <div class="das-zone orange">
+            <div class="das-zone-title">⚡ A棟 3–4F（主動 5G）</div>
+            <div class="das-zone-desc">4×4 MIMO，RU 12 支，3 家業者<br>光電混合纜 720 米</div>
+          </div>
+          <div class="das-zone green">
+            <div class="das-zone-title">🛗 電梯系統</div>
+            <div class="das-zone-desc">17 座電梯，電梯光纜 8,041 米<br>2 台 MU + 17 台 RU</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /das-p3 -->
+
+    <!-- P4: SISO vs MIMO -->
+    <div id="das-p4" class="das-panel">
+      <div class="das-compare">
+        <div class="das-cbox siso">
+          <h3>📡 SISO（本案大部分天線）</h3>
+          <div class="das-sig-vis">
+            <div class="das-sig-path"><div>📡</div><div>天線</div></div>
+            <div>→</div>
+            <div class="das-sig-path"><div>📱</div><div>手機</div></div>
+          </div>
+          <p style="font-size:12px;line-height:1.8;">
+            <strong>Single Input Single Output</strong><br>
+            一支天線、一條訊號通道。<br><br>
+            ✔ 成本低、施工簡單<br>
+            ✔ 4G 通話與基本上網夠用<br>
+            ✘ 速度上限低<br>
+            ✘ 多人同時使用時容易壅塞
+          </p>
+          <div style="margin-top:8px;">
+            <span class="das-badge ok">本案 345 支天線採用</span>
+            <span class="das-badge bad">僅 4G</span>
+          </div>
+        </div>
+
+        <div class="das-cbox mimo">
+          <h3>📡×4 MIMO（本案 5G 區）</h3>
+          <div class="das-sig-vis">
+            <div style="display:flex;flex-direction:column;gap:3px;">
+              <div class="das-sig-path"><div>📡</div><div>天線1</div></div>
+              <div class="das-sig-path"><div>📡</div><div>天線2</div></div>
+              <div class="das-sig-path"><div>📡</div><div>天線3</div></div>
+              <div class="das-sig-path"><div>📡</div><div>天線4</div></div>
+            </div>
+            <div>→</div>
+            <div class="das-sig-path"><div>📱</div><div>手機</div></div>
+          </div>
+          <p style="font-size:12px;line-height:1.8;">
+            <strong>Multiple Input Multiple Output</strong><br>
+            本案是 <strong>4×4 MIMO</strong>，同時用 4 條通道。<br><br>
+            ✔ 速度是 SISO 的 2–4 倍<br>
+            ✔ 多人同時使用也不壅塞<br>
+            ✔ 5G 支援<br>
+            ✘ 成本高、設備需要電源
+          </p>
+          <div style="margin-top:8px;">
+            <span class="das-badge good">A棟 3-4F 採用</span>
+            <span class="das-badge good">5G</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="das-flow-card">
+        <h3>📶 為什麼本案大部分用 SISO？</h3>
+        <p style="font-size:12.5px;line-height:1.8;color:#444;">
+          <strong>成本考量：</strong>被動式 SISO 系統造價遠低於主動式 MIMO，只要電纜和天線，不需電源和複雜設備。<br>
+          <strong>需求匹配：</strong>對一般公共走道、停車場、電梯大廳而言，4G SISO 足夠保持通話和基本上網。<br>
+          <strong>5G 試點：</strong>A棟 3–4 樓可能是展示廳、會議室等高需求場所，因此才配置 5G 主動系統。<br><br>
+          <span style="background:#fdecea;padding:2px 7px;border-radius:4px;color:#c0392b;font-weight:700;">⚠️ 注意：</span> 隨著手機全面 5G 化，未來 SISO 4G 系統可能需要升級，建議佈線時預留 MIMO 升級空間。
+        </p>
+      </div>
+    </div><!-- /das-p4 -->
+
+    <!-- P5: 數量總覽 -->
+    <div id="das-p5" class="das-panel">
+      <div class="das-stat-grid">
+        <div class="das-stat"><div class="das-stat-num">336</div><div class="das-stat-label">📡 Omni 天線（被動）</div></div>
+        <div class="das-stat"><div class="das-stat-num">12</div><div class="das-stat-label">⚡ RU 天線（5G 主動）</div></div>
+        <div class="das-stat"><div class="das-stat-num">9</div><div class="das-stat-label">📡 Panel 天線</div></div>
+        <div class="das-stat"><div class="das-stat-num orange">12,085</div><div class="das-stat-label">🔌 同軸電纜（米）</div></div>
+        <div class="das-stat"><div class="das-stat-num">8,041</div><div class="das-stat-label">💡 電梯光纜（米）</div></div>
+        <div class="das-stat"><div class="das-stat-num">4,500</div><div class="das-stat-label">🔩 電纜吊桿（支）</div></div>
+        <div class="das-stat"><div class="das-stat-num">212</div><div class="das-stat-label">🔀 分配器（公區）</div></div>
+        <div class="das-stat"><div class="das-stat-num orange">10</div><div class="das-stat-label">📦 POI 組數</div></div>
+        <div class="das-stat"><div class="das-stat-num">17</div><div class="das-stat-label">🛗 電梯 RU（座）</div></div>
+        <div class="das-stat"><div class="das-stat-num green">3</div><div class="das-stat-label">📶 接入業者（5G）</div></div>
+        <div class="das-stat"><div class="das-stat-num">26</div><div class="das-stat-label">🚗 高空作業車（台月）</div></div>
+        <div class="das-stat"><div class="das-stat-num red">0</div><div class="das-stat-label">💰 已填單價（全部空白）</div></div>
+      </div>
+      <div class="das-warn-box">
+        <h4>⚠️ 需要關注的 3 大問題</h4>
+        <ul>
+          <li><strong>報價單單價全部空白</strong>——無法得知工程總金額，合約上金額尚未定案，這是目前最大風險</li>
+          <li><strong>私區天線密度嚴重不足</strong>——10個樓層僅 20 支天線且無分配器，驗收時訊號強度極可能不達標（≥ −99 dBm）</li>
+          <li><strong>被動系統全為 SISO 4G</strong>——缺乏未來 5G 升級設計，影視園區若有高頻寬需求將面臨瓶頸</li>
+        </ul>
+      </div>
+    </div><!-- /das-p5 -->
+
+  </div><!-- /#view-das -->
+
   <!-- Footer -->
   <div class="footer">
     <div>契約書版本：<span>V4（民國115年）</span>｜文件基礎：⭕️⭕️⭕️</div>
@@ -964,13 +1422,23 @@
     document.getElementById('view-func').style.display    = t==='func'    ? '' : 'none';
     document.getElementById('view-chapter').style.display = t==='chapter' ? 'block' : 'none';
     document.getElementById('view-field').style.display   = t==='field'   ? 'block' : 'none';
+    document.getElementById('view-das').style.display     = t==='das'     ? 'block' : 'none';
     document.getElementById('tab-func').classList.toggle('active',    t==='func');
     document.getElementById('tab-chapter').classList.toggle('active', t==='chapter');
     document.getElementById('tab-field').classList.toggle('active',   t==='field');
+    document.getElementById('tab-das').classList.toggle('active',     t==='das');
     if (t === 'chapter' && !document.getElementById('view-chapter').dataset.built) {
       buildChapterView();
       document.getElementById('view-chapter').dataset.built = '1';
     }
+  }
+
+  /* ── DAS inner tab switching ── */
+  function dasSwitchTab(panelId, btn) {
+    document.querySelectorAll('.das-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.das-tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(panelId).classList.add('active');
+    btn.classList.add('active');
   }
 
   /* ── Chapter title map ── */
