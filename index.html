@@ -445,12 +445,19 @@
 
   /* ── Field view (現場工務) ── */
   #view-field { display: none; padding: 14px 16px; }
+
+  /* Role header banners */
   .fv-role-header {
     font-size: 14px; font-weight: 700; color: #fff;
     padding: 8px 16px; border-radius: 6px; margin: 18px 0 10px;
     display: flex; align-items: center; gap: 8px;
   }
   .fv-role-header:first-of-type { margin-top: 0; }
+  .fv-hdr-blue   { background: #1a5276; }
+  .fv-hdr-orange { background: #b7770d; }
+  .fv-hdr-green  { background: #1e8449; }
+
+  /* Sub-section headers */
   .fv-sub-header {
     font-size: 12px; font-weight: 700;
     padding: 4px 10px 4px 12px;
@@ -458,9 +465,15 @@
     border-left: 4px solid currentColor;
     display: flex; align-items: center; gap: 6px;
   }
+  .fv-sub-blue   { color: #1a5276; }
+  .fv-sub-orange { color: #b7770d; }
+  .fv-sub-green  { color: #1e8449; }
+  .fv-sub-red    { color: #c0392b; }
+
+  /* Item lists */
   .fv-items { list-style: none; padding: 0; margin: 0 0 6px; }
   .fv-items li {
-    font-size: 12.5px; line-height: 1.6;
+    font-size: 12.5px; line-height: 1.6; color: #222;
     padding: 3px 0 3px 16px; position: relative;
     border-bottom: 1px dashed #e8eaed;
   }
@@ -468,26 +481,42 @@
   .fv-items li::before { content:"▸"; position:absolute; left:2px; color:#999; font-size:10px; top:5px; }
   .fv-items li.sub { padding-left: 28px; }
   .fv-items li.sub::before { content:"◦"; left:14px; }
+
+  /* Warning / note boxes */
   .fv-warn {
     background: #fff5e6; border-left: 4px solid #e67e22;
     padding: 7px 11px; border-radius: 0 4px 4px 0;
-    margin: 6px 0; font-size: 12px; line-height: 1.6;
+    margin: 6px 0; font-size: 12px; line-height: 1.6; color: #222;
   }
-  .fv-warn.red { background: #fdedec; border-color: #c0392b; }
-  .fv-warn.blue { background: #ebf5fb; border-color: #1a5276; }
+  .fv-warn.red   { background: #fdedec; border-color: #c0392b; }
+  .fv-warn.blue  { background: #ebf5fb; border-color: #1a5276; }
   .fv-warn.green { background: #eafaf1; border-color: #1e8449; }
   .fv-warn strong { color: #c0392b; }
-  .fv-warn.blue strong { color: #1a5276; }
+  .fv-warn.blue  strong { color: #1a5276; }
   .fv-warn.green strong { color: #1e8449; }
+
   .fv-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0 20px; }
   @media (max-width: 900px) { .fv-grid { grid-template-columns: repeat(2,1fr); } }
   @media (max-width: 600px) { .fv-grid { grid-template-columns: 1fr; } }
-  body.dark #view-field { background: #111; }
-  body.dark .fv-items li { border-color: #2a3a4a; color: #c8d8e8; }
-  body.dark .fv-warn { background: #1c1a12; }
-  body.dark .fv-warn.red { background: #1f1010; }
-  body.dark .fv-warn.blue { background: #101620; }
-  body.dark .fv-warn.green { background: #101a12; }
+
+  /* ── Field view dark mode ── */
+  body.dark #view-field { background: #161b24; }
+  body.dark .fv-hdr-blue   { background: #1e2e42; color: #7ec8ff; border: 1px solid #2a4060; }
+  body.dark .fv-hdr-orange { background: #2a1e08; color: #f0a060; border: 1px solid #4a3010; }
+  body.dark .fv-hdr-green  { background: #0e2a1a; color: #6ed4a0; border: 1px solid #1a4a28; }
+  body.dark .fv-sub-blue   { color: #4da6ff; }
+  body.dark .fv-sub-orange { color: #f0a060; }
+  body.dark .fv-sub-green  { color: #6ed4a0; }
+  body.dark .fv-sub-red    { color: #f39c6b; }
+  body.dark .fv-items li   { border-bottom-color: #2a3040; color: #c8d8e8; }
+  body.dark .fv-items li::before { color: #556; }
+  body.dark .fv-warn        { background: #1e1a10; border-color: #c0792a; color: #c8d8e8; }
+  body.dark .fv-warn.red    { background: #1f1010; border-color: #c0392b; }
+  body.dark .fv-warn.blue   { background: #101620; border-color: #2a6090; }
+  body.dark .fv-warn.green  { background: #0e1e12; border-color: #27ae60; }
+  body.dark .fv-warn strong { color: #f39c6b; }
+  body.dark .fv-warn.blue  strong { color: #7eb8f0; }
+  body.dark .fv-warn.green strong { color: #6ed4a0; }
 
 </style>
 </head>
@@ -771,11 +800,11 @@
   <div id="view-field">
 
     <!-- ══ 一、工地主任 ══ -->
-    <div class="fv-role-header" style="background:#1a5276;">👷 一、工地主任　重點注意事項</div>
+    <div class="fv-role-header fv-hdr-blue">👷 一、工地主任　重點注意事項</div>
     <div class="fv-grid">
 
       <div>
-        <div class="fv-sub-header" style="color:#1a5276;">📋 開工前必辦</div>
+        <div class="fv-sub-header fv-sub-blue">📋 開工前必辦</div>
         <ul class="fv-items">
           <li>施工計畫（含安衛計畫、品管計畫）送審核准後始得開工，品管計畫核准前品質鑑定項目不得施作<em class="src">§13·一 / §11·一</em></li>
           <li>施工計畫送審期限：接獲通知次日起 <span class="val-blue">30 日內</span>提送<em class="src">§13·一</em></li>
@@ -784,7 +813,7 @@
         </ul>
         <div class="fv-warn red"><strong>⚠ 人員撤換：</strong>甲方得不說明任何理由要求撤換工地人員，乙方不得拒絕。建議爭取加入「書面說明事由＋7日緩衝期」條款<em class="src">§14·六</em></div>
 
-        <div class="fv-sub-header" style="color:#1a5276;">🚫 工地紀律</div>
+        <div class="fv-sub-header fv-sub-blue">🚫 工地紀律</div>
         <ul class="fv-items">
           <li>嚴禁工地員工攜帶武器、違禁物品、酗酒、賭博<em class="src">§14·五</em></li>
           <li>車輛駕駛及機具操作手須持<span class="val-blue">合法證照</span><em class="src">§5·三</em></li>
@@ -793,7 +822,7 @@
       </div>
 
       <div>
-        <div class="fv-sub-header" style="color:#1a5276;">📅 工期與進度管理</div>
+        <div class="fv-sub-header fv-sub-blue">📅 工期與進度管理</div>
         <ul class="fv-items">
           <li>施工期限：<span class="val">180 工作天</span>（甲方核准施工計畫後起算）<em class="src">§特訂條款</em></li>
           <li>進度落後 <span class="val">≥10%</span>：停止計價，須立即提趕工計畫<em class="src">§10·六</em></li>
@@ -806,7 +835,7 @@
       </div>
 
       <div>
-        <div class="fv-sub-header" style="color:#1a5276;">🔧 施工介面與分包管理</div>
+        <div class="fv-sub-header fv-sub-blue">🔧 施工介面與分包管理</div>
         <ul class="fv-items">
           <li>施工介面有爭議：<strong>不得停工</strong>、<strong>不得要求展延工期</strong><em class="src">§9·三</em></li>
           <li>介面不明確者：施工前立即<strong>書面</strong>通知專案辦公室（不可口頭）<em class="src">§9·三,四</em></li>
@@ -821,11 +850,11 @@
     </div>
 
     <!-- ══ 二、職安管理員 ══ -->
-    <div class="fv-role-header" style="background:#b7770d;">🦺 二、職安管理員　重點注意事項</div>
+    <div class="fv-role-header fv-hdr-orange">🦺 二、職安管理員　重點注意事項</div>
     <div class="fv-grid">
 
       <div>
-        <div class="fv-sub-header" style="color:#b7770d;">📝 開工前必辦</div>
+        <div class="fv-sub-header fv-sub-orange">📝 開工前必辦</div>
         <ul class="fv-items">
           <li>安全衛生計畫：施工前提送專案辦公室，<strong>核可後</strong>始得實施<em class="src">§5·八·2</em></li>
           <li>施工計畫內須含安全衛生計畫章節<em class="src">§13·二</em></li>
@@ -838,7 +867,7 @@
       </div>
 
       <div>
-        <div class="fv-sub-header" style="color:#b7770d;">🦺 日常安全管理責任</div>
+        <div class="fv-sub-header fv-sub-orange">🦺 日常安全管理責任</div>
         <ul class="fv-items">
           <li>承攬範圍內安全衛生工作負<span class="val">完全責任</span>，確保人員、財產、環境安全<em class="src">§5·八·1</em></li>
           <li>安全設施：由乙方負責設置、管理、監督及執行；發生事故由乙方負完全責任<em class="src">§5·八·3,4</em></li>
@@ -850,7 +879,7 @@
       </div>
 
       <div>
-        <div class="fv-sub-header" style="color:#c0392b;">🚨 事故發生處理流程（依序執行）</div>
+        <div class="fv-sub-header fv-sub-red">🚨 事故發生處理流程（依序執行）</div>
         <ul class="fv-items">
           <li>突發事故：立即向<span class="val-blue">治安機關</span>及<span class="val-blue">專案辦公室</span>通報<em class="src">§5·八·7</em></li>
           <li>職業災害 Step 1：立即急救／搶救<em class="src">§5·八·7</em></li>
@@ -863,18 +892,18 @@
     </div>
 
     <!-- ══ 三、品管人員 ══ -->
-    <div class="fv-role-header" style="background:#1e8449;">✅ 三、品管人員　重點注意事項</div>
+    <div class="fv-role-header fv-hdr-green">✅ 三、品管人員　重點注意事項</div>
     <div class="fv-grid">
 
       <div>
-        <div class="fv-sub-header" style="color:#1e8449;">📝 開工前必辦</div>
+        <div class="fv-sub-header fv-sub-green">📝 開工前必辦</div>
         <ul class="fv-items">
           <li>品質管制計畫：開工前送審，核准前品質鑑定項目<strong>不得施作</strong><em class="src">§11·一</em></li>
           <li>品管負責人資格：相關經驗 <span class="val">≥ 3 年</span><em class="src">§14·六</em></li>
           <li>品管人員至少 <span class="val-blue">1 人</span>，核定後若需更換須書面申請<em class="src">§11·四</em></li>
         </ul>
 
-        <div class="fv-sub-header" style="color:#1e8449;">🔍 施工中品質管制</div>
+        <div class="fv-sub-header fv-sub-green">🔍 施工中品質管制</div>
         <ul class="fv-items">
           <li>隱蔽工程：覆蓋前須通知專案辦公室到場檢驗，未通知即覆蓋者須自費拆除重建<em class="src">§12·三</em></li>
           <li>工料不符：甲方除減價外，另計減價金額 <span class="val">2 倍</span>懲罰性違約金<em class="src">§18·五</em></li>
@@ -884,7 +913,7 @@
       </div>
 
       <div>
-        <div class="fv-sub-header" style="color:#1e8449;">✅ 竣工驗收流程</div>
+        <div class="fv-sub-header fv-sub-green">✅ 竣工驗收流程</div>
         <ul class="fv-items">
           <li>竣工報告：完工後依規定格式提送專案辦公室<em class="src">§18·一</em></li>
           <li>竣工後 <span class="val-blue">14 日</span>內：提交完整竣工文件（含竣工圖A1藍曬圖1份、A3縮印圖6份等）<em class="src">§18·二</em></li>
@@ -897,7 +926,7 @@
       </div>
 
       <div>
-        <div class="fv-sub-header" style="color:#1e8449;">🛡️ 保固期管理（2 年）</div>
+        <div class="fv-sub-header fv-sub-green">🛡️ 保固期管理（2 年）</div>
         <ul class="fv-items">
           <li>保固保證金：結算金額之 <span class="val">5%</span>，保固期屆滿無異議後 <span class="val-blue">20 日</span>內退還<em class="src">§19·三/五</em></li>
           <li>保固期內瑕疵改正：接獲通知起 <span class="val">7 日</span>內完成改正<em class="src">§19·六</em></li>
