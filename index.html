@@ -443,6 +443,52 @@
   body.dark .ch-header { background: #141e2a; }
   body.dark .ch-body li { color: #c8d8e8; }
 
+  /* ── Field view (現場工務) ── */
+  #view-field { display: none; padding: 14px 16px; }
+  .fv-role-header {
+    font-size: 14px; font-weight: 700; color: #fff;
+    padding: 8px 16px; border-radius: 6px; margin: 18px 0 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .fv-role-header:first-of-type { margin-top: 0; }
+  .fv-sub-header {
+    font-size: 12px; font-weight: 700;
+    padding: 4px 10px 4px 12px;
+    margin: 10px 0 4px;
+    border-left: 4px solid currentColor;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .fv-items { list-style: none; padding: 0; margin: 0 0 6px; }
+  .fv-items li {
+    font-size: 12.5px; line-height: 1.6;
+    padding: 3px 0 3px 16px; position: relative;
+    border-bottom: 1px dashed #e8eaed;
+  }
+  .fv-items li:last-child { border-bottom: none; }
+  .fv-items li::before { content:"▸"; position:absolute; left:2px; color:#999; font-size:10px; top:5px; }
+  .fv-items li.sub { padding-left: 28px; }
+  .fv-items li.sub::before { content:"◦"; left:14px; }
+  .fv-warn {
+    background: #fff5e6; border-left: 4px solid #e67e22;
+    padding: 7px 11px; border-radius: 0 4px 4px 0;
+    margin: 6px 0; font-size: 12px; line-height: 1.6;
+  }
+  .fv-warn.red { background: #fdedec; border-color: #c0392b; }
+  .fv-warn.blue { background: #ebf5fb; border-color: #1a5276; }
+  .fv-warn.green { background: #eafaf1; border-color: #1e8449; }
+  .fv-warn strong { color: #c0392b; }
+  .fv-warn.blue strong { color: #1a5276; }
+  .fv-warn.green strong { color: #1e8449; }
+  .fv-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0 20px; }
+  @media (max-width: 900px) { .fv-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 600px) { .fv-grid { grid-template-columns: 1fr; } }
+  body.dark #view-field { background: #111; }
+  body.dark .fv-items li { border-color: #2a3a4a; color: #c8d8e8; }
+  body.dark .fv-warn { background: #1c1a12; }
+  body.dark .fv-warn.red { background: #1f1010; }
+  body.dark .fv-warn.blue { background: #101620; }
+  body.dark .fv-warn.green { background: #101a12; }
+
 </style>
 </head>
 <body>
@@ -467,6 +513,7 @@
   <div class="tab-bar">
     <button class="tab-btn active" id="tab-func" onclick="switchTab('func')">📋 管理重點</button>
     <button class="tab-btn" id="tab-chapter" onclick="switchTab('chapter')">📖 章節排序</button>
+    <button class="tab-btn" id="tab-field" onclick="switchTab('field')">👷 現場工務</button>
     <button id="btn-toggle-all" onclick="toggleAllSections()">⊟ 全部收摺</button>
   </div>
 
@@ -720,6 +767,149 @@
   <!-- Chapter view (built by JS) -->
   <div id="view-chapter"></div>
 
+  <!-- Field personnel view -->
+  <div id="view-field">
+
+    <!-- ══ 一、工地主任 ══ -->
+    <div class="fv-role-header" style="background:#1a5276;">👷 一、工地主任　重點注意事項</div>
+    <div class="fv-grid">
+
+      <div>
+        <div class="fv-sub-header" style="color:#1a5276;">📋 開工前必辦</div>
+        <ul class="fv-items">
+          <li>施工計畫（含安衛計畫、品管計畫）送審核准後始得開工，品管計畫核准前品質鑑定項目不得施作<em class="src">§13·一 / §11·一</em></li>
+          <li>施工計畫送審期限：接獲通知次日起 <span class="val-blue">30 日內</span>提送<em class="src">§13·一</em></li>
+          <li>工地負責人資格：本工程相關經驗 <span class="val">≥ 5 年</span>，開工前書面報甲方查核<em class="src">§14·六</em></li>
+          <li>人員替換或變更：應<strong>事先書面</strong>報請專案辦公室核准<em class="src">§14·四</em></li>
+        </ul>
+        <div class="fv-warn red"><strong>⚠ 人員撤換：</strong>甲方得不說明任何理由要求撤換工地人員，乙方不得拒絕。建議爭取加入「書面說明事由＋7日緩衝期」條款<em class="src">§14·六</em></div>
+
+        <div class="fv-sub-header" style="color:#1a5276;">🚫 工地紀律</div>
+        <ul class="fv-items">
+          <li>嚴禁工地員工攜帶武器、違禁物品、酗酒、賭博<em class="src">§14·五</em></li>
+          <li>車輛駕駛及機具操作手須持<span class="val-blue">合法證照</span><em class="src">§5·三</em></li>
+          <li>每月估驗：<span class="val-blue">15 日前</span>向專案辦公室申請計價乙次<em class="src">§16·三</em></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="fv-sub-header" style="color:#1a5276;">📅 工期與進度管理</div>
+        <ul class="fv-items">
+          <li>施工期限：<span class="val">180 工作天</span>（甲方核准施工計畫後起算）<em class="src">§特訂條款</em></li>
+          <li>進度落後 <span class="val">≥10%</span>：停止計價，須立即提趕工計畫<em class="src">§10·六</em></li>
+          <li>進度落後 <span class="val">≥20%</span>：甲方有權通知終止或解除契約<em class="src">§10·六</em></li>
+          <li>無故停工逾 <span class="val">14 日</span>：甲方可要求終止契約<em class="src">§20·一</em></li>
+          <li>甲方可歸責事由逾 <span class="val-blue">60 日</span>無法讓乙方施工：<strong>乙方</strong>得終止契約<em class="src">§20·二</em></li>
+          <li>展延工期申請：事故發生後 <span class="val">7 日內</span>書面申請，逾期不受理，不得要求額外費用<em class="src">§10·三</em></li>
+        </ul>
+        <div class="fv-warn red"><strong>⚠ 展延申請死線：</strong>事故發生後超過 7 日未申請，日後不得以同一事由主張展延工期，務必當下立即處理<em class="src">§10·三</em></div>
+      </div>
+
+      <div>
+        <div class="fv-sub-header" style="color:#1a5276;">🔧 施工介面與分包管理</div>
+        <ul class="fv-items">
+          <li>施工介面有爭議：<strong>不得停工</strong>、<strong>不得要求展延工期</strong><em class="src">§9·三</em></li>
+          <li>介面不明確者：施工前立即<strong>書面</strong>通知專案辦公室（不可口頭）<em class="src">§9·三,四</em></li>
+          <li>介面協調無法解決：於事故起 <span class="val">3 日內</span>書面通報專案辦公室<em class="src">§9·三,四</em></li>
+          <li>分包限制：不得全部轉包；分包總明細表須事前報備<em class="src">§8·一,四</em></li>
+          <li>分包商疏失：乙方對甲方負<span class="val">完全責任</span>，不因分包而免除<em class="src">§8·四</em></li>
+          <li>隱蔽工程：覆蓋前須通知專案辦公室到場檢驗，未通知即覆蓋者<strong>須自費拆除重建</strong><em class="src">§12·三</em></li>
+        </ul>
+        <div class="fv-warn red"><strong>⚠ 代履行風險：</strong>乙方怠於履行，甲方得委第三人代為履行，所有費用（含利潤管理費）全由乙方負擔，直接自工程款扣抵<em class="src">§5·二十一</em></div>
+      </div>
+
+    </div>
+
+    <!-- ══ 二、職安管理員 ══ -->
+    <div class="fv-role-header" style="background:#b7770d;">🦺 二、職安管理員　重點注意事項</div>
+    <div class="fv-grid">
+
+      <div>
+        <div class="fv-sub-header" style="color:#b7770d;">📝 開工前必辦</div>
+        <ul class="fv-items">
+          <li>安全衛生計畫：施工前提送專案辦公室，<strong>核可後</strong>始得實施<em class="src">§5·八·2</em></li>
+          <li>施工計畫內須含安全衛生計畫章節<em class="src">§13·二</em></li>
+          <li>安全衛生負責人資格：相關經驗 <span class="val">≥ 3 年</span><em class="src">§14·六</em></li>
+          <li>勞保、全民健保等法定保險：<span class="val-blue">開工前</span>辦妥<em class="src">§6·1(3)</em></li>
+          <li>安裝綜合保險（工損＋第三人責任險）及雇主意外責任險：<span class="val-blue">開工前</span>投保<em class="src">§6·1(2)</em></li>
+          <li>投保後 <span class="val-blue">15 日</span>內送保險單、批單及繳費收據副本予甲方<em class="src">§6·1(4)</em></li>
+        </ul>
+        <div class="fv-warn red"><strong>⚠ 安衛違規後果：</strong>因安衛違規暫停施工者，不得要求展延工期或補償費用；因違法致甲方受行政處罰，罰鍰由乙方繳納，未繳者自工程款扣抵<em class="src">§5·八</em></div>
+      </div>
+
+      <div>
+        <div class="fv-sub-header" style="color:#b7770d;">🦺 日常安全管理責任</div>
+        <ul class="fv-items">
+          <li>承攬範圍內安全衛生工作負<span class="val">完全責任</span>，確保人員、財產、環境安全<em class="src">§5·八·1</em></li>
+          <li>安全設施：由乙方負責設置、管理、監督及執行；發生事故由乙方負完全責任<em class="src">§5·八·3,4</em></li>
+          <li>不適任安全衛生人員：甲方得要求撤換，<strong>不得拒絕</strong><em class="src">§5·八·5</em></li>
+          <li>有立即危險或嚴重污染之虞：甲方得要求暫停部分施工至改善完畢<em class="src">§5·八·6</em></li>
+          <li>工地安全組織及會議：須配合主承包商召集參加<em class="src">§13·十三</em></li>
+        </ul>
+        <div class="fv-warn blue"><strong>📌 保險注意：</strong>工期展延時需辦理保期展延（費用由乙方負擔）；保單條件變更須事前取得甲方書面同意<em class="src">§6·1(4)(6)</em></div>
+      </div>
+
+      <div>
+        <div class="fv-sub-header" style="color:#c0392b;">🚨 事故發生處理流程（依序執行）</div>
+        <ul class="fv-items">
+          <li>突發事故：立即向<span class="val-blue">治安機關</span>及<span class="val-blue">專案辦公室</span>通報<em class="src">§5·八·7</em></li>
+          <li>職業災害 Step 1：立即急救／搶救<em class="src">§5·八·7</em></li>
+          <li class="sub">Step 2：展開調查、作成紀錄</li>
+          <li class="sub">Step 3：向專案辦公室及勞工安全檢查機構正式提報</li>
+          <li>勞工傷害：不論是否求償，立即通知專案辦公室及有關機關<em class="src">§14·九</em></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- ══ 三、品管人員 ══ -->
+    <div class="fv-role-header" style="background:#1e8449;">✅ 三、品管人員　重點注意事項</div>
+    <div class="fv-grid">
+
+      <div>
+        <div class="fv-sub-header" style="color:#1e8449;">📝 開工前必辦</div>
+        <ul class="fv-items">
+          <li>品質管制計畫：開工前送審，核准前品質鑑定項目<strong>不得施作</strong><em class="src">§11·一</em></li>
+          <li>品管負責人資格：相關經驗 <span class="val">≥ 3 年</span><em class="src">§14·六</em></li>
+          <li>品管人員至少 <span class="val-blue">1 人</span>，核定後若需更換須書面申請<em class="src">§11·四</em></li>
+        </ul>
+
+        <div class="fv-sub-header" style="color:#1e8449;">🔍 施工中品質管制</div>
+        <ul class="fv-items">
+          <li>隱蔽工程：覆蓋前須通知專案辦公室到場檢驗，未通知即覆蓋者須自費拆除重建<em class="src">§12·三</em></li>
+          <li>工料不符：甲方除減價外，另計減價金額 <span class="val">2 倍</span>懲罰性違約金<em class="src">§18·五</em></li>
+          <li>施工計畫變更：收到變更通知後 <span class="val">7 日</span>內提計畫，收到協議書後 <span class="val">15 日</span>內簽署送回<em class="src">§17·三/八</em></li>
+        </ul>
+        <div class="fv-warn red"><strong>⚠ 隱蔽工程最高風險：</strong>任何隱蔽部位（管線、壁面、天花板內）覆蓋前，必須通知專案辦公室完成檢驗並留存紀錄，否則拆除重建費用全數自負<em class="src">§12·三</em></div>
+      </div>
+
+      <div>
+        <div class="fv-sub-header" style="color:#1e8449;">✅ 竣工驗收流程</div>
+        <ul class="fv-items">
+          <li>竣工報告：完工後依規定格式提送專案辦公室<em class="src">§18·一</em></li>
+          <li>竣工後 <span class="val-blue">14 日</span>內：提交完整竣工文件（含竣工圖A1藍曬圖1份、A3縮印圖6份等）<em class="src">§18·二</em></li>
+          <li>專案辦公室收到竣工報告後 <span class="val-blue">14 日</span>內辦理竣工檢驗<em class="src">§18·一</em></li>
+          <li>甲方於驗收提報日起 <span class="val-blue">30 日</span>內開始驗收<em class="src">§18·四</em></li>
+          <li>驗收合格後甲方 <span class="val-blue">14 日</span>內核發驗收證明書<em class="src">§18·四</em></li>
+          <li>🔬 驗收標準：涵蓋範圍場強圖應符合施工規範（RSRP 95% <span class="val">≥ −99 dBm</span>，詳施工規範）<em class="src">§特訂條款·驗收</em></li>
+          <li>工程結算：收到驗收證明書後 <span class="val">7 日</span>內申請，需附<strong>切結書</strong><em class="src">§16·十二</em></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="fv-sub-header" style="color:#1e8449;">🛡️ 保固期管理（2 年）</div>
+        <ul class="fv-items">
+          <li>保固保證金：結算金額之 <span class="val">5%</span>，保固期屆滿無異議後 <span class="val-blue">20 日</span>內退還<em class="src">§19·三/五</em></li>
+          <li>保固期內瑕疵改正：接獲通知起 <span class="val">7 日</span>內完成改正<em class="src">§19·六</em></li>
+          <li>書面催告 <span class="val">3 工作天</span>仍未到場維修：延長合約有效期限<em class="src">§附件2·罰則</em></li>
+        </ul>
+        <div class="fv-warn green"><strong>📌 驗收款付款：</strong>訊號強度驗收合格後次月 30 日給付（驗收款 10%），務必確保驗收一次通過，避免影響付款時程</div>
+      </div>
+
+    </div>
+
+  </div><!-- /#view-field -->
+
   <!-- Footer -->
   <div class="footer">
     <div>契約書版本：<span>V4（民國115年）</span>｜文件基礎：⭕️⭕️⭕️</div>
@@ -742,10 +932,12 @@
 
   /* ── Tab switching ── */
   function switchTab(t) {
-    document.getElementById('view-func').style.display     = t==='func'    ? '' : 'none';
-    document.getElementById('view-chapter').style.display  = t==='chapter' ? 'block' : 'none';
+    document.getElementById('view-func').style.display    = t==='func'    ? '' : 'none';
+    document.getElementById('view-chapter').style.display = t==='chapter' ? 'block' : 'none';
+    document.getElementById('view-field').style.display   = t==='field'   ? 'block' : 'none';
     document.getElementById('tab-func').classList.toggle('active',    t==='func');
     document.getElementById('tab-chapter').classList.toggle('active', t==='chapter');
+    document.getElementById('tab-field').classList.toggle('active',   t==='field');
     if (t === 'chapter' && !document.getElementById('view-chapter').dataset.built) {
       buildChapterView();
       document.getElementById('view-chapter').dataset.built = '1';
