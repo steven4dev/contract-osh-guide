@@ -796,6 +796,21 @@
   body:not(.dark) .bom-summary-box { background: #f0f5fb; border-color: #d0dcea; color: #555; }
   body:not(.dark) .bom-summary-box strong { color: #c0392b; }
 
+  /* keyword chips */
+  .bom-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .bom-chip {
+    padding: 3px 11px; border-radius: 12px; font-size: 11px; font-weight: 700;
+    cursor: pointer; border: 1px solid #3a5070; color: #aab;
+    background: transparent; transition: all .15s; user-select: none;
+  }
+  .bom-chip:hover  { background: #1e2e42; color: #7ec8ff; border-color: #2563a8; }
+  .bom-chip.active { background: #2563a8; color: #fff; border-color: #2563a8; }
+  body:not(.dark) .bom-chip { border-color: #bdd0ea; color: #667; }
+  body:not(.dark) .bom-chip:hover  { background: #e8f0fb; color: #2563a8; border-color: #2563a8; }
+  body:not(.dark) .bom-chip.active { background: #2563a8; color: #fff; }
+  mark.bom-hl { background: #f39c12; color: #000; border-radius: 2px; padding: 0 1px; }
+  body:not(.dark) mark.bom-hl { background: #f1c40f; }
+
 </style>
 </head>
 <body>
@@ -822,7 +837,7 @@
     <button class="tab-btn" id="tab-chapter" onclick="switchTab('chapter')">📖 章節排序</button>
     <button class="tab-btn" id="tab-field" onclick="switchTab('field')">👷 現場工務</button>
     <button class="tab-btn" id="tab-das" onclick="switchTab('das')">📡 系統概要</button>
-    <button class="tab-btn" id="tab-bom" onclick="switchTab('bom')">📋 報價單</button>
+    <button class="tab-btn" id="tab-bom" onclick="switchTab('bom')">📋 BOM</button>
     <button id="btn-toggle-all" onclick="toggleAllSections()">⊟ 全部收摺</button>
   </div>
 
@@ -1538,7 +1553,20 @@
       <button class="bom-filter-btn" onclick="bomFilter('1',this)">一、被動式（4G）</button>
       <button class="bom-filter-btn" onclick="bomFilter('2',this)">二、主動式（5G）</button>
       <button class="bom-filter-btn" onclick="bomFilter('3',this)">三、保險管理費</button>
-      <input class="bom-search" type="text" placeholder="🔍 搜尋品項…" oninput="bomSearch(this.value)">
+      <input class="bom-search" id="bom-search-input" type="text" placeholder="🔍 輸入關鍵字篩選…" oninput="bomSearch(this.value)">
+    </div>
+    <div class="bom-chips">
+      <span class="bom-chip" onclick="bomChip(this,'SISO')">SISO</span>
+      <span class="bom-chip" onclick="bomChip(this,'Omni')">Omni 天線</span>
+      <span class="bom-chip" onclick="bomChip(this,'Panel')">Panel 天線</span>
+      <span class="bom-chip" onclick="bomChip(this,'分配器')">分配器</span>
+      <span class="bom-chip" onclick="bomChip(this,'同軸電纜')">同軸電纜</span>
+      <span class="bom-chip" onclick="bomChip(this,'光纜')">光纜</span>
+      <span class="bom-chip" onclick="bomChip(this,'電梯')">電梯</span>
+      <span class="bom-chip" onclick="bomChip(this,'POI')">POI</span>
+      <span class="bom-chip" onclick="bomChip(this,'接頭')">接頭</span>
+      <span class="bom-chip" onclick="bomChip(this,'RU')">RU</span>
+      <span class="bom-chip" onclick="bomChip(this,'高空作業車')">高空作業車</span>
     </div>
     <div class="bom-table-wrap">
       <table class="bom-table" id="bom-table">
@@ -1707,17 +1735,42 @@
     }
   }
 
-  /* ── BOM filter / search ── */
+  /* ── BOM filter / search / chips ── */
   let _bomSec = 'all', _bomQ = '';
-  function _bomRender() {
-    document.querySelectorAll('#bom-body tr').forEach(function(tr) {
-      const sec = tr.dataset.sec || '';
-      const txt = tr.textContent.toLowerCase();
-      const secOk = _bomSec === 'all' || sec === _bomSec;
-      const qOk   = _bomQ === '' || txt.includes(_bomQ);
-      tr.style.display = (secOk && qOk) ? '' : 'none';
+
+  // store original cell text on first render
+  function _bomStoreOriginal() {
+    document.querySelectorAll('#bom-body tr td:nth-child(2)').forEach(function(td) {
+      if (!td.dataset.orig) td.dataset.orig = td.innerHTML;
     });
   }
+
+  function _bomRender() {
+    _bomStoreOriginal();
+    var q = _bomQ;
+    document.querySelectorAll('#bom-body tr').forEach(function(tr) {
+      var sec = tr.dataset.sec || '';
+      var secOk = _bomSec === 'all' || sec === _bomSec;
+      // for section/sub header rows: show if secOk, ignore text filter
+      var isHeader = tr.classList.contains('bom-sec-main') || tr.classList.contains('bom-sec-sub') || tr.classList.contains('bom-sec-subsub');
+      if (isHeader) { tr.style.display = secOk ? '' : 'none'; return; }
+      var td2 = tr.querySelector('td:nth-child(2)');
+      var orig = td2 ? (td2.dataset.orig || td2.innerHTML) : '';
+      var txt  = tr.textContent.toLowerCase();
+      var qOk  = q === '' || txt.includes(q.toLowerCase());
+      tr.style.display = (secOk && qOk) ? '' : 'none';
+      // highlight
+      if (td2) {
+        if (q && qOk) {
+          var re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+          td2.innerHTML = orig.replace(re, '<mark class="bom-hl">$1</mark>');
+        } else {
+          td2.innerHTML = orig;
+        }
+      }
+    });
+  }
+
   function bomFilter(s, btn) {
     _bomSec = s;
     document.querySelectorAll('.bom-filter-btn').forEach(function(b){ b.classList.remove('active'); });
@@ -1725,7 +1778,23 @@
     _bomRender();
   }
   function bomSearch(q) {
-    _bomQ = q.toLowerCase().trim();
+    _bomQ = q.trim();
+    // clear chips if user types manually
+    document.querySelectorAll('.bom-chip').forEach(function(c){ c.classList.remove('active'); });
+    _bomRender();
+  }
+  function bomChip(chip, kw) {
+    var inp = document.getElementById('bom-search-input');
+    var already = chip.classList.contains('active');
+    document.querySelectorAll('.bom-chip').forEach(function(c){ c.classList.remove('active'); });
+    if (already) {
+      _bomQ = '';
+      inp.value = '';
+    } else {
+      chip.classList.add('active');
+      _bomQ = kw;
+      inp.value = kw;
+    }
     _bomRender();
   }
 
