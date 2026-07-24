@@ -1296,8 +1296,10 @@
 
     <!-- P3: 本案架構 -->
     <div id="das-p3" class="das-panel">
+
+      <!-- 系統①：被動 4G -->
       <div class="das-flow-card">
-        <h3>🏢 本案訊號系統示意圖</h3>
+        <h3>① 被動式系統（4G SISO）　全棟公共區 + 私區</h3>
         <div class="das-sys-row">
           <div class="das-sys-box"><span class="ico">🗼</span>室外基地台</div>
           <span class="das-arrow">→</span>
@@ -1307,11 +1309,30 @@
           <span class="das-arrow">→</span>
           <div class="das-sys-box purple"><span class="ico">🔀</span>分配器<br><small class="das-small">212 支</small></div>
           <span class="das-arrow">→</span>
-          <div class="das-sys-box green"><span class="ico">📡</span>天線<br><small class="das-small">336 Omni</small></div>
+          <div class="das-sys-box green"><span class="ico">📡</span>SISO 天線<br><small class="das-small">345 支</small></div>
           <span class="das-arrow">→</span>
-          <div class="das-sys-box red"><span class="ico">📱</span>手機收訊</div>
+          <div class="das-sys-box red"><span class="ico">📱</span>手機 4G</div>
         </div>
-        <div class="das-note">主幹電纜（1-1/4"）從機房出發 → 各樓層改用 7/8" 次幹 → 末端 1/2" 連接天線</div>
+        <div class="das-note">主幹（1-1/4"）從機房出發 → 各樓層 7/8" 次幹 → 末端 1/2" 接天線｜不需電源，純被動傳輸</div>
+      </div>
+
+      <!-- 系統②：主動 5G -->
+      <div class="das-flow-card">
+        <h3>② 主動式系統（5G 4×4 MIMO）　A棟 3–4F</h3>
+        <div class="das-sys-row">
+          <div class="das-sys-box"><span class="ico">🗼</span>室外基地台<br><small class="das-small">×3 業者</small></div>
+          <span class="das-arrow">→</span>
+          <div class="das-sys-box orange"><span class="ico">📦</span>CU<br><small class="das-small">×3 組</small></div>
+          <span class="das-arrow">→</span>
+          <div class="das-sys-box orange"><span class="ico">🖥️</span>MU<br><small class="das-small">主機 ×1</small></div>
+          <span class="das-arrow">→</span>
+          <div class="das-sys-box orange"><span class="ico">🔁</span>EU<br><small class="das-small">中繼 ×2</small></div>
+          <span class="das-arrow">→</span>
+          <div class="das-sys-box orange"><span class="ico">📡</span>RU 天線<br><small class="das-small">×12 支</small></div>
+          <span class="das-arrow">→</span>
+          <div class="das-sys-box red"><span class="ico">📱</span>手機 5G</div>
+        </div>
+        <div class="das-note">光電混合纜（720 米）傳資料＋供電｜4×4 MIMO 速度為被動系統 2–4 倍｜設備需接電</div>
       </div>
 
       <div class="das-flow-card">
