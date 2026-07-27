@@ -444,6 +444,27 @@
   body.dark .ch-body li { color: #c8d8e8; }
 
   /* ── Field view (現場工務) ── */
+
+  /* -- Field view inner tabs -- */
+  .field-inner-tabs {
+    display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap;
+    background: #f0f2f5; padding: 8px 10px; border-radius: 8px;
+    border: 1px solid #d8dde6;
+  }
+  .field-tab-btn {
+    padding: 5px 16px; border: 1px solid #b0bcc8; border-radius: 20px;
+    background: #fff; color: #445; font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: all .2s;
+  }
+  .field-tab-btn.active { background: #1a3a5c; color: #fff; border-color: #1a3a5c; }
+  .field-tab-btn:hover:not(.active) { background: #e8edf5; border-color: #8898aa; }
+  .field-panel { display: none; }
+  .field-panel.active { display: block; }
+  body.dark .field-inner-tabs { background: #1a2030; border-color: #2a3a4a; }
+  body.dark .field-tab-btn { background: #1e2a38; color: #7ec8ff; border-color: #2a3a4a; }
+  body.dark .field-tab-btn.active { background: #2563a8; color: #fff; border-color: #2563a8; }
+  body.dark .field-tab-btn:hover:not(.active) { background: #1e2e42; }
+
   #view-field { display: none; padding: 14px 16px; }
 
   /* Role header banners */
@@ -1188,6 +1209,15 @@
   <!-- Field personnel view -->
   <div id="view-field">
 
+    <div class="field-inner-tabs">
+      <button class="field-tab-btn active" onclick="fieldSwitchTab('fld-p1',this)">&#128119; 工地主任</button>
+      <button class="field-tab-btn" onclick="fieldSwitchTab('fld-p2',this)">&#129381; 職安管理員</button>
+      <button class="field-tab-btn" onclick="fieldSwitchTab('fld-p3',this)">&#9989; 品管人員</button>
+      <button class="field-tab-btn" onclick="fieldSwitchTab('fld-p4',this)">&#128203; 施工時序清單</button>
+    </div>
+
+    <div id="fld-p1" class="field-panel active">
+
     <!-- ══ 一、工地主任 ══ -->
     <div class="fv-role-header fv-hdr-blue">👷 一、工地主任　重點注意事項</div>
     <div class="fv-grid">
@@ -1238,6 +1268,10 @@
 
     </div>
 
+    </div><!-- /fld-p1 -->
+
+    <div id="fld-p2" class="field-panel">
+
     <!-- ══ 二、職安管理員 ══ -->
     <div class="fv-role-header fv-hdr-orange">🦺 二、職安管理員　重點注意事項</div>
     <div class="fv-grid">
@@ -1279,6 +1313,10 @@
       </div>
 
     </div>
+
+    </div><!-- /fld-p2 -->
+
+    <div id="fld-p3" class="field-panel">
 
     <!-- ══ 三、品管人員 ══ -->
     <div class="fv-role-header fv-hdr-green">✅ 三、品管人員　重點注意事項</div>
@@ -1326,6 +1364,10 @@
 
     </div>
 
+
+    </div><!-- /fld-p3 -->
+
+    <div id="fld-p4" class="field-panel">
 
     <!-- == 施工時序檢核清單 == -->
     <div class="fv-role-header fv-hdr-purple" style="margin-top:28px;">&#128203; 施工時序檢核清單　依工程推進時序</div>
@@ -1701,6 +1743,7 @@
         </div>
       </div>
     </div><!-- /#chk-list -->
+    </div><!-- /fld-p4 -->
 
   </div><!-- /#view-field -->
 
@@ -2190,6 +2233,14 @@
   /* ── Tab switching ── */
 
 
+
+
+  function fieldSwitchTab(panelId, btn) {
+    document.querySelectorAll('.field-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.field-tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(panelId).classList.add('active');
+    btn.classList.add('active');
+  }
 
   function chkExpandAll(btn) {
     const blocks = document.querySelectorAll('.phase-block');
