@@ -448,20 +448,17 @@
   /* -- Field view inner tabs -- */
   .field-inner-tabs {
     display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap;
-    background: #f0f2f5; padding: 8px 10px; border-radius: 8px;
-    border: 1px solid #d8dde6;
   }
   .field-tab-btn {
-    padding: 5px 16px; border: 1px solid #b0bcc8; border-radius: 20px;
-    background: #fff; color: #445; font-size: 12px; font-weight: 700;
+    padding: 5px 14px; border: 1px solid #3a5070; border-radius: 20px;
+    background: transparent; color: #3a5070; font-size: 12px; font-weight: 700;
     cursor: pointer; transition: all .2s;
   }
-  .field-tab-btn.active { background: #1a3a5c; color: #fff; border-color: #1a3a5c; }
-  .field-tab-btn:hover:not(.active) { background: #e8edf5; border-color: #8898aa; }
+  .field-tab-btn.active { background: #2563a8; color: #fff; border-color: #2563a8; }
+  .field-tab-btn:hover:not(.active) { background: #e8edf5; }
   .field-panel { display: none; }
   .field-panel.active { display: block; }
-  body.dark .field-inner-tabs { background: #1a2030; border-color: #2a3a4a; }
-  body.dark .field-tab-btn { background: #1e2a38; color: #7ec8ff; border-color: #2a3a4a; }
+  body.dark .field-tab-btn { color: #7ec8ff; border-color: #3a5070; }
   body.dark .field-tab-btn.active { background: #2563a8; color: #fff; border-color: #2563a8; }
   body.dark .field-tab-btn:hover:not(.active) { background: #1e2e42; }
 
