@@ -519,6 +519,35 @@
   body.dark .fv-warn.green strong { color: #6ed4a0; }
 
 
+
+  /* -- Checklist role filter chips -- */
+  .chk-filter-bar {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin: 10px 0 14px;
+  }
+  .chk-role-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    cursor: pointer; border: 2px solid transparent; transition: all 0.15s;
+    user-select: none;
+  }
+  .chk-btn-blue   { background: #eaf2fb; color: #1a5276; border-color: #aed6f1; }
+  .chk-btn-green  { background: #eafaf1; color: #1e8449; border-color: #a9dfbf; }
+  .chk-btn-orange { background: #fef9e7; color: #b7770d; border-color: #f9e79f; }
+  .chk-btn-blue.active   { background: #1a5276; color: #fff; border-color: #1a5276; }
+  .chk-btn-green.active  { background: #1e8449; color: #fff; border-color: #1e8449; }
+  .chk-btn-orange.active { background: #b7770d; color: #fff; border-color: #b7770d; }
+  .chk-role-btn:hover:not(.active) { filter: brightness(0.93); }
+  body.dark .chk-btn-blue   { background: #132030; color: #4da6ff; border-color: #2a4a70; }
+  body.dark .chk-btn-green  { background: #0e2018; color: #6ed4a0; border-color: #1a4a28; }
+  body.dark .chk-btn-orange { background: #1e1508; color: #f0a060; border-color: #4a3010; }
+  body.dark .chk-btn-blue.active   { background: #1a4060; color: #7ec8ff; border-color: #2a6090; }
+  body.dark .chk-btn-green.active  { background: #0e3020; color: #8ee8b8; border-color: #1a6030; }
+  body.dark .chk-btn-orange.active { background: #3a2008; color: #f0c080; border-color: #6a4018; }
+
+  /* single-column mode when role is filtered */
+  .chk-grid.role-filtered { grid-template-columns: 1fr !important; }
+
   /* -- Checklist (施工時序) -- */
   .fv-hdr-purple { background: #4a235a; }
   body.dark .fv-hdr-purple { background: #2a1535; color: #d8a8f0; border: 1px solid #5a2a75; }
@@ -1300,6 +1329,12 @@
 
     <!-- == 施工時序檢核清單 == -->
     <div class="fv-role-header fv-hdr-purple" style="margin-top:28px;">&#128203; 施工時序檢核清單　依工程推進時序</div>
+
+    <div class="chk-filter-bar">
+      <span class="chk-role-btn chk-btn-blue"   onclick="chkFilter('blue',this)">&#128119; 工地主任</span>
+      <span class="chk-role-btn chk-btn-green"  onclick="chkFilter('green',this)">&#9989; 品管人員</span>
+      <span class="chk-role-btn chk-btn-orange" onclick="chkFilter('orange',this)">&#129381; 職安人員</span>
+    </div>
     <div id="chk-list">
 
       <div class="phase-block">
@@ -1352,7 +1387,7 @@
               <div class="chk-role-label">&#128119; 工地主任</div>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>主機房位置、面積、承重確認（POI ×10 組、CU ×3 組空間需求）</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>主機房電源容量確認（5G CU/MU/EU 設備用電需求）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>設備吊裝進場路線確認</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>設備搬運進場路線確認（POI/CU/MU/EU 均為人力可搬運規格）</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>設備安裝進度里程碑記錄</span></label>
             </div>
             <div class="chk-col chk-green">
@@ -1369,7 +1404,6 @@
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>主機房進出管制：懸掛「施工中—閒人禁入」標示，非施工人員不得進入</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電氣作業前確認停電並執行鎖定掛牌（LOTO）：上鎖 → 掛牌 → 測電確認零電位，方可施工</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>機架設備搬運：確認搬運路線淨空（走道寬度、電梯承重），人員站於設備兩側、不得站正前方</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>重型機架吊裝時：地面人員全數退出下方，以導引繩控制擺動，禁止手扶底部</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>機房內作業若有電氣設備帶電部位暴露：設置臨時護欄或警示膠帶隔離</span></label>
             </div>
           </div>
@@ -1399,7 +1433,7 @@
             </div>
             <div class="chk-col chk-orange">
               <div class="chk-role-label">&#129381; 職安人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>豎井作業開始前：確認豎井頂底無積水、異味（排除有毒氣體風險），並保持通風</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>豎井作業開始前：確認豎井內通風狀況，作業期間保持空氣流通，若悶熱潮濕則先散氣再進入</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>豎井內垂直施工：每人配備 Y 型雙掛鉤安全帶，掛於固定錨點（不得掛於電纜橋架或管線上）</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>上下作業不得垂直同步進行：電纜牽引時底部人員全數退出豎井下方區域並設隔離警示</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電纜卷盤放置：固定於樓板（以卷盤架固定），避免翻倒後滾落傷人</span></label>
@@ -1474,7 +1508,6 @@
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>高空作業車天花板作業：平台上升至距天花板 30～50cm 處操作，禁止以身體頂靠天花板輔助施力</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>鑽孔作業：操作人員配戴護目鏡及防塵口罩，鑽孔正下方設圍籬禁止人員停留</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>天花板嵌入型天線安裝：確認開口周圍天花板結構完整，避免大面積破壞造成天花板局部塌落</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>振動工具（電鑽）使用：同一作業人員連續使用不超過 30 分鐘，輪換以避免手臂振動傷害（白指病）</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>私區樓層有住戶/使用者時：施工前公告施工時間，並設置隔離圍籬防止閒人誤入</span></label>
             </div>
           </div>
@@ -2157,6 +2190,21 @@
   }
 
   /* ── Tab switching ── */
+
+
+  function chkFilter(role, el) {
+    const isActive = el.classList.contains('active');
+    document.querySelectorAll('.chk-role-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.chk-col').forEach(c => c.style.display = '');
+    document.querySelectorAll('.chk-grid').forEach(g => g.classList.remove('role-filtered'));
+    if (!isActive) {
+      el.classList.add('active');
+      document.querySelectorAll('.chk-col').forEach(c => {
+        c.style.display = c.classList.contains('chk-' + role) ? '' : 'none';
+      });
+      document.querySelectorAll('.chk-grid').forEach(g => g.classList.add('role-filtered'));
+    }
+  }
 
   function togglePhase(hdr) {
     hdr.closest('.phase-block').classList.toggle('open');
