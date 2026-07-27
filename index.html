@@ -1335,6 +1335,13 @@
       <span class="chk-role-btn chk-btn-green"  onclick="chkFilter('green',this)">&#9989; 品管人員</span>
       <span class="chk-role-btn chk-btn-orange" onclick="chkFilter('orange',this)">&#129381; 職安人員</span>
     </div>
+
+    <div style="display:flex;align-items:center;justify-content:flex-end;margin-bottom:8px;">
+      <button id="chk-expand-btn" onclick="chkExpandAll(this)"
+        style="background:none;border:1px solid #aaa;border-radius:4px;padding:3px 12px;font-size:12px;cursor:pointer;color:#555;">
+        &#9660; 全部展開
+      </button>
+    </div>
     <div id="chk-list">
 
       <div class="phase-block">
@@ -1401,7 +1408,6 @@
             </div>
             <div class="chk-col chk-orange">
               <div class="chk-role-label">&#129381; 職安人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>主機房進出管制：懸掛「施工中—閒人禁入」標示，非施工人員不得進入</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電氣作業前確認停電並執行鎖定掛牌（LOTO）：上鎖 → 掛牌 → 測電確認零電位，方可施工</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>機架設備搬運：確認搬運路線淨空（走道寬度、電梯承重），人員站於設備兩側、不得站正前方</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>機房內作業若有電氣設備帶電部位暴露：設置臨時護欄或警示膠帶隔離</span></label>
@@ -1508,7 +1514,7 @@
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>高空作業車天花板作業：平台上升至距天花板 30～50cm 處操作，禁止以身體頂靠天花板輔助施力</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>鑽孔作業：操作人員配戴護目鏡及防塵口罩，鑽孔正下方設圍籬禁止人員停留</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>天花板嵌入型天線安裝：確認開口周圍天花板結構完整，避免大面積破壞造成天花板局部塌落</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>私區樓層有住戶/使用者時：施工前公告施工時間，並設置隔離圍籬防止閒人誤入</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>私區樓層有住戶/使用者時：事前通知建物管理方，確認並協調可施工時段</span></label>
             </div>
           </div>
         </div>
@@ -1601,7 +1607,6 @@
             <div class="chk-col chk-orange">
               <div class="chk-role-label">&#129381; 職安人員</div>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>PIM 測試儀輸出功率極高（2x43 dBm = 2x20W）：測試期間禁止任何人員站立於天線正前方（依廠商建議至少 1m），並懸掛警示牌</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>PIM 測試儀電源線：使用前目視檢查是否破損、插頭是否鬆動，確認接地良好再開機</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>測試儀連接射頻纜線時：確認接頭已鎖緊，RF 高功率下鬆脫接頭可能造成電弧或設備損傷</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>測試期間如發現設備異常高溫或異味：立即關閉電源，通報工地主任，不得繼續施加功率</span></label>
             </div>
@@ -1633,9 +1638,7 @@
             </div>
             <div class="chk-col chk-orange">
               <div class="chk-role-label">&#129381; 職安人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>測試人員在各樓層移動時：持測試設備行走，注意腳下電纜線或地面不平處，避免絆倒</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>停車場 B1/B2 測試期間：確認停車場照明充足，不足時配備手電筒，地面有高低差或車擋需特別注意</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電梯測試期間：測試人員進出電梯時確認電梯門全開後再進出，不得在門縫未全開時擠入</span></label>
             </div>
           </div>
         </div>
@@ -2191,6 +2194,14 @@
 
   /* ── Tab switching ── */
 
+
+
+  function chkExpandAll(btn) {
+    const blocks = document.querySelectorAll('.phase-block');
+    const allOpen = [...blocks].every(b => b.classList.contains('open'));
+    blocks.forEach(b => b.classList.toggle('open', !allOpen));
+    btn.innerHTML = allOpen ? '&#9660; 全部展開' : '&#9650; 全部收合';
+  }
 
   function chkFilter(role, el) {
     const isActive = el.classList.contains('active');
