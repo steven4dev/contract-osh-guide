@@ -539,6 +539,26 @@
 
 
   /* -- Checklist role filter chips -- */
+
+  /* -- 來源標籤 -- */
+  .src-badge {
+    display: inline-block; font-size: 9px; font-weight: 700; padding: 1px 6px;
+    border-radius: 10px; margin-right: 5px; vertical-align: middle;
+    letter-spacing: 0.3px; white-space: nowrap; flex-shrink: 0;
+  }
+  .src-contract { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+  .src-law      { background: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
+  .src-rec      { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+  body.dark .src-contract { background: #1e3a5f; color: #93c5fd; border-color: #1e40af; }
+  body.dark .src-law      { background: #431407; color: #fb923c; border-color: #c2410c; }
+  body.dark .src-rec      { background: #1e293b; color: #94a3b8; border-color: #334155; }
+  .chk-legend {
+    display: flex; gap: 12px; flex-wrap: wrap; margin: 0 0 10px;
+    font-size: 11px; color: #667; align-items: center;
+  }
+  body.dark .chk-legend { color: #8a9bb0; }
+  .chk-legend span.lbl { font-weight: 600; }
+
   .chk-filter-bar {
     display: flex; gap: 6px; flex-wrap: wrap;
     margin: 10px 0 14px;
@@ -1199,8 +1219,8 @@
 
     <div class="field-inner-tabs">
       <button class="field-tab-btn active" onclick="fieldSwitchTab('fld-p1',this)">&#128119; 工地主任</button>
-      <button class="field-tab-btn" onclick="fieldSwitchTab('fld-p2',this)">&#129381; 職安人員</button>
       <button class="field-tab-btn" onclick="fieldSwitchTab('fld-p3',this)">&#9989; 品管人員</button>
+      <button class="field-tab-btn" onclick="fieldSwitchTab('fld-p2',this)">&#129381; 職安人員</button>
       <button class="field-tab-btn" onclick="fieldSwitchTab('fld-p4',this)">&#128203; 施工時序清單</button>
     </div>
 
@@ -1356,6 +1376,7 @@
 
     <!-- == 施工時序檢核清單 == -->
 
+    <div class="chk-legend"><span class="lbl">標示：</span><span class="src-badge src-contract">合約</span>合約明定義務　<span class="src-badge src-law">法規</span>職安法及相關法規　<span class="src-badge src-rec">建議</span>最佳實務（非強制）</div>
     <div class="chk-filter-bar">
       <span class="chk-role-btn" onclick="chkFilter('blue',this)">工地主任</span>
       <span class="chk-role-btn" onclick="chkFilter('green',this)">品管人員</span>
@@ -1378,34 +1399,34 @@
           <div class="chk-grid">
             <div class="chk-col chk-blue">
               <div class="chk-role-label">&#128119; 工地主任</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>施工計畫書（含安衛計畫、品管計畫章節）3份，接獲通知次日起 30 日內送審</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>工地負責人資格文件（本工程相關經驗 ≥5 年）書面報甲方查核</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>安全衛生負責人資格文件（≥3 年）送審</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>履約保證金繳納確認</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>保險辦妥：雇主意外責任險、勞工保險、全民健保，開工前完成</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>被保險人確認：含甲方、乙方、各層分包商及新北市政府經濟發展局</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>施工介面確認：與建物其他包商協調電纜路由、管槽使用及施工時段</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>高空作業車（26 台月）進場計畫、停放區域及各樓層排程確認</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>材料進場路線、暫存區域核定（各規格電纜及光電混合纜）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>施工人員名冊建立，分包廠商資格文件備查</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>施工計畫書（含安衛計畫、品管計畫章節）3份，接獲通知次日起 30 日內送審</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>工地負責人資格文件（本工程相關經驗 ≥5 年）書面報甲方查核</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>安全衛生負責人資格文件（≥3 年）送審</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>履約保證金繳納確認</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>保險辦妥：雇主意外責任險、勞工保險、全民健保，開工前完成</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>被保險人確認：含甲方、乙方、各層分包商及新北市政府經濟發展局</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>施工介面確認：與建物其他包商協調電纜路由、管槽使用及施工時段</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>高空作業車（26 台月）進場計畫、停放區域及各樓層排程確認</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>材料進場路線、暫存區域核定（各規格電纜及光電混合纜）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>施工人員名冊建立，分包廠商資格文件備查</span></label>
             </div>
             <div class="chk-col chk-green">
               <div class="chk-role-label">&#9989; 品管人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>品質管制計畫送審，<strong>核准前不得施作</strong></span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>主要材料送審清單確認：電纜、分配器、天線、4.3-10 接頭、POI、CU/MU/EU/RU</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>廠商出廠檢驗合格書收集（電纜出廠測試報告、天線規格書）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>品管人員資格文件（相關經驗 ≥3 年）確認</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>品質管制計畫送審，<strong>核准前不得施作</strong></span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>主要材料送審清單確認：電纜、分配器、天線、4.3-10 接頭、POI、CU/MU/EU/RU</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>廠商出廠檢驗合格書收集（電纜出廠測試報告、天線規格書）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>品管人員資格文件（相關經驗 ≥3 年）確認</span></label>
             </div>
             <div class="chk-col chk-orange">
               <div class="chk-role-label">&#129381; 職安人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>安全衛生計畫送審（含高空作業、密閉空間、電氣作業等章節），核可後方可實施</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>工地環境勘查：確認各樓層淨高、電梯承重、天花板材質（石膏板/RC），研判高空作業車可進入範圍</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>所有進場人員施工前完成教育訓練，填寫訓練紀錄並保存（含分包商人員）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>個人防護裝備（PPE）確認備齊：安全帽、安全帶（Y型雙掛鉤）、防滑安全鞋、防護眼鏡</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>高空作業車操作人員：確認持有操作證照，進場前完成機械自主檢查並填寫日報表</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>緊急應變計畫核定：急救包位置公告、鄰近醫院（林口長庚）路線熟悉、緊急聯絡名冊張貼</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>工地安全組織確認，出席主承包商工地安全組織會議並簽到</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>施工計畫內安全衛生章節完整性確認（不得僅列標題無實質內容）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>安全衛生計畫送審（含高空作業、密閉空間、電氣作業等章節），核可後方可實施</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>工地環境勘查：確認各樓層淨高、電梯承重、天花板材質（石膏板/RC），研判高空作業車可進入範圍</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>所有進場人員施工前完成教育訓練，填寫訓練紀錄並保存（含分包商人員）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>個人防護裝備（PPE）確認備齊：安全帽、安全帶（Y型雙掛鉤）、防滑安全鞋、防護眼鏡</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>高空作業車操作人員：確認持有操作證照，進場前完成機械自主檢查並填寫日報表</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>緊急應變計畫核定：急救包位置公告、鄰近醫院（林口長庚）路線熟悉、緊急聯絡名冊張貼</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>工地安全組織確認，出席主承包商工地安全組織會議並簽到</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>施工計畫內安全衛生章節完整性確認（不得僅列標題無實質內容）</span></label>
             </div>
           </div>
         </div>
@@ -1418,25 +1439,25 @@
           <div class="chk-grid">
             <div class="chk-col chk-blue">
               <div class="chk-role-label">&#128119; 工地主任</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>主機房位置、面積、承重確認（POI ×10 組、CU ×3 組空間需求）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>主機房電源容量確認（5G CU/MU/EU 設備用電需求）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>設備搬運進場路線確認（POI/CU/MU/EU 均為人力可搬運規格）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>設備安裝進度里程碑記錄</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>主機房位置、面積、承重確認（POI ×10 組、CU ×3 組空間需求）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>主機房電源容量確認（5G CU/MU/EU 設備用電需求）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>設備搬運進場路線確認（POI/CU/MU/EU 均為人力可搬運規格）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>設備安裝進度里程碑記錄</span></label>
             </div>
             <div class="chk-col chk-green">
               <div class="chk-role-label">&#9989; 品管人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>POI 外觀查驗（16 進 4 出口數確認）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>POI 規格書核對（頻段支援、插入損耗、最大輸入功率）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>CU/MU/EU 設備序號與送審資料核對</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>設備安裝水平度、固定牢固度查驗</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>主機房設備機架接地連接查驗</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電源線施工符合電氣法規確認</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>POI 外觀查驗（16 進 4 出口數確認）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>POI 規格書核對（頻段支援、插入損耗、最大輸入功率）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>CU/MU/EU 設備序號與送審資料核對</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>設備安裝水平度、固定牢固度查驗</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>主機房設備機架接地連接查驗</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>電源線施工符合電氣法規確認</span></label>
             </div>
             <div class="chk-col chk-orange">
               <div class="chk-role-label">&#129381; 職安人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電氣作業前確認停電並執行鎖定掛牌（LOTO）：上鎖 → 掛牌 → 測電確認零電位，方可施工</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>機架設備搬運：確認搬運路線淨空（走道寬度、電梯承重），人員站於設備兩側、不得站正前方</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>機房內作業若有電氣設備帶電部位暴露：設置臨時護欄或警示膠帶隔離</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>電氣作業前確認停電並執行鎖定掛牌（LOTO）：上鎖 → 掛牌 → 測電確認零電位，方可施工</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>機架設備搬運：確認搬運路線淨空（走道寬度、電梯承重），人員站於設備兩側、不得站正前方</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>機房內作業若有電氣設備帶電部位暴露：設置臨時護欄或警示膠帶隔離</span></label>
             </div>
           </div>
         </div>
@@ -1449,28 +1470,28 @@
           <div class="chk-grid">
             <div class="chk-col chk-blue">
               <div class="chk-role-label">&#128119; 工地主任</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>垂直主幹路由（電管間/豎井）使用協議，與建物管理確認</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電纜牽引計畫制定（含 A 棟垂直段及各樓層預留）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>各樓層穿越樓板防火封堵施工安排</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>線纜進場數量點收（含 4.3-10 接頭及編號牌）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>垂直主幹路由（電管間/豎井）使用協議，與建物管理確認</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>電纜牽引計畫制定（含 A 棟垂直段及各樓層預留）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>各樓層穿越樓板防火封堵施工安排</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>線纜進場數量點收（含 4.3-10 接頭及編號牌）</span></label>
             </div>
             <div class="chk-col chk-green">
               <div class="chk-role-label">&#9989; 品管人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>1-1/4" 電纜外皮損傷查驗（牽引過程中即時確認）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電纜最小彎曲半徑確認（建議 ≥10 倍纜徑）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>吊桿間距查驗（建議 ≤1.5m，重型電纜段加密）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>各樓層預留長度確認（含分配器連接餘量）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>線纜編號牌安裝位置及標示正確性查驗</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>防火封堵材料規格確認（防火泥/防火板，需通過耐火測試）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>防火封堵材料施工：確認封堵後不留縫隙，施工完成後拍照存檔</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>1-1/4" 電纜外皮損傷查驗（牽引過程中即時確認）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>電纜最小彎曲半徑確認（建議 ≥10 倍纜徑）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>吊桿間距查驗（建議 ≤1.5m，重型電纜段加密）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>各樓層預留長度確認（含分配器連接餘量）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>線纜編號牌安裝位置及標示正確性查驗</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>防火封堵材料規格確認（防火泥/防火板，需通過耐火測試）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>防火封堵材料施工：確認封堵後不留縫隙，施工完成後拍照存檔</span></label>
             </div>
             <div class="chk-col chk-orange">
               <div class="chk-role-label">&#129381; 職安人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>豎井作業開始前：確認豎井內通風狀況，作業期間保持空氣流通，若悶熱潮濕則先散氣再進入</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>豎井內垂直施工：每人配備 Y 型雙掛鉤安全帶，掛於固定錨點（不得掛於電纜橋架或管線上）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>上下作業不得垂直同步進行：電纜牽引時底部人員全數退出豎井下方區域並設隔離警示</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電纜卷盤放置：固定於樓板（以卷盤架固定），避免翻倒後滾落傷人</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>穿越樓板鑽孔：使用吸塵器即時抽塵，操作人員配戴 N95 口罩及防護眼鏡</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>豎井作業開始前：確認豎井內通風狀況，作業期間保持空氣流通，若悶熱潮濕則先散氣再進入</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>豎井內垂直施工：每人配備 Y 型雙掛鉤安全帶，掛於固定錨點（不得掛於電纜橋架或管線上）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>上下作業不得垂直同步進行：電纜牽引時底部人員全數退出豎井下方區域並設隔離警示</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>電纜卷盤放置：固定於樓板（以卷盤架固定），避免翻倒後滾落傷人</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>穿越樓板鑽孔：使用吸塵器即時抽塵，操作人員配戴 N95 口罩及防護眼鏡</span></label>
             </div>
           </div>
         </div>
@@ -1483,32 +1504,32 @@
           <div class="chk-grid">
             <div class="chk-col chk-blue">
               <div class="chk-role-label">&#128119; 工地主任</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>各樓層施工順序排定（配合建物各區開放時程）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>高空作業車排班計畫（26 台月分配於各工區）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>分配器進場點收（2路108支、3路52支、4路30支、不平衡22支，共 212 支）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>7/8" 電纜（4,230m）、1/2" 電纜（1,408m）進場核對</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>吊桿（4,300 支）進場點收</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>每日進度與施工計畫對照，落後 ≥10% 須提報趕工計畫</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>各樓層施工順序排定（配合建物各區開放時程）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>高空作業車排班計畫（26 台月分配於各工區）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>分配器進場點收（2路108支、3路52支、4路30支、不平衡22支，共 212 支）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>7/8" 電纜（4,230m）、1/2" 電纜（1,408m）進場核對</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>吊桿（4,300 支）進場點收</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>每日進度與施工計畫對照，落後 ≥10% 須提報趕工計畫</span></label>
             </div>
             <div class="chk-col chk-green">
               <div class="chk-role-label">&#9989; 品管人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>分配器型號與施工圖核對（各樓層路數需求）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>分配器安裝水平度查驗（垂直安裝型確認朝向）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>7/8"→1/2" 接頭轉換處查驗（4.3-10 M 接頭旋緊確認）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>1/2" 電纜最小彎曲半徑查驗（建議 ≥5 倍纜徑）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電纜固定吊桿間距查驗（1/2" 建議 ≤1.0m）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>線纜編號牌完整查驗（1/2" 共 141 組，7/8" 共 422 組）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>跳線安裝查驗（4.3-10M 跳線旋緊確認）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>分配器型號與施工圖核對（各樓層路數需求）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>分配器安裝水平度查驗（垂直安裝型確認朝向）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>7/8"→1/2" 接頭轉換處查驗（4.3-10 M 接頭旋緊確認）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>1/2" 電纜最小彎曲半徑查驗（建議 ≥5 倍纜徑）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>電纜固定吊桿間距查驗（1/2" 建議 ≤1.0m）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>線纜編號牌完整查驗（1/2" 共 141 組，7/8" 共 422 組）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>跳線安裝查驗（4.3-10M 跳線旋緊確認）</span></label>
             </div>
             <div class="chk-col chk-orange">
               <div class="chk-role-label">&#129381; 職安人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>高空作業車每日作業前自主安全檢查：液壓系統（無滲漏）、臂架動作（升降/轉向正常）、平台護欄（無鬆脫）、剎車（停車後不滑動），填寫日報表</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>高空作業車操作期間：地面設置警示三角錐（前後各 2 支），禁止車輛及非作業人員進入作業半徑</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>高空作業車平台上：人員必須佩掛安全帶並掛於平台專用掛點，嚴禁攀爬護欄或站立於護欄上取件</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>平台上嚴禁超載：人員＋工具＋材料總重不得超過額定承重，上平台前確認分量</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>走廊高空作業：下方設置警示圍籬，禁止地面人員在施工正下方通行</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>逃生動線管理：電纜線材不得橫跨走廊地面（即使暫時），必須走上方橋架或加設臨時護管</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>每日收工：施工廢料（電纜截頭、包裝材）集中清運，不堆積於樓板或走廊</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>高空作業車每日作業前自主安全檢查：液壓系統（無滲漏）、臂架動作（升降/轉向正常）、平台護欄（無鬆脫）、剎車（停車後不滑動），填寫日報表</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>高空作業車操作期間：地面設置警示三角錐（前後各 2 支），禁止車輛及非作業人員進入作業半徑</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>高空作業車平台上：人員必須佩掛安全帶並掛於平台專用掛點，嚴禁攀爬護欄或站立於護欄上取件</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>平台上嚴禁超載：人員＋工具＋材料總重不得超過額定承重，上平台前確認分量</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>走廊高空作業：下方設置警示圍籬，禁止地面人員在施工正下方通行</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>逃生動線管理：電纜線材不得橫跨走廊地面（即使暫時），必須走上方橋架或加設臨時護管</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>每日收工：施工廢料（電纜截頭、包裝材）集中清運，不堆積於樓板或走廊</span></label>
             </div>
           </div>
         </div>
@@ -1521,26 +1542,26 @@
           <div class="chk-grid">
             <div class="chk-col chk-blue">
               <div class="chk-role-label">&#128119; 工地主任</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>天線安裝位置依施工圖確認（公區 Omni 336 支、Panel 9 支）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>私區天線（Omni 20 支，B2F～2F / 10～13F / 20～21F）施工協調</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>天線進場點收（Omni 336 支公區 + 20 支私區、Panel 9 支）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>嵌入型天線（天花板）與建物裝修介面確認</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>私區樓層有住戶/使用者時：事前通知建物管理方，確認並協調可施工時段</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>天線安裝位置依施工圖確認（公區 Omni 336 支、Panel 9 支）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>私區天線（Omni 20 支，B2F～2F / 10～13F / 20～21F）施工協調</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>天線進場點收（Omni 336 支公區 + 20 支私區、Panel 9 支）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>嵌入型天線（天花板）與建物裝修介面確認</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>私區樓層有住戶/使用者時：事前通知建物管理方，確認並協調可施工時段</span></label>
             </div>
             <div class="chk-col chk-green">
               <div class="chk-role-label">&#9989; 品管人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>天線型號、頻段規格書核對（符合合約規範）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>天線安裝位置與設計圖核對（距牆角/柱距離合理）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>天線安裝方向確認（Omni 全向型確認不被結構遮蔽）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>天線接頭連接確認（4.3-10 M 公頭旋緊力矩確認）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>天線外觀查驗（無損傷、無接觸金屬遮蔽物）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>天線型號、頻段規格書核對（符合合約規範）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>天線安裝位置與設計圖核對（距牆角/柱距離合理）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>天線安裝方向確認（Omni 全向型確認不被結構遮蔽）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>天線接頭連接確認（4.3-10 M 公頭旋緊力矩確認）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>天線外觀查驗（無損傷、無接觸金屬遮蔽物）</span></label>
             </div>
             <div class="chk-col chk-orange">
               <div class="chk-role-label">&#129381; 職安人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>天花板鑽孔前：以管線探測儀（非接觸式）確認上方無水管、電管、消防管，避免誤鑽</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>高空作業車天花板作業：平台上升至距天花板 30～50cm 處操作，禁止以身體頂靠天花板輔助施力</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>鑽孔作業：操作人員配戴護目鏡及防塵口罩，鑽孔正下方設圍籬禁止人員停留</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>天花板嵌入型天線安裝：確認開口周圍天花板結構完整，避免大面積破壞造成天花板局部塌落</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>天花板鑽孔前：以管線探測儀（非接觸式）確認上方無水管、電管、消防管，避免誤鑽</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>高空作業車天花板作業：平台上升至距天花板 30～50cm 處操作，禁止以身體頂靠天花板輔助施力</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>鑽孔作業：操作人員配戴護目鏡及防塵口罩，鑽孔正下方設圍籬禁止人員停留</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>天花板嵌入型天線安裝：確認開口周圍天花板結構完整，避免大面積破壞造成天花板局部塌落</span></label>
             </div>
           </div>
         </div>
@@ -1553,28 +1574,28 @@
           <div class="chk-grid">
             <div class="chk-col chk-blue">
               <div class="chk-role-label">&#128119; 工地主任</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電梯停用排班與建物管理協調（影響住戶/使用者，需提前公告）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電梯 MU x2、RU x17 進場點收</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>光電混合纜 8,041m 進場點收（電梯用，含光纖與電力複合）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電梯機房空間確認（MU 設備安裝位置）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>電梯停用排班與建物管理協調（影響住戶/使用者，需提前公告）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>電梯 MU x2、RU x17 進場點收</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>光電混合纜 8,041m 進場點收（電梯用，含光纖與電力複合）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>電梯機房空間確認（MU 設備安裝位置）</span></label>
             </div>
             <div class="chk-col chk-green">
               <div class="chk-role-label">&#9989; 品管人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電梯 MU/RU 規格與送審資料核對</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>光電混合纜規格查驗（光纖芯數、電力線截面積）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電梯內 RU 安裝位置查驗（不影響電梯正常運行及安全標準）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>光纜接續品質查驗（接續損耗測試，OTDR 報告留存）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>光電混合纜敷設時：禁止扭轉或過度彎折，曲率半徑須符合廠商規範，以避免光纖折損</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電梯 MU 接地連接查驗</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>電梯 MU/RU 規格與送審資料核對</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>光電混合纜規格查驗（光纖芯數、電力線截面積）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>電梯內 RU 安裝位置查驗（不影響電梯正常運行及安全標準）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>光纜接續品質查驗（接續損耗測試，OTDR 報告留存）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>光電混合纜敷設時：禁止扭轉或過度彎折，曲率半徑須符合廠商規範，以避免光纖折損</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>電梯 MU 接地連接查驗</span></label>
             </div>
             <div class="chk-col chk-orange">
               <div class="chk-role-label">&#129381; 職安人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電梯停用前：與電梯維保廠商確認停用程序，由維保人員執行停電及機械鎖定，非電梯維保人員不得自行切斷電梯電源</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電梯停用期間：在各樓層電梯門口張貼「電梯停用—施工中」標示，並以三角錐或圍籬阻擋人員誤入</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電梯井內作業：進入前確認電梯停電並由維保人員鎖定（機械鎖定＋電氣鎖定），作業人員佩掛安全帶掛於電梯井固定錨點</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電梯頂部作業：人員站立於電梯頂部時禁止倚靠井壁（可能有夾擠危險），安全帶掛點需固定於電梯頂板設施</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電梯井口（各樓層停層點）：施工期間設置防墜蓋板或護欄，防止人員跌入</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>光纖熔接作業：熔接機使用前確認電源線無破損，熔接時產生的弧光對眼睛有害，作業人員及旁觀者均需配戴防護眼鏡或遮蔽遮罩</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>電梯停用前：與電梯維保廠商確認停用程序，由維保人員執行停電及機械鎖定，非電梯維保人員不得自行切斷電梯電源</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>電梯停用期間：在各樓層電梯門口張貼「電梯停用—施工中」標示，並以三角錐或圍籬阻擋人員誤入</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>電梯井內作業：進入前確認電梯停電並由維保人員鎖定（機械鎖定＋電氣鎖定），作業人員佩掛安全帶掛於電梯井固定錨點</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>電梯頂部作業：人員站立於電梯頂部時禁止倚靠井壁（可能有夾擠危險），安全帶掛點需固定於電梯頂板設施</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>電梯井口（各樓層停層點）：施工期間設置防墜蓋板或護欄，防止人員跌入</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>光纖熔接作業：熔接機使用前確認電源線無破損，熔接時產生的弧光對眼睛有害，作業人員及旁觀者均需配戴防護眼鏡或遮蔽遮罩</span></label>
             </div>
           </div>
         </div>
@@ -1587,20 +1608,17 @@
           <div class="chk-grid">
             <div class="chk-col chk-blue">
               <div class="chk-role-label">&#128119; 工地主任</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>RU 天線 x12 支安裝（A棟 3F + 4F）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>三家業者系統整合協調時程確認（NTT / 台灣大哥大 / 中華電信）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>CU/MU/EU 設備 IP 設定、網管連線協調（業者端配合）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>RU 天線 x12 支安裝（A棟 3F + 4F）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>三家業者系統整合協調時程確認（NTT / 台灣大哥大 / 中華電信）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>CU/MU/EU 設備 IP 設定、網管連線協調（業者端配合）</span></label>
             </div>
             <div class="chk-col chk-green">
               <div class="chk-role-label">&#9989; 品管人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>RU 天線 4x4 MIMO 安裝方向查驗（偏振方向確認，不得旋轉 90 度錯裝）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>CU → MU → EU → RU 光纖連接路由查驗</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>各設備電源線標示與設備序號核對</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>系統開機後設備狀態燈號確認（無紅燈告警）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>設備上電程序：採分段上電，先確認 CU 正常後再依序啟動 MU→EU→RU，避免突波導致設備損壞或電氣事故</span></label>
-            </div>
-            <div class="chk-col chk-orange">
-              <div class="chk-role-label">&#129381; 職安人員</div>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>RU 天線 4x4 MIMO 安裝方向查驗（偏振方向確認，不得旋轉 90 度錯裝）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>CU → MU → EU → RU 光纖連接路由查驗</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>各設備電源線標示與設備序號核對</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>系統開機後設備狀態燈號確認（無紅燈告警）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>設備上電程序：採分段上電，先確認 CU 正常後再依序啟動 MU→EU→RU，避免突波導致設備損壞或電氣事故</span></label>
             </div>
           </div>
         </div>
@@ -1613,23 +1631,23 @@
           <div class="chk-grid">
             <div class="chk-col chk-blue">
               <div class="chk-role-label">&#128119; 工地主任</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>PIM 測試儀安排（租用或委外），測試時程排定</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>測試前確認所有接頭安裝完畢（1-1/4" 共 133 顆、7/8" 共 310 顆、1/2" 共 690+ 顆）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>測試記錄表格準備，留存備查</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>PIM 測試儀安排（租用或委外），測試時程排定</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>測試前確認所有接頭安裝完畢（1-1/4" 共 133 顆、7/8" 共 310 顆、1/2" 共 690+ 顆）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>測試記錄表格準備，留存備查</span></label>
             </div>
             <div class="chk-col chk-green">
               <div class="chk-role-label">&#9989; 品管人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>每個 4.3-10 接頭壓製品質目視查驗（無鬆脫、無內導體偏移、無氧化）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>接頭防水處理查驗（外露接頭以自黏防水膠帶包覆確認）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>測試儀連接射頻纜線時：確認接頭已鎖緊，RF 高功率下鬆脫接頭可能造成電弧或設備損傷</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>各分支端口導通測試（VSWR / Return Loss 量測）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>PIM 測試：每組接頭/連接點符合合約規範值（建議 ≤ -150 dBc @ 2x43 dBm）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電纜連通測試（路徑損耗在設計容許值內）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>測試不合格點逐一記錄、追蹤改善後重測，存檔備查</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>每個 4.3-10 接頭壓製品質目視查驗（無鬆脫、無內導體偏移、無氧化）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>接頭防水處理查驗（外露接頭以自黏防水膠帶包覆確認）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>測試儀連接射頻纜線時：確認接頭已鎖緊，RF 高功率下鬆脫接頭可能造成電弧或設備損傷</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>各分支端口導通測試（VSWR / Return Loss 量測）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>PIM 測試：每組接頭/連接點符合合約規範值（建議 ≤ -150 dBc @ 2x43 dBm）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>電纜連通測試（路徑損耗在設計容許值內）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>測試不合格點逐一記錄、追蹤改善後重測，存檔備查</span></label>
             </div>
             <div class="chk-col chk-orange">
               <div class="chk-role-label">&#129381; 職安人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>測試期間如發現設備異常高溫或異味：立即關閉電源，通報工地主任，不得繼續施加功率</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>測試期間如發現設備異常高溫或異味：立即關閉電源，通報工地主任，不得繼續施加功率</span></label>
             </div>
             <div class="chk-note">&#9888; 接頭品質建議於每個接頭安裝當下即目視查驗，避免完工後集中測試時發現大量不合格，重工成本極高</div>
           </div>
@@ -1643,23 +1661,20 @@
           <div class="chk-grid">
             <div class="chk-col chk-blue">
               <div class="chk-role-label">&#128119; 工地主任</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>測試時程確認（協調三家電信業者工程師配合到場）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>各樓層測試路線規劃（涵蓋私區、電梯、停車場、樓梯間等難點區域）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>測試結果記錄整理（場強圖、RSRP 值分布輸出）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>停車場 B1/B2 測試期間：確認停車場照明充足，不足時配備手電筒，地面有高低差或車擋需特別注意</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>測試時程確認（協調三家電信業者工程師配合到場）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>各樓層測試路線規劃（涵蓋私區、電梯、停車場、樓梯間等難點區域）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>測試結果記錄整理（場強圖、RSRP 值分布輸出）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>停車場 B1/B2 測試期間：確認停車場照明充足，不足時配備手電筒，地面有高低差或車擋需特別注意</span></label>
             </div>
             <div class="chk-col chk-green">
               <div class="chk-role-label">&#9989; 品管人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>驗收標準核對：RSRP 95% ≥ −99 dBm（§特訂條款·驗收）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>測試頻段確認（2G/3G/4G/5G 各頻段均需覆蓋）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>測試點密度確認（每個功能空間 ≥1 點，走廊每 20m 一點）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>不合格點（熱點/死角）標記，調整天線位置或分配損耗後重測</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>電梯內訊號測試（電梯行進中及靜止停層均需測試）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>停車場 B1/B2 訊號測試（地下層為訊號死角高風險區）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>私區樓層（B2F～2F、10～13F、20～21F）測試記錄特別關注</span></label>
-            </div>
-            <div class="chk-col chk-orange">
-              <div class="chk-role-label">&#129381; 職安人員</div>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>驗收標準核對：RSRP 95% ≥ −99 dBm（§特訂條款·驗收）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>測試頻段確認（2G/3G/4G/5G 各頻段均需覆蓋）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>測試點密度確認（每個功能空間 ≥1 點，走廊每 20m 一點）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>不合格點（熱點/死角）標記，調整天線位置或分配損耗後重測</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>電梯內訊號測試（電梯行進中及靜止停層均需測試）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>停車場 B1/B2 訊號測試（地下層為訊號死角高風險區）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>私區樓層（B2F～2F、10～13F、20～21F）測試記錄特別關注</span></label>
             </div>
           </div>
         </div>
@@ -1672,29 +1687,29 @@
           <div class="chk-grid">
             <div class="chk-col chk-blue">
               <div class="chk-role-label">&#128119; 工地主任</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>竣工報告提送（甲方接獲後 14 日內辦理竣工檢驗）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>甲方於驗收提報日起 30 日內開始驗收</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>竣工文件包（竣工圖、測試報告、設備清單）竣工日起 14 日內提送</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>設備清單核對（81 項 BOM 全數確認安裝）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>驗收缺失改善追蹤，甲方核發驗收證明書後 14 日內完成</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>工程結算申請：收到驗收證明書後 7 日內提送，附切結書</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>保固保證金繳納確認（結算金額 5%）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>竣工報告提送（甲方接獲後 14 日內辦理竣工檢驗）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>甲方於驗收提報日起 30 日內開始驗收</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>竣工文件包（竣工圖、測試報告、設備清單）竣工日起 14 日內提送</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>設備清單核對（81 項 BOM 全數確認安裝）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>驗收缺失改善追蹤，甲方核發驗收證明書後 14 日內完成</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>工程結算申請：收到驗收證明書後 7 日內提送，附切結書</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>保固保證金繳納確認（結算金額 5%）</span></label>
             </div>
             <div class="chk-col chk-green">
               <div class="chk-role-label">&#9989; 品管人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>竣工圖（As-Built）正確性查驗（電纜路由、天線位置、設備序號）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>設備序號清單與實物全數核對</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>全套測試報告完整性確認（PIM、VSWR、場強圖）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>材料/設備品牌型號與送審資料一致性確認</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>廠商安裝完成證明書收集</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>竣工圖（As-Built）正確性查驗（電纜路由、天線位置、設備序號）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>設備序號清單與實物全數核對</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>全套測試報告完整性確認（PIM、VSWR、場強圖）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>材料/設備品牌型號與送審資料一致性確認</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>廠商安裝完成證明書收集</span></label>
             </div>
             <div class="chk-col chk-orange">
               <div class="chk-role-label">&#129381; 職安人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>驗收前場地整理：確認所有施工廢料清除（截斷電纜、電纜盤、包裝材、螺絲袋），地面清潔</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>臨時用電設備（工地用延長線、工作燈）全數拆除，回路確認斷電</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>高空作業車離場前：確認車輛完好無損（若有碰撞需記錄），歸還或送廠保養</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>工安事故（含虛驚事故）記錄彙整：完整填寫事故報告，含原因分析及改善措施，留存備查</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>所有施工人員離場：確認無人員遺留於機房、豎井、電梯間等封閉空間</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>驗收前場地整理：確認所有施工廢料清除（截斷電纜、電纜盤、包裝材、螺絲袋），地面清潔</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>臨時用電設備（工地用延長線、工作燈）全數拆除，回路確認斷電</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>高空作業車離場前：確認車輛完好無損（若有碰撞需記錄），歸還或送廠保養</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>工安事故（含虛驚事故）記錄彙整：完整填寫事故報告，含原因分析及改善措施，留存備查</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>所有施工人員離場：確認無人員遺留於機房、豎井、電梯間等封閉空間</span></label>
             </div>
           </div>
         </div>
@@ -1707,21 +1722,15 @@
           <div class="chk-grid">
             <div class="chk-col chk-blue">
               <div class="chk-role-label">&#128119; 工地主任</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>保固保證金有效期確認（到期日管控，勿逾期未展延）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>收到保固瑕疵通知後 7 日內完成改正</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>書面催告 3 工作天仍未到場維修者，合約有效期限延長</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>保固期屆滿無異議後 20 日內取回保固保證金</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>保固保證金有效期確認（到期日管控，勿逾期未展延）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>收到保固瑕疵通知後 7 日內完成改正</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>書面催告 3 工作天仍未到場維修者，合約有效期限延長</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>保固期屆滿無異議後 20 日內取回保固保證金</span></label>
             </div>
             <div class="chk-col chk-green">
               <div class="chk-role-label">&#9989; 品管人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>保固期第 1 年中段建議主動進行一次系統檢測（天線連接鬆動、電纜損耗變化）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>接獲瑕疵通知時立即確認缺失點，安排復測後出具改善報告</span></label>
-            </div>
-            <div class="chk-col chk-orange">
-              <div class="chk-role-label">&#129381; 職安人員</div>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>保固期進場維修前：重新申請業主/建物管理方進場許可（保固期不等同有長期進場授權）</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>維修作業若需高空作業車：重新執行機械自主安全檢查及操作人員資格確認</span></label>
-              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span>維修作業需停電操作時：重新執行 LOTO 程序，不得因為「只是小修」而省略鎖定掛牌</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>保固期第 1 年中段建議主動進行一次系統檢測（天線連接鬆動、電纜損耗變化）</span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>接獲瑕疵通知時立即確認缺失點，安排復測後出具改善報告</span></label>
             </div>
           </div>
         </div>
