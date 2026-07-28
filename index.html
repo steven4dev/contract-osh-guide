@@ -20,7 +20,9 @@
     border-radius: 10px;
     box-shadow: 0 2px 16px rgba(0,0,0,.12);
     overflow: hidden;
+    transition: max-width .25s;
   }
+  .page.wide { max-width: 100%; }
   /* Header */
   .header {
     background: linear-gradient(135deg, #1a3a5c 0%, #2563a8 100%);
@@ -89,7 +91,8 @@
     .header h1  { font-size: 14px; }
     .header .sub { flex-direction: column; gap: 4px; font-size: 11px; }
     #dark-toggle  { top: 8px; right: 10px; width: 34px; height: 34px; font-size: 15px; }
-    #redact-toggle{ top: 8px; right: 50px; width: 34px; height: 34px; font-size: 15px; }
+    #wide-toggle  { top: 8px; right: 52px; width: 34px; height: 34px; font-size: 14px; }
+    #redact-toggle{ top: 8px; right: 94px; width: 34px; height: 34px; font-size: 15px; }
   }
 
   /* Section */
@@ -333,6 +336,29 @@
     transition: background .25s, transform .2s;
   }
   #dark-toggle:hover { transform: scale(1.1); }
+
+  /* Wide mode toggle button */
+  #wide-toggle {
+    position: fixed;
+    top: 14px;
+    right: 66px;
+    z-index: 999;
+    background: #1a3a5c;
+    color: #fff;
+    border: 2px solid #fff3;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,.3);
+    transition: background .25s, transform .2s;
+  }
+  #wide-toggle:hover { transform: scale(1.1); }
+  body.dark #wide-toggle { background: #2563a8; }
 
   /* Dark mode overrides */
   body.dark {
@@ -938,7 +964,8 @@
 </head>
 <body>
 <button id="dark-toggle" title="切換暗黑/明亮模式" onclick="toggleDark()">🌙</button>
-<div class="page">
+<button id="wide-toggle" title="切換滿版/限寬版型" onclick="toggleWide()">⛶</button>
+<div class="page" id="page-container">
 
   <!-- Header -->
   <div class="header">
@@ -961,7 +988,7 @@
     <button class="tab-btn" id="tab-field" onclick="switchTab('field')">👷 現場工務</button>
     <button class="tab-btn" id="tab-das" onclick="switchTab('das')">📡 系統概要</button>
     <button class="tab-btn" id="tab-bom" onclick="switchTab('bom')">📋 物料清單</button>
-    <button id="btn-toggle-all" onclick="toggleAllSections()">⊟ 全部收摺</button>
+    <button id="btn-toggle-all" onclick="toggleAllSections()">⊟ 全部收合</button>
   </div>
 
   <!-- Functional view wrapper -->
@@ -1386,7 +1413,7 @@
     <div style="display:flex;align-items:center;justify-content:flex-end;margin-bottom:8px;">
       <button id="chk-expand-btn" onclick="chkExpandAll(this)"
         style="background:none;border:1px solid #aaa;border-radius:4px;padding:3px 12px;font-size:12px;cursor:pointer;color:#555;">
-        &#9660; 全部展開
+        ⊞ 全部展開
       </button>
     </div>
     <div id="chk-list">
@@ -2267,6 +2294,21 @@
     btn.textContent = '☀️';
   }
 
+  const wideBtn = document.getElementById('wide-toggle');
+  const pageEl = document.getElementById('page-container');
+  function toggleWide() {
+    const isWide = pageEl.classList.toggle('wide');
+    wideBtn.textContent = isWide ? '⛶' : '⛶';
+    wideBtn.title = isWide ? '切換回限寬版型' : '切換為滿版版型';
+    wideBtn.style.background = isWide ? '#27ae60' : '';
+    localStorage.setItem('wideMode', isWide ? '1' : '0');
+  }
+  if (localStorage.getItem('wideMode') === '1') {
+    pageEl.classList.add('wide');
+    wideBtn.title = '切換回限寬版型';
+    wideBtn.style.background = '#27ae60';
+  }
+
   /* ── Tab switching ── */
 
 
@@ -2283,7 +2325,7 @@
     const blocks = document.querySelectorAll('.phase-block');
     const allOpen = [...blocks].every(b => b.classList.contains('open'));
     blocks.forEach(b => b.classList.toggle('open', !allOpen));
-    btn.innerHTML = allOpen ? '&#9660; 全部展開' : '&#9650; 全部收合';
+    btn.innerHTML = allOpen ? '⊞ 全部展開' : '⊟ 全部收合';
   }
 
   function chkFilter(role, el) {
@@ -2516,7 +2558,7 @@
     icon.textContent = hidden ? '▼' : '▶';
   }
 
-  /* ── 全部展開／收摺 ── */
+  /* ── 全部展開／收合 ── */
   let _allCollapsed = false;
 
   function initCollapsibleSections() {
@@ -2554,7 +2596,7 @@
       if (icon) icon.textContent = _allCollapsed ? '▶' : '▼';
     });
     const toggleBtn = document.getElementById('btn-toggle-all');
-    if (toggleBtn) toggleBtn.textContent = _allCollapsed ? '⊞ 全部展開' : '⊟ 全部收摺';
+    if (toggleBtn) toggleBtn.textContent = _allCollapsed ? '⊞ 全部展開' : '⊟ 全部收合';
   }
 
   initCollapsibleSections();
