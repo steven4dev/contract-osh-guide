@@ -1410,12 +1410,6 @@
       <span class="chk-role-btn" onclick="chkFilter('orange',this)">職安人員</span>
     </div>
 
-    <div style="display:flex;align-items:center;justify-content:flex-end;margin-bottom:8px;">
-      <button id="chk-expand-btn" onclick="chkExpandAll(this)"
-        style="background:none;border:1px solid #aaa;border-radius:4px;padding:3px 12px;font-size:12px;cursor:pointer;color:#555;">
-        ▼ 全部展開
-      </button>
-    </div>
     <div id="chk-list">
 
       <div class="phase-block">
@@ -2321,13 +2315,6 @@
     btn.classList.add('active');
   }
 
-  function chkExpandAll(btn) {
-    const blocks = document.querySelectorAll('.phase-block');
-    const allOpen = [...blocks].every(b => b.classList.contains('open'));
-    blocks.forEach(b => b.classList.toggle('open', !allOpen));
-    btn.innerHTML = allOpen ? '▼ 全部展開' : '▲ 全部收合';
-  }
-
   function chkFilter(role, el) {
     const isActive = el.classList.contains('active');
     document.querySelectorAll('.chk-role-btn').forEach(b => b.classList.remove('active'));
@@ -2594,6 +2581,10 @@
       body.style.display = _allCollapsed ? 'none' : '';
       const icon = document.getElementById(body.id + '-icon');
       if (icon) icon.textContent = _allCollapsed ? '▶' : '▼';
+    });
+    // 現場工務／施工時序清單
+    document.querySelectorAll('.phase-block').forEach(function(b) {
+      b.classList.toggle('open', !_allCollapsed);
     });
     const toggleBtn = document.getElementById('btn-toggle-all');
     if (toggleBtn) toggleBtn.textContent = _allCollapsed ? '▼ 全部展開' : '▲ 全部收合';
