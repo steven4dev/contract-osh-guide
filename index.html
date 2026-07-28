@@ -988,7 +988,7 @@
     <button class="tab-btn" id="tab-field" onclick="switchTab('field')">👷 現場工務</button>
     <button class="tab-btn" id="tab-das" onclick="switchTab('das')">📡 系統概要</button>
     <button class="tab-btn" id="tab-bom" onclick="switchTab('bom')">📋 物料清單</button>
-    <button id="btn-toggle-all" onclick="toggleAllSections()">⊟ 全部收合</button>
+    <button id="btn-toggle-all" onclick="toggleAllSections()">▲ 全部收合</button>
   </div>
 
   <!-- Functional view wrapper -->
@@ -1413,7 +1413,7 @@
     <div style="display:flex;align-items:center;justify-content:flex-end;margin-bottom:8px;">
       <button id="chk-expand-btn" onclick="chkExpandAll(this)"
         style="background:none;border:1px solid #aaa;border-radius:4px;padding:3px 12px;font-size:12px;cursor:pointer;color:#555;">
-        ⊞ 全部展開
+        ▼ 全部展開
       </button>
     </div>
     <div id="chk-list">
@@ -2325,7 +2325,7 @@
     const blocks = document.querySelectorAll('.phase-block');
     const allOpen = [...blocks].every(b => b.classList.contains('open'));
     blocks.forEach(b => b.classList.toggle('open', !allOpen));
-    btn.innerHTML = allOpen ? '⊞ 全部展開' : '⊟ 全部收合';
+    btn.innerHTML = allOpen ? '▼ 全部展開' : '▲ 全部收合';
   }
 
   function chkFilter(role, el) {
@@ -2596,7 +2596,7 @@
       if (icon) icon.textContent = _allCollapsed ? '▶' : '▼';
     });
     const toggleBtn = document.getElementById('btn-toggle-all');
-    if (toggleBtn) toggleBtn.textContent = _allCollapsed ? '⊞ 全部展開' : '⊟ 全部收合';
+    if (toggleBtn) toggleBtn.textContent = _allCollapsed ? '▼ 全部展開' : '▲ 全部收合';
   }
 
   initCollapsibleSections();
