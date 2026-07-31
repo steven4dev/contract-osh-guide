@@ -602,6 +602,16 @@
   body:not(.dark) .chk-role-btn:hover  { background: #e8f0fb; color: #2563a8; border-color: #2563a8; }
   body:not(.dark) .chk-role-btn.active { background: #2563a8; color: #fff; }
 
+  .chk-io-btn {
+    padding: 3px 12px; border-radius: 4px; font-size: 12px; font-weight: 600;
+    cursor: pointer; border: 1px solid #2563a8; color: #2563a8; background: transparent;
+  }
+  .chk-io-btn:hover { background: #e8f0fb; }
+  body.dark .chk-io-btn { border-color: #4da6ff; color: #7ec8ff; }
+  body.dark .chk-io-btn:hover { background: #1e2e42; }
+  .chk-io-status { font-size: 11.5px; font-weight: 600; color: #2563a8; }
+  body.dark .chk-io-status { color: #7ec8ff; }
+
   /* single-column mode when role is filtered */
   .chk-grid.role-filtered { grid-template-columns: 1fr !important; }
 
@@ -1415,11 +1425,9 @@
     </div>
 
     <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:0 0 8px;">
-      <span id="chk-save-status" style="font-size:11px;color:#8a9bb0;"></span>
-      <button onclick="chkExportJSON()"
-        style="background:none;border:1px solid #aaa;border-radius:4px;padding:3px 10px;font-size:12px;cursor:pointer;color:#555;">💾 匯出進度</button>
-      <button onclick="document.getElementById('chk-import-input').click()"
-        style="background:none;border:1px solid #aaa;border-radius:4px;padding:3px 10px;font-size:12px;cursor:pointer;color:#555;">📂 匯入進度</button>
+      <span id="chk-save-status" class="chk-io-status"></span>
+      <button class="chk-io-btn" onclick="chkExportJSON()">💾 匯出進度</button>
+      <button class="chk-io-btn" onclick="document.getElementById('chk-import-input').click()">📂 匯入進度</button>
       <input type="file" id="chk-import-input" accept="application/json" style="display:none" onchange="chkImportJSON(this.files[0])">
     </div>
 
@@ -2379,7 +2387,33 @@
     hdr.closest('.phase-block').classList.toggle('open');
   }
 
-  /* ── 檢核清單進度：匯出／匯入 JSON ── */
+  /* ── 檢核清單進度：自動記憶（localStorage）＋匯出／匯入 JSON ── */
+  const CHK_STORAGE_KEY = 'dasChkProgressV1';
+
+  function chkApplyDoneIds(doneIds) {
+    const list = document.getElementById('chk-list');
+    if (!list) return;
+    list.querySelectorAll('.chk-item').forEach(function(item) {
+      const id = item.getAttribute('data-chk-id');
+      const checkbox = item.querySelector('input[type=checkbox]');
+      const isDone = doneIds.has(id);
+      item.classList.toggle('done', isDone);
+      if (checkbox) checkbox.checked = isDone;
+    });
+  }
+
+  function chkSaveToStorage() {
+    const list = document.getElementById('chk-list');
+    if (!list) return;
+    const done = [];
+    list.querySelectorAll('.chk-item.done').forEach(function(item) {
+      done.push(item.getAttribute('data-chk-id'));
+    });
+    try {
+      localStorage.setItem(CHK_STORAGE_KEY, JSON.stringify({ savedAt: new Date().toISOString(), doneIds: done }));
+    } catch (err) { /* localStorage 不可用時略過 */ }
+  }
+
   (function chkAssignIds() {
     const list = document.getElementById('chk-list');
     if (!list) return;
@@ -2387,8 +2421,20 @@
     items.forEach(function(item, i) {
       item.setAttribute('data-chk-id', 'chk-' + i);
     });
+
+    // 還原上次自動記憶的進度
+    try {
+      const saved = JSON.parse(localStorage.getItem(CHK_STORAGE_KEY) || 'null');
+      if (saved && Array.isArray(saved.doneIds)) {
+        chkApplyDoneIds(new Set(saved.doneIds));
+      }
+    } catch (err) { /* 忽略解析錯誤 */ }
+
     list.addEventListener('click', function(e) {
-      if (e.target.closest('.chk-item')) chkUpdateProgress();
+      if (e.target.closest('.chk-item')) {
+        chkUpdateProgress();
+        chkSaveToStorage();
+      }
     });
     chkUpdateProgress();
   })();
@@ -2433,13 +2479,9 @@
       const doneIds = new Set(payload.doneIds || []);
       const list = document.getElementById('chk-list');
       if (!list) return;
-      list.querySelectorAll('.chk-item').forEach(function(item) {
-        const id = item.getAttribute('data-chk-id');
-        const checkbox = item.querySelector('input[type=checkbox]');
-        const isDone = doneIds.has(id);
-        item.classList.toggle('done', isDone);
-        if (checkbox) checkbox.checked = isDone;
-      });
+      chkApplyDoneIds(doneIds);
+      chkSaveToStorage();
+      chkUpdateProgress();
       const status = document.getElementById('chk-save-status');
       if (status) { status.textContent = '已匯入 ' + doneIds.size + ' / ' + list.querySelectorAll('.chk-item').length + ' 項（' + (payload.exportedAt ? payload.exportedAt.slice(0,10) : '') + '）'; }
       document.getElementById('chk-import-input').value = '';
