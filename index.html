@@ -1414,6 +1414,15 @@
       <span class="chk-role-btn" onclick="chkFilter('orange',this)">職安人員</span>
     </div>
 
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:0 0 8px;">
+      <span id="chk-save-status" style="font-size:11px;color:#8a9bb0;"></span>
+      <button onclick="chkExportJSON()"
+        style="background:none;border:1px solid #aaa;border-radius:4px;padding:3px 10px;font-size:12px;cursor:pointer;color:#555;">💾 匯出進度</button>
+      <button onclick="document.getElementById('chk-import-input').click()"
+        style="background:none;border:1px solid #aaa;border-radius:4px;padding:3px 10px;font-size:12px;cursor:pointer;color:#555;">📂 匯入進度</button>
+      <input type="file" id="chk-import-input" accept="application/json" style="display:none" onchange="chkImportJSON(this.files[0])">
+    </div>
+
     <div id="chk-list">
 
       <div class="phase-block">
@@ -2350,6 +2359,70 @@
 
   function togglePhase(hdr) {
     hdr.closest('.phase-block').classList.toggle('open');
+  }
+
+  /* ── 檢核清單進度：匯出／匯入 JSON ── */
+  (function chkAssignIds() {
+    const list = document.getElementById('chk-list');
+    if (!list) return;
+    const items = list.querySelectorAll('.chk-item');
+    items.forEach(function(item, i) {
+      item.setAttribute('data-chk-id', 'chk-' + i);
+    });
+  })();
+
+  function chkExportJSON() {
+    const list = document.getElementById('chk-list');
+    if (!list) return;
+    const done = [];
+    list.querySelectorAll('.chk-item.done').forEach(function(item) {
+      done.push(item.getAttribute('data-chk-id'));
+    });
+    const payload = {
+      exportedAt: new Date().toISOString(),
+      total: list.querySelectorAll('.chk-item').length,
+      doneIds: done
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const ts = new Date().toISOString().slice(0,10);
+    a.href = url;
+    a.download = '施工檢核進度_' + ts + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    const status = document.getElementById('chk-save-status');
+    if (status) { status.textContent = '已匯出 ' + done.length + ' / ' + payload.total + ' 項'; }
+  }
+
+  function chkImportJSON(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      let payload;
+      try {
+        payload = JSON.parse(e.target.result);
+      } catch (err) {
+        alert('檔案格式錯誤，無法匯入。');
+        return;
+      }
+      const doneIds = new Set(payload.doneIds || []);
+      const list = document.getElementById('chk-list');
+      if (!list) return;
+      list.querySelectorAll('.chk-item').forEach(function(item) {
+        const id = item.getAttribute('data-chk-id');
+        const checkbox = item.querySelector('input[type=checkbox]');
+        const isDone = doneIds.has(id);
+        item.classList.toggle('done', isDone);
+        if (checkbox) checkbox.checked = isDone;
+      });
+      const status = document.getElementById('chk-save-status');
+      if (status) { status.textContent = '已匯入 ' + doneIds.size + ' / ' + list.querySelectorAll('.chk-item').length + ' 項（' + (payload.exportedAt ? payload.exportedAt.slice(0,10) : '') + '）'; }
+      document.getElementById('chk-import-input').value = '';
+    };
+    reader.readAsText(file, 'utf-8');
   }
 
   function switchTab(t) {
