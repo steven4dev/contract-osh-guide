@@ -574,9 +574,11 @@
   }
   .src-contract { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
   .src-law      { background: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
+  .src-internal { background: #ede9fe; color: #6d28d9; border: 1px solid #ddd6fe; }
   .src-rec      { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
   body.dark .src-contract { background: #1e3a5f; color: #93c5fd; border-color: #1e40af; }
   body.dark .src-law      { background: #431407; color: #fb923c; border-color: #c2410c; }
+  body.dark .src-internal { background: #2e1a5c; color: #c4b5fd; border-color: #6d28d9; }
   body.dark .src-rec      { background: #1e293b; color: #94a3b8; border-color: #334155; }
   .chk-legend {
     display: flex; gap: 12px; flex-wrap: wrap; margin: 0 0 10px;
@@ -1403,7 +1405,7 @@
 
     <!-- == 施工時序檢核清單 == -->
 
-    <div class="chk-legend"><span class="lbl">標示：</span><span class="src-badge src-contract">合約</span>合約明定義務　<span class="src-badge src-law">法規</span>職安法及相關法規　<span class="src-badge src-rec">建議</span>最佳實務（非強制）</div>
+    <div class="chk-legend"><span class="lbl">標示：</span><span class="src-badge src-contract">合約</span>合約明定義務　<span class="src-badge src-law">法規</span>職安法及相關法規　<span class="src-badge src-internal">內規</span>乙方（中華電信）內部管理要點　<span class="src-badge src-rec">建議</span>最佳實務（非強制）</div>
     <div class="chk-filter-bar">
       <span class="chk-role-btn" onclick="chkFilter('blue',this)">工地主任</span>
       <span class="chk-role-btn" onclick="chkFilter('green',this)">品管人員</span>
@@ -1441,6 +1443,21 @@
             <div class="chk-col chk-orange">
               <div class="chk-role-label">&#129381; 職安人員</div>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-contract">合約</span>安全衛生計畫送審（含高空作業、密閉空間、電氣作業等章節），核可後方可實施<em class="src">§5·八·2</em></span></label>
+              <div style="margin:6px 0 2px;font-size:11px;font-weight:700;color:#8a5cf0;">📋 開工報告／開工前協調會議應備文件（勞工新進或異動時亦同）</div>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-internal">內規</span>承攬人所屬事業單位職安衛管理單位（人員）設置報備書；承攬本工程之職安衛管理單位（人員）設置報備書（未滿30人者直接向主辦單位報備）<em class="src">要點§28·一</em></span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-internal">內規</span>職安衛人員證照<em class="src">要點§28·二</em></span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-internal">內規</span>工作場所（工地）負責人安全衛生業務主管證照<em class="src">要點§28·三</em></span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-internal">內規</span>各類安全衛生作業主管證照<em class="src">要點§28·四</em></span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-internal">內規</span>危險性機械設備操作人員證照<em class="src">要點§28·五</em></span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-internal">內規</span>特殊作業人員證照<em class="src">要點§28·六</em></span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-internal">內規</span>急救人員證照<em class="src">要點§28·七</em></span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-internal">內規</span>勞工一般安全衛生教育訓練證明<em class="src">要點§28·八</em></span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-internal">內規</span>前述證照人員之安全衛生在職教育訓練證明<em class="src">要點§28·九</em></span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-internal">內規</span>危險性機械設備、起重升降機具、壓力容器等有效使用合格證<em class="src">要點§28·十</em></span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-internal">內規</span>已實施承攬人勞工體格、健康檢查之切結書<em class="src">要點§28·十一</em></span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-internal">內規</span>承攬人勞工之勞工保險證明<em class="src">要點§28·十二</em></span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-internal">內規</span>工程保險單<em class="src">要點§28·十三</em></span></label>
+              <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-internal">內規</span>其他依法應取得證照之人員、機具證明文件<em class="src">要點§28·十四</em></span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-rec">建議</span>工地環境勘查：確認各樓層淨高、電梯承重、天花板材質（石膏板/RC），研判高空作業車可進入範圍</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>所有進場人員施工前完成教育訓練，填寫訓練紀錄並保存（含分包商人員）</span></label>
               <label class="chk-item" onclick="this.classList.toggle('done')"><input type="checkbox"><span><span class="src-badge src-law">法規</span>個人防護裝備（PPE）確認備齊：安全帽、安全帶（Y型雙掛鉤）、防滑安全鞋、防護眼鏡</span></label>
