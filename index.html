@@ -2355,6 +2355,24 @@
       });
       document.querySelectorAll('.chk-grid').forEach(g => g.classList.add('role-filtered'));
     }
+    chkUpdateProgress();
+  }
+
+  function chkUpdateProgress() {
+    const list = document.getElementById('chk-list');
+    const status = document.getElementById('chk-save-status');
+    if (!list || !status) return;
+    const visibleCols = Array.from(list.querySelectorAll('.chk-col')).filter(function(c) {
+      return c.style.display !== 'none';
+    });
+    const items = visibleCols.reduce(function(arr, c) {
+      return arr.concat(Array.from(c.querySelectorAll('.chk-item')));
+    }, []);
+    const total = items.length;
+    const done = items.filter(function(i) { return i.classList.contains('done'); }).length;
+    const activeBtn = document.querySelector('.chk-role-btn.active');
+    const label = activeBtn ? activeBtn.textContent : '全部角色';
+    status.textContent = label + '：已完成 ' + done + ' / ' + total + ' 項';
   }
 
   function togglePhase(hdr) {
@@ -2369,6 +2387,10 @@
     items.forEach(function(item, i) {
       item.setAttribute('data-chk-id', 'chk-' + i);
     });
+    list.addEventListener('click', function(e) {
+      if (e.target.closest('.chk-item')) chkUpdateProgress();
+    });
+    chkUpdateProgress();
   })();
 
   function chkExportJSON() {
